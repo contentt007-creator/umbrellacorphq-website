@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
       loadPanelContent(panelId);
     }
 
-    // Update topbar
+    // Update topbar breadcrumb
     if (panelTitle && link) {
-      panelTitle.textContent = 'Umbrella Corp HQ \u2014 ' + link.querySelector('.link-label')?.textContent;
+      panelTitle.textContent = link.querySelector('.link-label')?.textContent || panelId;
     }
 
     // Update preview button
