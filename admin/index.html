@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Umbrella Corp HQ</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════ -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1"/>
+        <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+        <circle cx="50" cy="50" r="2.5" fill="#0a0a0a"/>
+      </svg>
+      <span class="login-logo-text">Umbrella Corp HQ</span>
+    </div>
+    <h1 class="login-heading">Admin Panel</h1>
+    <p class="login-sub">Enter your password to access the site editor.</p>
+
+    <form id="login-form" novalidate>
+      <div class="login-field">
+        <label class="login-label" for="login-password">Password</label>
+        <input class="login-input" type="password" id="login-password" placeholder="Enter admin password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="login-btn">Access Dashboard</button>
+      <div id="login-error" class="login-error" role="alert"></div>
+    </form>
+
+    <p style="font-size:11px;color:rgba(85,85,85,0.4);margin-top:32px;line-height:1.5">
+      <!-- IMPORTANT: This panel uses client-side authentication for MVP.
+           Replace with backend auth before production deployment. -->
+      Default password: <code style="color:rgba(193,18,31,0.6)">UCH@admin2025</code>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ADMIN DASHBOARD
+═══════════════════════════════ -->
+<div id="admin-dashboard" class="admin-dashboard">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar" role="navigation" aria-label="Admin navigation">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px">
+        <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="2"/>
+        <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+        <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1.5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1.5"/>
+      </svg>
+      <span class="sidebar-logo-text">UCH Admin</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <p class="sidebar-label">Overview</p>
+      <button class="sidebar-link" data-panel="dashboard">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="link-label">Dashboard</span>
+      </button>
+
+      <p class="sidebar-label" style="margin-top:8px">Pages</p>
+      <button class="sidebar-link" data-panel="home">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="link-label">Home Page</span>
+      </button>
+      <button class="sidebar-link" data-panel="services">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M2 12h2M20 12h2"/></svg>
+        <span class="link-label">Services</span>
+      </button>
+      <button class="sidebar-link" data-panel="work">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span class="link-label">Case Studies</span>
+      </button>
+      <button class="sidebar-link" data-panel="about">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span class="link-label">About</span>
+      </button>
+      <button class="sidebar-link" data-panel="contact">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.1 2.1 2 2 0 012.08 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <span class="link-label">Contact</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-label">Content</p>
+      <button class="sidebar-link" data-panel="gallery">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span class="link-label">Client Gallery</span>
+      </button>
+      <button class="sidebar-link" data-panel="testimonials">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span class="link-label">Testimonials</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+      <button class="sidebar-link" data-panel="settings">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M2 12h2M20 12h2"/></svg>
+        <span class="link-label">Settings</span>
+      </button>
+    </nav>
+
+    <button id="logout-btn" class="sidebar-logout" aria-label="Logout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Logout
+    </button>
+  </aside>
+
+  <!-- Top Bar -->
+  <div class="admin-topbar">
+    <span class="topbar-title" id="panel-page-title">Umbrella Corp HQ &mdash; Dashboard</span>
+    <div class="topbar-meta">
+      <span class="topbar-saved" id="topbar-saved">Not saved yet</span>
+      <button class="topbar-preview" id="preview-btn" style="display:none" aria-label="Preview live site">
+        Preview Site &#8599;
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+
+    <!-- ─── DASHBOARD ─── -->
+    <div id="panel-dashboard" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Dashboard</h1>
+        <p class="panel-desc">Welcome back. Edit any section using the navigation on the left. All changes save to localStorage and are reflected live on the public site.</p>
+      </div>
+
+      <div class="security-note" role="alert">
+        <strong>Security Note:</strong> This admin panel uses client-side localStorage. Suitable for a static site MVP.
+        For production with multiple editors or sensitive data, replace with a backend API and proper server-side authentication.
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-card-value">5</div><div class="stat-card-label">Pages</div></div>
+        <div class="stat-card"><div class="stat-card-value">6</div><div class="stat-card-label">Services</div></div>
+        <div class="stat-card"><div class="stat-card-value">3</div><div class="stat-card-label">Case Studies</div></div>
+        <div class="stat-card"><div class="stat-card-value">12</div><div class="stat-card-label">Client Logos</div></div>
+      </div>
+
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;margin-bottom:20px;color:var(--steel)">Quick Access</h2>
+      <div class="quick-links">
+        <div class="quick-link-card" data-goto="home">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+          <div class="quick-link-title">Home Page</div>
+          <div class="quick-link-desc">Edit hero text, stats, process steps, and CTA section.</div>
+        </div>
+        <div class="quick-link-card" data-goto="work">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+          <div class="quick-link-title">Case Studies</div>
+          <div class="quick-link-desc">Add, edit, or reorder case studies with full metrics and testimonials.</div>
+        </div>
+        <div class="quick-link-card" data-goto="testimonials">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <div class="quick-link-title">Testimonials</div>
+          <div class="quick-link-desc">Edit client quotes, names, and roles displayed on the homepage.</div>
+        </div>
+        <div class="quick-link-card" data-goto="gallery">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+          <div class="quick-link-title">Client Gallery</div>
+          <div class="quick-link-desc">Update client logo slots in the homepage gallery strip.</div>
+        </div>
+        <div class="quick-link-card" data-goto="settings">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M12 2v2M2 12h2"/></svg>
+          <div class="quick-link-title">Settings</div>
+          <div class="quick-link-desc">Site name, tagline, colours, analytics, social links, and export/import.</div>
+        </div>
+        <div class="quick-link-card" data-goto="contact">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div class="quick-link-title">Contact Info</div>
+          <div class="quick-link-desc">Update office address, email, phone number, and response message.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── HOME PAGE EDITOR ─── -->
+    <div id="panel-home" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Home Page</h1>
+        <p class="panel-desc">Edit homepage content. Changes are saved to localStorage and reflected immediately on the live site.</p>
+      </div>
+
+      <!-- Hero -->
+      <div class="editor-card">
+        <div class="editor-card-title">Hero Section <span class="editor-card-badge">index.html</span></div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-hero-l1">Heading Line 1</label>
+            <input class="field-input" type="text" id="f-hero-l1" data-key="hero_line1" data-default="We Cover" placeholder="We Cover">
+          </div>
+          <div>
+            <label class="field-label" for="f-hero-l2">Heading Line 2 <span class="hint">(displays in red)</span></label>
+            <input class="field-input" type="text" id="f-hero-l2" data-key="hero_line2" data-default="Everything." placeholder="Everything.">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-hero-l3">Heading Line 3 <span class="hint">(smaller size)</span></label>
+          <input class="field-input" type="text" id="f-hero-l3" data-key="hero_line3" data-default="So You Don't Have To." placeholder="So You Don't Have To.">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-hero-sub">Hero Subtext</label>
+          <input class="field-input" type="text" id="f-hero-sub" data-key="hero_subtext" data-default="Full-service agency based in Dhaka. Branding. Digital. Offline. Strategy." placeholder="Hero subtext...">
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-cta1">CTA Button 1 Label</label>
+            <input class="field-input" type="text" id="f-cta1" data-key="hero_cta1_label" data-default="See Our Work" placeholder="See Our Work">
+          </div>
+          <div>
+            <label class="field-label" for="f-cta2">CTA Button 2 Label</label>
+            <input class="field-input" type="text" id="f-cta2" data-key="hero_cta2_label" data-default="Start a Project" placeholder="Start a Project">
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="editor-card">
+        <div class="editor-card-title">Stats Bar <span class="editor-card-badge">4 counters</span></div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-stat1n">Stat 1 Number</label>
+            <input class="field-input" type="text" id="f-stat1n" data-key="stat1_number" data-default="150" placeholder="150">
+          </div>
+          <div>
+            <label class="field-label" for="f-stat1l">Stat 1 Label</label>
+            <input class="field-input" type="text" id="f-stat1l" data-key="stat1_label" data-default="Projects Delivered" placeholder="Projects Delivered">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-stat2n">Stat 2 Number</label>
+            <input class="field-input" type="text" id="f-stat2n" data-key="stat2_number" data-default="80" placeholder="80">
+          </div>
+          <div>
+            <label class="field-label" for="f-stat2l">Stat 2 Label</label>
+            <input class="field-input" type="text" id="f-stat2l" data-key="stat2_label" data-default="Happy Clients" placeholder="Happy Clients">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-stat3n">Stat 3 Number</label>
+            <input class="field-input" type="text" id="f-stat3n" data-key="stat3_number" data-default="5" placeholder="5">
+          </div>
+          <div>
+            <label class="field-label" for="f-stat3l">Stat 3 Label</label>
+            <input class="field-input" type="text" id="f-stat3l" data-key="stat3_label" data-default="Years Experience" placeholder="Years Experience">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-stat4n">Stat 4 Number</label>
+            <input class="field-input" type="text" id="f-stat4n" data-key="stat4_number" data-default="12" placeholder="12">
+          </div>
+          <div>
+            <label class="field-label" for="f-stat4l">Stat 4 Label</label>
+            <input class="field-input" type="text" id="f-stat4l" data-key="stat4_label" data-default="Industries Served" placeholder="Industries Served">
+          </div>
+        </div>
+      </div>
+
+      <!-- Process -->
+      <div class="editor-card">
+        <div class="editor-card-title">Process Steps</div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-p1t">Step 1 Title</label>
+            <input class="field-input" type="text" id="f-p1t" data-key="process1_title" data-default="Discovery" placeholder="Discovery">
+          </div>
+          <div>
+            <label class="field-label" for="f-p1d">Step 1 Description</label>
+            <input class="field-input" type="text" id="f-p1d" data-key="process1_desc" data-default="We dig into your brand, market, competition, and goals." placeholder="Description...">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-p2t">Step 2 Title</label>
+            <input class="field-input" type="text" id="f-p2t" data-key="process2_title" data-default="Strategy" placeholder="Strategy">
+          </div>
+          <div>
+            <label class="field-label" for="f-p2d">Step 2 Description</label>
+            <input class="field-input" type="text" id="f-p2d" data-key="process2_desc" data-default="A concrete plan with clear KPIs, channels, timelines." placeholder="Description...">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-p3t">Step 3 Title</label>
+            <input class="field-input" type="text" id="f-p3t" data-key="process3_title" data-default="Execution" placeholder="Execution">
+          </div>
+          <div>
+            <label class="field-label" for="f-p3d">Step 3 Description</label>
+            <input class="field-input" type="text" id="f-p3d" data-key="process3_desc" data-default="We build, launch, and manage with obsessive attention to detail." placeholder="Description...">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-p4t">Step 4 Title</label>
+            <input class="field-input" type="text" id="f-p4t" data-key="process4_title" data-default="Results" placeholder="Results">
+          </div>
+          <div>
+            <label class="field-label" for="f-p4d">Step 4 Description</label>
+            <input class="field-input" type="text" id="f-p4d" data-key="process4_desc" data-default="We measure everything. Report transparently. Optimise." placeholder="Description...">
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="editor-card">
+        <div class="editor-card-title">CTA Section</div>
+        <div class="field-group">
+          <label class="field-label" for="f-cta-h">CTA Heading</label>
+          <input class="field-input" type="text" id="f-cta-h" data-key="cta_heading" data-default="Ready To Be Covered?" placeholder="Ready To Be Covered?">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-cta-s">CTA Subtext</label>
+          <input class="field-input" type="text" id="f-cta-s" data-key="cta_subtext" data-default="Let's build something that outlasts the competition." placeholder="Subtext...">
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── TESTIMONIALS EDITOR ─── -->
+    <div id="panel-testimonials" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Testimonials</h1>
+        <p class="panel-desc">Edit the three client testimonials displayed on the homepage.</p>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Testimonial 1</div>
+        <div class="field-group">
+          <label class="field-label" for="f-t1q">Quote Text</label>
+          <textarea class="field-textarea" id="f-t1q" data-key="testimonial1_text" data-default="Working with Umbrella Corp HQ was the best marketing decision we made." rows="3"></textarea>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-t1n">Client Name</label>
+            <input class="field-input" type="text" id="f-t1n" data-key="testimonial1_name" data-default="Ahmed Rahman" placeholder="Client name">
+          </div>
+          <div>
+            <label class="field-label" for="f-t1r">Client Role &amp; Company</label>
+            <input class="field-input" type="text" id="f-t1r" data-key="testimonial1_role" data-default="CEO, Cafforia BD" placeholder="CEO, Company Name">
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Testimonial 2</div>
+        <div class="field-group">
+          <label class="field-label" for="f-t2q">Quote Text</label>
+          <textarea class="field-textarea" id="f-t2q" data-key="testimonial2_text" data-default="They understood the luxury positioning immediately." rows="3"></textarea>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-t2n">Client Name</label>
+            <input class="field-input" type="text" id="f-t2n" data-key="testimonial2_name" data-default="Nadia Islam" placeholder="Client name">
+          </div>
+          <div>
+            <label class="field-label" for="f-t2r">Client Role &amp; Company</label>
+            <input class="field-input" type="text" id="f-t2r" data-key="testimonial2_role" data-default="Founder, Halcourt" placeholder="Role, Company">
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Testimonial 3</div>
+        <div class="field-group">
+          <label class="field-label" for="f-t3q">Quote Text</label>
+          <textarea class="field-textarea" id="f-t3q" data-key="testimonial3_text" data-default="Direct, strategic, no fluff. A different breed of agency entirely." rows="3"></textarea>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-t3n">Client Name</label>
+            <input class="field-input" type="text" id="f-t3n" data-key="testimonial3_name" data-default="Karim Chowdhury" placeholder="Client name">
+          </div>
+          <div>
+            <label class="field-label" for="f-t3r">Client Role &amp; Company</label>
+            <input class="field-input" type="text" id="f-t3r" data-key="testimonial3_role" data-default="Marketing Director" placeholder="Role, Company">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GALLERY EDITOR ─── -->
+    <div id="panel-gallery" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Client Gallery</h1>
+        <p class="panel-desc">Manage the 12 client logo slots in the homepage gallery strip. Enter a logo image URL and client name for each slot.</p>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Gallery Row 1 (6 logos)</div>
+        <p style="font-size:12px;color:var(--steel);margin-bottom:24px">Replace placeholder boxes with actual client SVG/PNG logos. Recommended size: 200&#215;90px.</p>
+
+        <div id="gallery-slots-1">
+          <!-- Slots 1-6 -->
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+            <div class="field-group">
+              <label class="field-label">Logo 1 — Client Name</label>
+              <input class="field-input" type="text" data-key="gallery1_name" data-default="" placeholder="Client name">
+              <label class="field-label" style="margin-top:8px">Logo 1 — Image URL</label>
+              <div class="img-field-wrap">
+                <input class="field-input img-url-input" type="url" data-key="gallery1_url" data-default="" placeholder="https://...logo.svg">
+                <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Logo 2 — Client Name</label>
+              <input class="field-input" type="text" data-key="gallery2_name" data-default="" placeholder="Client name">
+              <label class="field-label" style="margin-top:8px">Logo 2 — Image URL</label>
+              <div class="img-field-wrap">
+                <input class="field-input img-url-input" type="url" data-key="gallery2_url" data-default="" placeholder="https://...logo.svg">
+                <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Logo 3 — Client Name</label>
+              <input class="field-input" type="text" data-key="gallery3_name" data-default="" placeholder="Client name">
+              <label class="field-label" style="margin-top:8px">Logo 3 — Image URL</label>
+              <div class="img-field-wrap">
+                <input class="field-input img-url-input" type="url" data-key="gallery3_url" data-default="" placeholder="https://...logo.svg">
+                <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Logo 4 — Client Name</label>
+              <input class="field-input" type="text" data-key="gallery4_name" data-default="" placeholder="Client name">
+              <label class="field-label" style="margin-top:8px">Logo 4 — Image URL</label>
+              <div class="img-field-wrap">
+                <input class="field-input img-url-input" type="url" data-key="gallery4_url" data-default="" placeholder="https://...logo.svg">
+                <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Logo 5 — Client Name</label>
+              <input class="field-input" type="text" data-key="gallery5_name" data-default="" placeholder="Client name">
+              <label class="field-label" style="margin-top:8px">Logo 5 — Image URL</label>
+              <div class="img-field-wrap">
+                <input class="field-input img-url-input" type="url" data-key="gallery5_url" data-default="" placeholder="https://...logo.svg">
+                <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Logo 6 — Client Name</label>
+              <input class="field-input" type="text" data-key="gallery6_name" data-default="" placeholder="Client name">
+              <label class="field-label" style="margin-top:8px">Logo 6 — Image URL</label>
+              <div class="img-field-wrap">
+                <input class="field-input img-url-input" type="url" data-key="gallery6_url" data-default="" placeholder="https://...logo.svg">
+                <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CONTACT EDITOR ─── -->
+    <div id="panel-contact" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Contact Info</h1>
+        <p class="panel-desc">Update contact details displayed in the footer and contact page.</p>
+      </div>
+      <div class="editor-card">
+        <div class="editor-card-title">Contact Details</div>
+        <div class="field-group">
+          <label class="field-label" for="f-addr">Office Address</label>
+          <textarea class="field-textarea" id="f-addr" data-key="contact_address" data-default="Dhaka, Bangladesh" rows="2" placeholder="Full office address..."></textarea>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-email">Email Address</label>
+            <input class="field-input" type="email" id="f-email" data-key="contact_email" data-default="hello@umbrellacorphq.com" placeholder="hello@umbrellacorphq.com">
+          </div>
+          <div>
+            <label class="field-label" for="f-phone">Phone Number</label>
+            <input class="field-input" type="tel" id="f-phone" data-key="contact_phone" data-default="+880 1X-XXXX-XXXX" placeholder="+880 1X-XXXX-XXXX">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-response-time">Response Time Message</label>
+          <input class="field-input" type="text" id="f-response-time" data-key="contact_response_time" data-default="We respond within 24 hours" placeholder="We respond within 24 hours">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-whatsapp">WhatsApp Number <span class="hint">(digits only, include country code)</span></label>
+          <input class="field-input" type="text" id="f-whatsapp" data-key="whatsapp_number" data-default="8801700000000" placeholder="8801700000000">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-map-url">Google Maps Embed URL <span class="hint">(iframe src)</span></label>
+          <input class="field-input" type="url" id="f-map-url" data-key="contact_map_url" data-default="" placeholder="https://maps.google.com/embed...">
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ABOUT EDITOR ─── -->
+    <div id="panel-about" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">About Page</h1>
+        <p class="panel-desc">Edit agency story, mission, vision, and team member information.</p>
+      </div>
+      <div class="editor-card">
+        <div class="editor-card-title">Agency Story</div>
+        <div class="field-group">
+          <label class="field-label">Story Paragraph 1</label>
+          <textarea class="field-textarea" data-key="about_story_p1" rows="3" placeholder="Agency origin story paragraph 1..."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Story Paragraph 2</label>
+          <textarea class="field-textarea" data-key="about_story_p2" rows="3" placeholder="Story paragraph 2..."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Story Paragraph 3</label>
+          <textarea class="field-textarea" data-key="about_story_p3" rows="3" placeholder="Story paragraph 3..."></textarea>
+        </div>
+      </div>
+      <div class="editor-card">
+        <div class="editor-card-title">Mission &amp; Vision</div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label">Mission Heading</label>
+            <input class="field-input" type="text" data-key="mission_heading" data-default="To Make Great Marketing Accessible." placeholder="Mission heading...">
+          </div>
+          <div>
+            <label class="field-label">Vision Heading</label>
+            <input class="field-input" type="text" data-key="vision_heading" data-default="Bangladesh's Most Trusted Marketing Partner." placeholder="Vision heading...">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label">Mission Text</label>
+            <textarea class="field-textarea" data-key="mission_text" rows="3" placeholder="Mission description..."></textarea>
+          </div>
+          <div>
+            <label class="field-label">Vision Text</label>
+            <textarea class="field-textarea" data-key="vision_text" rows="3" placeholder="Vision description..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="editor-card">
+        <div class="editor-card-title">Team Members</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+          <div class="field-group">
+            <label class="field-label">Member 1 Name</label>
+            <input class="field-input" type="text" data-key="team1_name" data-default="" placeholder="Full name">
+            <label class="field-label" style="margin-top:8px">Member 1 Role</label>
+            <input class="field-input" type="text" data-key="team1_role" data-default="" placeholder="Job title">
+            <label class="field-label" style="margin-top:8px">Member 1 Photo URL</label>
+            <div class="img-field-wrap">
+              <input class="field-input img-url-input" type="url" data-key="team1_photo" data-default="" placeholder="https://...photo.jpg">
+              <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Member 2 Name</label>
+            <input class="field-input" type="text" data-key="team2_name" data-default="" placeholder="Full name">
+            <label class="field-label" style="margin-top:8px">Member 2 Role</label>
+            <input class="field-input" type="text" data-key="team2_role" data-default="" placeholder="Job title">
+            <label class="field-label" style="margin-top:8px">Member 2 Photo URL</label>
+            <div class="img-field-wrap">
+              <input class="field-input img-url-input" type="url" data-key="team2_photo" data-default="" placeholder="https://...photo.jpg">
+              <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Member 3 Name</label>
+            <input class="field-input" type="text" data-key="team3_name" data-default="" placeholder="Full name">
+            <label class="field-label" style="margin-top:8px">Member 3 Role</label>
+            <input class="field-input" type="text" data-key="team3_role" data-default="" placeholder="Job title">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Member 4 Name</label>
+            <input class="field-input" type="text" data-key="team4_name" data-default="" placeholder="Full name">
+            <label class="field-label" style="margin-top:8px">Member 4 Role</label>
+            <input class="field-input" type="text" data-key="team4_role" data-default="" placeholder="Job title">
+          </div>
+        </div>
+      </div>
+
+      <!-- Values Section -->
+      <div class="editor-card">
+        <div class="editor-card-title">Core Values</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div class="field-group">
+            <label class="field-label">Value 1 — Title</label>
+            <input class="field-input" type="text" data-key="value1_title" data-default="Results First" placeholder="Value title">
+            <label class="field-label" style="margin-top:12px">Value 1 — Description</label>
+            <textarea class="field-textarea" data-key="value1_text" rows="2" placeholder="Value description..."></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Value 2 — Title</label>
+            <input class="field-input" type="text" data-key="value2_title" data-default="Radical Honesty" placeholder="Value title">
+            <label class="field-label" style="margin-top:12px">Value 2 — Description</label>
+            <textarea class="field-textarea" data-key="value2_text" rows="2" placeholder="Value description..."></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Value 3 — Title</label>
+            <input class="field-input" type="text" data-key="value3_title" data-default="Strategic Precision" placeholder="Value title">
+            <label class="field-label" style="margin-top:12px">Value 3 — Description</label>
+            <textarea class="field-textarea" data-key="value3_text" rows="2" placeholder="Value description..."></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Value 4 — Title</label>
+            <input class="field-input" type="text" data-key="value4_title" data-default="Long-term Thinking" placeholder="Value title">
+            <label class="field-label" style="margin-top:12px">Value 4 — Description</label>
+            <textarea class="field-textarea" data-key="value4_text" rows="2" placeholder="Value description..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SERVICES EDITOR ─── -->
+    <div id="panel-services" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Services</h1>
+        <p class="panel-desc">Edit service names, descriptions, and deliverables lists.</p>
+      </div>
+      <div class="editor-card">
+        <div class="editor-card-title">Service 01 — Brand Identity</div>
+        <div class="field-group">
+          <label class="field-label">Deliverables List <span class="hint">(one per row)</span></label>
+          <div class="list-editor" data-key="service1_deliverables" data-default='["Logo and logo variations","Colour palette","Typography system","Brand guidelines PDF"]'>
+            <div class="list-editor-item"><input type="text" class="field-input" value="Logo and logo variations"><button class="list-btn-sm list-item-up">&#8593;</button><button class="list-btn-sm list-item-dn">&#8595;</button><button class="list-btn-sm del list-item-del">&#215;</button></div>
+            <div class="list-editor-item"><input type="text" class="field-input" value="Colour palette and usage guidelines"><button class="list-btn-sm list-item-up">&#8593;</button><button class="list-btn-sm list-item-dn">&#8595;</button><button class="list-btn-sm del list-item-del">&#215;</button></div>
+            <div class="list-editor-item"><input type="text" class="field-input" value="Typography system"><button class="list-btn-sm list-item-up">&#8593;</button><button class="list-btn-sm list-item-dn">&#8595;</button><button class="list-btn-sm del list-item-del">&#215;</button></div>
+            <div class="list-editor-item"><input type="text" class="field-input" value="Brand guidelines PDF"><button class="list-btn-sm list-item-up">&#8593;</button><button class="list-btn-sm list-item-dn">&#8595;</button><button class="list-btn-sm del list-item-del">&#215;</button></div>
+            <button class="list-add-btn">+ Add Deliverable</button>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--steel);margin-top:16px;padding:16px 20px;background:var(--carbon);border:1px solid rgba(255,255,255,0.05)">Additional service editors (02–06) follow the same pattern. Extend this panel with cards for each service using the same list-editor structure.</p>
+    </div>
+
+    <!-- ─── WORK / CASE STUDIES EDITOR ─── -->
+    <div id="panel-work" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Case Studies</h1>
+        <p class="panel-desc">Edit the three case studies displayed on the Work page. Click a card header to expand it.</p>
+      </div>
+
+      <!-- Case Study 1 -->
+      <div class="cs-editor-card">
+        <div class="cs-editor-header">
+          <span class="cs-editor-client">01 &mdash; Cafforia BD</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="1.5" style="width:18px;height:18px" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="cs-editor-body">
+          <div class="field-group inline">
+            <div>
+              <label class="field-label">Client Name</label>
+              <input class="field-input" type="text" data-key="cs1_client" data-default="Cafforia BD" placeholder="Client name">
+            </div>
+            <div>
+              <label class="field-label">Industry</label>
+              <input class="field-input" type="text" data-key="cs1_industry" data-default="Food &amp; Beverage" placeholder="Industry">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Hero Image URL</label>
+            <div class="img-field-wrap">
+              <input class="field-input img-url-input" type="url" data-key="cs1_hero_img" data-default="" placeholder="https://...image.jpg">
+              <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">The Problem <span class="hint">(2-3 sentences)</span></label>
+            <textarea class="field-textarea" data-key="cs1_challenge" data-default="Cafforia BD was a new café concept launching in Dhaka with no brand identity or social media presence." rows="3"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">What We Did</label>
+            <textarea class="field-textarea" data-key="cs1_solution" data-default="We developed complete brand identity, built social media strategy, and ran Meta ad campaigns." rows="3"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+            <div>
+              <label class="field-label">Metric 1 Number</label>
+              <input class="field-input" type="text" data-key="cs1_metric1_num" data-default="5K+" placeholder="5K+">
+              <label class="field-label" style="margin-top:8px">Metric 1 Label</label>
+              <input class="field-input" type="text" data-key="cs1_metric1_label" data-default="Instagram Followers in 60 Days" placeholder="Label">
+            </div>
+            <div>
+              <label class="field-label">Metric 2 Number</label>
+              <input class="field-input" type="text" data-key="cs1_metric2_num" data-default="4.1x" placeholder="4.1x">
+              <label class="field-label" style="margin-top:8px">Metric 2 Label</label>
+              <input class="field-input" type="text" data-key="cs1_metric2_label" data-default="ROAS on Meta Ads" placeholder="Label">
+            </div>
+            <div>
+              <label class="field-label">Metric 3 Number</label>
+              <input class="field-input" type="text" data-key="cs1_metric3_num" data-default="60" placeholder="90">
+              <label class="field-label" style="margin-top:8px">Metric 3 Label</label>
+              <input class="field-input" type="text" data-key="cs1_metric3_label" data-default="Days to Full Launch" placeholder="Label">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Client Testimonial Quote</label>
+            <textarea class="field-textarea" data-key="cs1_testimonial_quote" rows="3" placeholder="Client quote..."></textarea>
+          </div>
+          <div class="field-group inline">
+            <div>
+              <label class="field-label">Client Name</label>
+              <input class="field-input" type="text" data-key="cs1_testimonial_name" data-default="Ahmed Rahman" placeholder="Name">
+            </div>
+            <div>
+              <label class="field-label">Client Role</label>
+              <input class="field-input" type="text" data-key="cs1_testimonial_role" data-default="CEO, Cafforia BD" placeholder="Role, Company">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Full Case Study Body <span class="hint">(rich text)</span></label>
+            <div class="rich-toolbar">
+              <button class="rich-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+              <button class="rich-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+              <div class="rich-divider"></div>
+              <button class="rich-btn" data-cmd="formatBlock" data-val="h3" title="Heading">H3</button>
+              <button class="rich-btn" data-cmd="formatBlock" data-val="p" title="Paragraph">P</button>
+              <div class="rich-divider"></div>
+              <button class="rich-btn" data-cmd="insertUnorderedList" title="Bullet list">&#8226; List</button>
+            </div>
+            <div contenteditable="true" data-key="cs1_body" placeholder="Full case study content..."></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 2 -->
+      <div class="cs-editor-card">
+        <div class="cs-editor-header">
+          <span class="cs-editor-client">02 &mdash; Halcourt</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="1.5" style="width:18px;height:18px" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="cs-editor-body">
+          <div class="field-group inline">
+            <div>
+              <label class="field-label">Client Name</label>
+              <input class="field-input" type="text" data-key="cs2_client" data-default="Halcourt" placeholder="Client name">
+            </div>
+            <div>
+              <label class="field-label">Industry</label>
+              <input class="field-input" type="text" data-key="cs2_industry" data-default="Fashion / Luxury" placeholder="Industry">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Hero Image URL</label>
+            <div class="img-field-wrap">
+              <input class="field-input img-url-input" type="url" data-key="cs2_hero_img" data-default="" placeholder="https://...image.jpg">
+              <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">The Problem</label>
+            <textarea class="field-textarea" data-key="cs2_challenge" rows="3"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">What We Did</label>
+            <textarea class="field-textarea" data-key="cs2_solution" rows="3"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+            <div>
+              <label class="field-label">Metric 1 Number</label>
+              <input class="field-input" type="text" data-key="cs2_metric1_num" data-default="300%">
+              <label class="field-label" style="margin-top:8px">Metric 1 Label</label>
+              <input class="field-input" type="text" data-key="cs2_metric1_label" data-default="Revenue Growth Q1">
+            </div>
+            <div>
+              <label class="field-label">Metric 2 Number</label>
+              <input class="field-input" type="text" data-key="cs2_metric2_num" data-default="4.8x">
+              <label class="field-label" style="margin-top:8px">Metric 2 Label</label>
+              <input class="field-input" type="text" data-key="cs2_metric2_label" data-default="ROAS on Paid Campaigns">
+            </div>
+            <div>
+              <label class="field-label">Metric 3 Number</label>
+              <input class="field-input" type="text" data-key="cs2_metric3_num" data-default="220%">
+              <label class="field-label" style="margin-top:8px">Metric 3 Label</label>
+              <input class="field-input" type="text" data-key="cs2_metric3_label" data-default="Increase in Conversion Rate">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 3 -->
+      <div class="cs-editor-card">
+        <div class="cs-editor-header">
+          <span class="cs-editor-client">03 &mdash; Client C (Placeholder)</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="1.5" style="width:18px;height:18px" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="cs-editor-body">
+          <p style="font-size:13px;color:var(--steel);margin-bottom:24px">Replace this placeholder with a real client case study.</p>
+          <div class="field-group inline">
+            <div>
+              <label class="field-label">Client Name</label>
+              <input class="field-input" type="text" data-key="cs3_client" data-default="" placeholder="Client name">
+            </div>
+            <div>
+              <label class="field-label">Industry</label>
+              <input class="field-input" type="text" data-key="cs3_industry" data-default="" placeholder="Industry">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Hero Image URL</label>
+            <div class="img-field-wrap">
+              <input class="field-input img-url-input" type="url" data-key="cs3_hero_img" data-default="" placeholder="https://...image.jpg">
+              <div class="img-preview"><span class="img-preview-empty">No image</span></div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">The Problem</label>
+            <textarea class="field-textarea" data-key="cs3_challenge" rows="3" placeholder="Describe the challenge..."></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">What We Did</label>
+            <textarea class="field-textarea" data-key="cs3_solution" rows="3" placeholder="Describe the solution..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SETTINGS EDITOR ─── -->
+    <div id="panel-settings" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Settings</h1>
+        <p class="panel-desc">Global site settings, branding colours, analytics, social links, and data management.</p>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Site Identity</div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-site-name">Site Name</label>
+            <input class="field-input" type="text" id="f-site-name" data-key="site_name" data-default="Umbrella Corp HQ" placeholder="Site name">
+          </div>
+          <div>
+            <label class="field-label" for="f-site-tagline">Tagline</label>
+            <input class="field-input" type="text" id="f-site-tagline" data-key="site_tagline" data-default="We Cover Everything." placeholder="Tagline">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-footer-copy">Footer Copyright Text</label>
+          <input class="field-input" type="text" id="f-footer-copy" data-key="footer_copyright" data-default="© 2025 Umbrella Corp HQ. All rights reserved." placeholder="© 2025 ...">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-meta-desc">Global Meta Description (fallback)</label>
+          <textarea class="field-textarea" id="f-meta-desc" data-key="global_meta_desc" rows="2" placeholder="Default meta description..."></textarea>
+        </div>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Brand Colours <span class="editor-card-badge">Live Preview</span></div>
+        <div class="field-group">
+          <label class="field-label">Primary Accent Colour <span class="hint">(--corp-red)</span></label>
+          <div class="color-field-wrap">
+            <div class="color-swatch" style="background:#c1121f"></div>
+            <input class="field-input color-input" type="text" data-key="corp_red" data-default="#c1121f" data-css-var="--corp-red" placeholder="#c1121f" style="font-family:monospace">
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--steel);margin-top:-8px">Changes apply to the admin panel preview immediately. The public site reads this value on page load.</p>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Analytics &amp; Tracking</div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label" for="f-ga-id">Google Analytics ID <span class="hint">(G-XXXXXXXXXX)</span></label>
+            <input class="field-input" type="text" id="f-ga-id" data-key="ga_id" data-default="" placeholder="G-XXXXXXXXXX">
+          </div>
+          <div>
+            <label class="field-label" for="f-fb-pixel">Facebook Pixel ID</label>
+            <input class="field-input" type="text" id="f-fb-pixel" data-key="fb_pixel_id" data-default="" placeholder="0000000000000000">
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--steel)">Saving these IDs will inject the respective tracking scripts on all public pages via the content loading system in main.js.</p>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Social Media Links</div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label">Facebook URL</label>
+            <input class="field-input" type="url" data-key="social_facebook" data-default="https://facebook.com/umbrellacorphq" placeholder="https://facebook.com/...">
+          </div>
+          <div>
+            <label class="field-label">Instagram URL</label>
+            <input class="field-input" type="url" data-key="social_instagram" data-default="https://instagram.com/umbrellacorphq" placeholder="https://instagram.com/...">
+          </div>
+        </div>
+        <div class="field-group inline">
+          <div>
+            <label class="field-label">LinkedIn URL</label>
+            <input class="field-input" type="url" data-key="social_linkedin" data-default="https://linkedin.com/company/umbrellacorphq" placeholder="https://linkedin.com/...">
+          </div>
+          <div>
+            <label class="field-label">X (Twitter) URL</label>
+            <input class="field-input" type="url" data-key="social_x" data-default="https://x.com/umbrellacorphq" placeholder="https://x.com/...">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">TikTok URL</label>
+          <input class="field-input" type="url" data-key="social_tiktok" data-default="" placeholder="https://tiktok.com/@...">
+        </div>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Security</div>
+        <div class="field-group">
+          <label class="field-label">Change Admin Password</label>
+          <input class="field-input" type="password" id="f-new-pw" placeholder="New password (min 8 characters)">
+          <p style="font-size:12px;color:var(--steel);margin-top:8px">
+            <!-- TODO: Implement backend password change. Currently uses hardcoded JS. -->
+            Note: Password change requires backend integration for production.
+          </p>
+        </div>
+        <button id="btn-change-password" class="btn-export" style="margin-top:8px">Change Password</button>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-card-title">Data Management</div>
+        <p style="font-size:13px;color:var(--steel);margin-bottom:24px;line-height:1.6">
+          Export all site content as a JSON file for backup. Import a previous backup to restore content.
+          Reset clears all custom content and reverts the site to its hardcoded defaults.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button id="btn-export" class="btn-export">Export Content (JSON)</button>
+          <button id="btn-import" class="btn-export">Import Backup</button>
+          <input type="file" id="import-file-input" accept=".json" style="display:none">
+        </div>
+
+        <div class="settings-danger-zone" style="margin-top:24px">
+          <div class="settings-danger-title">Danger Zone</div>
+          <p style="font-size:13px;color:rgba(231,76,60,0.7);margin-bottom:16px;line-height:1.5">
+            Resetting content is irreversible. All custom edits will be lost and the site will revert to its original hardcoded content.
+          </p>
+          <button id="btn-reset" class="btn-danger">Reset All Content to Defaults</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Fixed Save Button -->
+  <button id="save-btn" class="save-btn" aria-label="Save all changes">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+    Save Changes
+  </button>
+
+</div>
+
+<!-- Toast -->
+<div id="admin-toast" class="admin-toast" role="status" aria-live="polite">
+  <div class="toast-msg"></div>
+  <div class="toast-time"></div>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/editor.js"></script>
+
+</body>
+</html>

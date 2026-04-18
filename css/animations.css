@@ -1,0 +1,144 @@
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS.CSS — Umbrella Corp HQ
+   Keyframes, scroll-reveal classes, stagger utilities,
+   page-transition overlay
+═══════════════════════════════════════════════════════════ */
+
+/* ─── Keyframes ─────────────────────────────────────────── */
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes crosshairRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes cursorPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+  50%       { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0)     translateX(-50%); }
+  50%       { transform: translateY(-10px) translateX(-50%); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceWA {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40%                      { transform: translateY(-12px); }
+  60%                      { transform: translateY(-6px); }
+}
+
+@keyframes drawLine {
+  from { width: 0; }
+  to   { width: 75%; }
+}
+
+@keyframes navFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mobileMenuOpen {
+  from { opacity: 0; transform: scaleY(0.95); transform-origin: top; }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes toastSlideIn {
+  from { transform: translateY(80px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ─── Scroll Reveal Base States ─────────────────────────── */
+
+.reveal {
+  opacity:    0;
+  transform:  translateY(60px);
+  transition: opacity   0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.is-visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity:    0;
+  transform:  translateX(-60px);
+  transition: opacity   0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-left.is-visible {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity:    0;
+  transform:  translateX(60px);
+  transition: opacity   0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-right.is-visible {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity:    0;
+  transform:  scale(0.92);
+  transition: opacity   0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-scale.is-visible {
+  opacity:   1;
+  transform: scale(1);
+}
+
+/* ─── Stagger Delays for Children ───────────────────────── */
+
+.stagger-children > *:nth-child(1) { transition-delay: 0s; }
+.stagger-children > *:nth-child(2) { transition-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { transition-delay: 0.2s; }
+.stagger-children > *:nth-child(4) { transition-delay: 0.3s; }
+.stagger-children > *:nth-child(5) { transition-delay: 0.4s; }
+.stagger-children > *:nth-child(6) { transition-delay: 0.5s; }
+
+/* ─── Page Transition Overlay ───────────────────────────── */
+
+.page-transition {
+  position:         fixed;
+  inset:            0;
+  background:       var(--void);
+  z-index:          9000;
+  pointer-events:   none;
+  transform-origin: bottom;
+  transform:        scaleY(0);
+}
