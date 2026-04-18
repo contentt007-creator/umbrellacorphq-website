@@ -1061,6 +1061,52 @@ ul { list-style: none; }
 .security-note strong { color: var(--warning); }
 
 /* ════════════════════════════════════════
+   AUTH MODE BADGE (login screen)
+════════════════════════════════════════ */
+
+.auth-mode-badge {
+  display:        inline-block;
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding:        3px 10px;
+  border-radius:  20px;
+  margin-bottom:  20px;
+}
+.auth-mode-badge.mode-supabase {
+  background: rgba(62, 207, 142, 0.12);
+  color:      #3ecf8e;
+  border:     1px solid rgba(62, 207, 142, 0.25);
+}
+.auth-mode-badge.mode-legacy {
+  background: rgba(245, 158, 11, 0.1);
+  color:      var(--warning);
+  border:     1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* ════════════════════════════════════════
+   CLOUD SYNC DOT (topbar)
+════════════════════════════════════════ */
+
+.cloud-sync-dot {
+  display:       inline-block;
+  width:         7px;
+  height:        7px;
+  border-radius: 50%;
+  margin-right:  6px;
+  vertical-align: middle;
+}
+.cloud-sync-dot.synced  { background: #3ecf8e; }
+.cloud-sync-dot.syncing { background: var(--warning); animation: sbPulse 1.2s infinite; }
+.cloud-sync-dot.offline { background: rgba(255,255,255,0.2); }
+
+@keyframes sbPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ════════════════════════════════════════
    SCROLLBAR STYLING
 ════════════════════════════════════════ */
 

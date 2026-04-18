@@ -27,9 +27,17 @@
       <span class="login-logo-text">Umbrella Corp HQ</span>
     </div>
     <h1 class="login-heading">Admin Panel</h1>
-    <p class="login-sub">Enter your password to access the site editor.</p>
+    <p class="login-sub">Enter your credentials to access the site editor.</p>
+
+    <!-- Mode badge — JS fills this in -->
+    <span id="auth-mode-badge" class="auth-mode-badge mode-legacy" style="display:none"></span>
 
     <form id="login-form" novalidate>
+      <!-- Email field — shown only in Supabase mode -->
+      <div class="login-field" id="email-group" style="display:none">
+        <label class="login-label" for="login-email">Email</label>
+        <input class="login-input" type="email" id="login-email" placeholder="admin@yourdomain.com" autocomplete="email">
+      </div>
       <div class="login-field">
         <label class="login-label" for="login-password">Password</label>
         <input class="login-input" type="password" id="login-password" placeholder="Enter admin password" autocomplete="current-password" required>
@@ -38,10 +46,11 @@
       <div id="login-error" class="login-error" role="alert"></div>
     </form>
 
-    <p style="font-size:11px;color:rgba(85,85,85,0.4);margin-top:32px;line-height:1.5">
-      <!-- IMPORTANT: This panel uses client-side authentication for MVP.
-           Replace with backend auth before production deployment. -->
+    <!-- Legacy hint — hidden when Supabase is active -->
+    <p id="legacy-hint" style="font-size:11px;color:rgba(85,85,85,0.4);margin-top:32px;line-height:1.5">
       Default password: <code style="color:rgba(193,18,31,0.6)">UCH@admin2025</code>
+      &nbsp;&mdash;&nbsp;
+      <a href="../docs/supabase-setup.sql" style="color:rgba(193,18,31,0.5);text-decoration:underline" target="_blank">Upgrade to Supabase &rarr;</a>
     </p>
   </div>
 </div>
@@ -1036,6 +1045,10 @@
   <div class="toast-time"></div>
 </div>
 
+<!-- Supabase JS v2 (loaded before auth/storage) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- Your Supabase credentials — edit this file -->
+<script src="js/supabase-config.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/editor.js"></script>

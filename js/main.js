@@ -116,10 +116,17 @@ applySettings();
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ───────────────────────────────
+  /* ───────────────────────────────────────────────────────────
    * Apply content overrides
-   * ─────────────────────────────── */
-  applyContentOverrides();
+   * ContentAPI: applies localStorage immediately, then fetches
+   * from Supabase in background if configured (zero flash).
+   * Falls back to direct localStorage if ContentAPI not loaded.
+   * ─────────────────────────────────────────────────────────── */
+  if (window.ContentAPI && typeof window.ContentAPI.applyAll === 'function') {
+    window.ContentAPI.applyAll(); // async — stale-while-revalidate
+  } else {
+    applyContentOverrides();      // legacy fallback
+  }
 
   /* ─────────────────────────────────────────────────
    * 2. LENIS SMOOTH SCROLL INIT

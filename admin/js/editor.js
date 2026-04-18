@@ -77,31 +77,88 @@ document.addEventListener('DOMContentLoaded', () => {
   // Default panel on load
   activatePanel('dashboard');
 
+  // ─── Cloud Sync on Load ─────────────────────────────────────────────────────
+  // If Supabase is configured, pull latest content and refresh form fields.
+
+  (async function initCloudSync() {
+    const topbarSaved = document.getElementById('topbar-saved');
+
+    // Show mode in topbar
+    const isCloud = typeof window.isSupabaseMode === 'function' && window.isSupabaseMode();
+    if (topbarSaved) {
+      const dot = document.createElement('span');
+      dot.className = 'cloud-sync-dot ' + (isCloud ? 'syncing' : 'offline');
+      topbarSaved.prepend(dot);
+      window._syncDot = dot;
+    }
+
+    if (!isCloud) {
+      // Update security note to make it clear it's MVP mode
+      const note = document.querySelector('.security-note');
+      if (note) {
+        note.innerHTML = '&#9888;&nbsp; <strong>Legacy Mode</strong> &mdash; Content is stored in this browser only. <a href="../docs/supabase-setup.sql" target="_blank" style="color:var(--warning);text-decoration:underline">Set up Supabase</a> to sync across devices and get real server-side auth.';
+      }
+      return;
+    }
+
+    // Hide security note when Supabase is active
+    const note = document.querySelector('.security-note');
+    if (note) note.style.display = 'none';
+
+    try {
+      const result = await window.syncFromCloud();
+      if (window._syncDot) {
+        window._syncDot.className = 'cloud-sync-dot ' + (result.synced ? 'synced' : 'offline');
+      }
+      if (result.synced) {
+        // Re-load current panel fields with fresh data
+        const activePanel = document.querySelector('.admin-panel.active');
+        if (activePanel) {
+          const panelId = activePanel.id.replace('panel-', '');
+          loadPanelContent(panelId);
+        }
+        if (topbarSaved) {
+          const now = new Date();
+          const savedSpan = topbarSaved.querySelector('span:not(.cloud-sync-dot)') || topbarSaved;
+          savedSpan.textContent = `Synced from cloud`;
+        }
+      }
+    } catch (e) {
+      if (window._syncDot) window._syncDot.className = 'cloud-sync-dot offline';
+    }
+  })();
+
   // ─── Save Button ────────────────────────────────────────────────────────────
 
   const saveBtn = document.getElementById('save-btn');
   if (saveBtn) {
-    saveBtn.addEventListener('click', () => {
+    saveBtn.addEventListener('click', async () => {
       const activePanel = document.querySelector('.admin-panel.active');
       if (!activePanel) return;
 
-      saveBtn.textContent = 'Saving…';
+      saveBtn.textContent  = 'Saving…';
+      saveBtn.disabled     = true;
       saveBtn.classList.add('saving');
+      if (window._syncDot) window._syncDot.className = 'cloud-sync-dot syncing';
 
       const panelId = activePanel.id.replace('panel-', '');
-      savePanelContent(panelId);
+      const result  = await savePanelContent(panelId);
+
+      const savedTo = result?.source === 'supabase' ? 'Saved to cloud ✓' : 'Saved locally ✓';
+      if (window._syncDot) {
+        window._syncDot.className = 'cloud-sync-dot ' + (result?.source === 'supabase' ? 'synced' : 'offline');
+      }
+
+      saveBtn.textContent = savedTo;
+      saveBtn.disabled    = false;
+      saveBtn.classList.remove('saving');
+      saveBtn.classList.add('saved');
+      showToast(result?.source === 'supabase' ? 'Saved to cloud.' : 'Saved locally (Supabase not configured).');
 
       setTimeout(() => {
-        saveBtn.textContent = 'Saved \u2713';
-        saveBtn.classList.remove('saving');
-        saveBtn.classList.add('saved');
-        showToast('Changes saved successfully.');
-
-        setTimeout(() => {
-          saveBtn.textContent = 'Save Changes';
-          saveBtn.classList.remove('saved');
-        }, 2000);
-      }, 300);
+        saveBtn.textContent = 'Save Changes';
+        saveBtn.classList.remove('saved');
+      }, 2200);
     });
   }
 
@@ -345,9 +402,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Read form fields from a panel and save to localStorage
    */
-  function savePanelContent(panelId) {
+  async function savePanelContent(panelId) {
     const panel = document.getElementById(`panel-${panelId}`);
-    if (!panel) return;
+    if (!panel) return { ok: false, source: 'none' };
+
+    const batch = {};
 
     panel.querySelectorAll('[data-key]').forEach(el => {
       const key = el.dataset.key;
@@ -363,19 +422,24 @@ document.addEventListener('DOMContentLoaded', () => {
         value = el.classList.contains('on') ? 'true' : 'false';
       }
 
-      saveContent(key, value);
+      batch[key] = value;
       flashField(el);
     });
 
-    // Save list editors
+    // Add list editors to batch
     panel.querySelectorAll('.list-editor[data-key]').forEach(list => {
       const key    = list.dataset.key;
       const values = getListValues(list);
-      saveContent(key, JSON.stringify(values));
+      batch[key]   = JSON.stringify(values);
     });
+
+    // One batched save — syncs both localStorage + Supabase
+    const result = await saveAll(batch);
 
     // Apply settings if in settings panel
     if (panelId === 'settings') applySettings();
+
+    return result;
   }
 
   /**
