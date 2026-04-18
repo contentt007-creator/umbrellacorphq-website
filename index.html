@@ -95,19 +95,12 @@
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero" aria-label="Full-service marketing agency in Bangladesh">
-  <!-- Animated background crosshair — rotates slowly via CSS animation -->
-  <svg class="hero-bg-crosshair" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="0.5"/>
-    <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="0.35" stroke-dasharray="4 4"/>
-    <circle cx="50" cy="50" r="18" stroke="#c1121f" stroke-width="0.25" stroke-dasharray="2 5"/>
-    <line x1="0" y1="50" x2="100" y2="50" stroke="#c1121f" stroke-width="0.4"/>
-    <line x1="50" y1="0" x2="50" y2="100" stroke="#c1121f" stroke-width="0.4"/>
-    <line x1="5" y1="5" x2="95" y2="95" stroke="#c1121f" stroke-width="0.3" opacity="0.4"/>
-    <line x1="95" y1="5" x2="5" y2="95" stroke="#c1121f" stroke-width="0.3" opacity="0.4"/>
-    <circle cx="50" cy="50" r="4" fill="#c1121f"/>
-    <circle cx="50" cy="50" r="1.5" fill="#0a0a0a"/>
-  </svg>
-  <div class="container">
+
+  <!-- Three.js 3D Crosshair Canvas -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- Hero text — sits above canvas via z-index -->
+  <div class="container hero-text-wrap">
     <div class="hero-content">
       <h1 class="hero-heading">
         <span class="hero-line-1" data-key="hero_line1" data-default="We Cover">We Cover</span>
@@ -123,12 +116,14 @@
       </div>
     </div>
   </div>
+
   <div class="hero-scroll-indicator" aria-hidden="true">
     <span>Scroll</span>
     <svg viewBox="0 0 20 20" fill="none" stroke="var(--corp-red)" stroke-width="1.5" style="width:20px;height:20px" xmlns="http://www.w3.org/2000/svg">
       <path d="M10 3v14M3 10l7 7 7-7"/>
     </svg>
   </div>
+
 </section>
 
 <!-- ═══ MARQUEE ═══ -->
@@ -493,6 +488,7 @@
 </a>
 
 <!-- CDN Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
@@ -501,6 +497,7 @@
 <script src="js/cursor.js"></script>
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
+<script src="js/hero3d.js"></script>
 
 </body>
 </html>

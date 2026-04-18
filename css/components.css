@@ -213,23 +213,40 @@
   align-items: center;
   overflow:    hidden;
   padding-top: var(--nav-height);
+  background:  var(--void); /* fallback if WebGL fails */
+}
+
+/* Three.js canvas — full bleed, behind all content */
+#hero-canvas {
+  position:       absolute;
+  top:            0;
+  left:           0;
+  width:          100% !important;
+  height:         100% !important;
+  z-index:        0;
+  pointer-events: none; /* canvas captures clicks only for easter egg via JS */
+  display:        block;
+  transition:     opacity 0.1s linear;
+}
+
+/* Re-enable pointer-events on canvas for the click easter egg */
+#hero-canvas {
+  pointer-events: auto;
+}
+
+/* Ensure text sits on top of the canvas */
+.hero-text-wrap {
+  position: relative;
+  z-index:  10;
 }
 
 .hero-bg-graphic {
-  position:       absolute;
-  right:          -8%;
-  bottom:         -15%;
-  width:          65vw;
-  max-width:      900px;
-  opacity:        0.05;
-  animation:      crosshairRotate 80s linear infinite;
-  pointer-events: none;
-  z-index:        0;
+  display: none; /* replaced by Three.js */
 }
 
 .hero-content {
   position:  relative;
-  z-index:   1;
+  z-index:   10;
   max-width: 1000px;
 }
 
@@ -275,7 +292,8 @@
   opacity:    0;
 }
 
-.scroll-indicator {
+.scroll-indicator,
+.hero-scroll-indicator {
   position:        absolute;
   bottom:          48px;
   left:            50%;
@@ -289,9 +307,11 @@
   font-size:       11px;
   letter-spacing:  0.2em;
   text-transform:  uppercase;
+  z-index:         10;
 }
 
-.scroll-indicator svg {
+.scroll-indicator svg,
+.hero-scroll-indicator svg {
   width:  20px;
   height: 20px;
   stroke: var(--corp-red);
