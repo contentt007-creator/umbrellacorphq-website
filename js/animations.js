@@ -226,10 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ─────────────────────────────────────────────────
-   * 6. SECTION HEADINGS REVEAL (.split-heading)
+   * 6. SECTION HEADINGS REVEAL
+   * Clip-path + char stagger on ALL .section-heading
    * ───────────────────────────────────────────────── */
   (function sectionHeadings() {
-    const headings = document.querySelectorAll('.section-heading.split-heading');
+    const headings = document.querySelectorAll('.section-heading');
     if (!headings.length) return;
 
     headings.forEach((heading) => {
@@ -456,6 +457,202 @@ document.addEventListener('DOMContentLoaded', () => {
         delay: 0.2,
       });
     }
+  })();
+
+  /* ─────────────────────────────────────────────────
+   * 11. ELASTIC BUTTON HOVER
+   * GSAP back.out spring overshoot on all CTAs.
+   * ───────────────────────────────────────────────── */
+  (function elasticButtons() {
+    const btns = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-cta');
+    btns.forEach((btn) => {
+      btn.addEventListener('mouseenter', () => {
+        gsap.to(btn, {
+          scale: 1.05,
+          y: -3,
+          duration: 0.45,
+          ease: 'back.out(2)',
+          overwrite: 'auto',
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+          scale: 1,
+          y: 0,
+          duration: 0.35,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
+      });
+    });
+  })();
+
+  /* ─────────────────────────────────────────────────
+   * 12. 3D CARD TILT
+   * Mouse-follow perspective tilt on service cards.
+   * ───────────────────────────────────────────────── */
+  (function cardTilt() {
+    // Skip on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const tiltCards = document.querySelectorAll('.service-card, .case-study-card');
+    if (!tiltCards.length) return;
+
+    const MAX_TILT    = 7;   // degrees
+    const PERSPECTIVE = 900; // px
+
+    tiltCards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = (e.clientX - cx) / (rect.width  / 2);
+        const dy   = (e.clientY - cy) / (rect.height / 2);
+        const rotX = -dy * MAX_TILT;
+        const rotY =  dx * MAX_TILT;
+
+        gsap.to(card, {
+          rotateX:             rotX,
+          rotateY:             rotY,
+          transformPerspective: PERSPECTIVE,
+          duration:            0.3,
+          ease:                'power2.out',
+          overwrite:           'auto',
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateX:  0,
+          rotateY:  0,
+          duration: 0.55,
+          ease:     'power3.out',
+          overwrite: 'auto',
+        });
+      });
+    });
+  })();
+
+  /* ─────────────────────────────────────────────────
+   * 13. STAGGERED MOBILE MENU
+   * Links slide in with stagger when hamburger opens.
+   * ───────────────────────────────────────────────── */
+  (function mobileMenuStagger() {
+    const hamburger  = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    if (!hamburger || !mobileMenu) return;
+
+    const links = mobileMenu.querySelectorAll(
+      '.mobile-menu-link, .mobile-link, .btn-primary, .mobile-cta'
+    );
+    if (!links.length) return;
+
+    // Set initial state
+    gsap.set(links, { x: -40, opacity: 0 });
+
+    const observer = new MutationObserver(() => {
+      if (hamburger.classList.contains('is-open')) {
+        // Open: stagger slide in from left
+        gsap.to(links, {
+          x:        0,
+          opacity:  1,
+          duration: 0.5,
+          ease:     'power3.out',
+          stagger:  0.08,
+          delay:    0.12,
+        });
+      } else {
+        // Close: stagger slide out quickly
+        gsap.to(links, {
+          x:        -30,
+          opacity:  0,
+          duration: 0.25,
+          ease:     'power2.in',
+          stagger:  0.04,
+        });
+      }
+    });
+
+    observer.observe(hamburger, { attributes: true, attributeFilter: ['class'] });
+  })();
+
+  /* ─────────────────────────────────────────────────
+   * 14. SCROLL IMAGE REVEAL (clip-path bottom-up)
+   * .img-reveal elements wipe into view on scroll.
+   * ───────────────────────────────────────────────── */
+  (function imageReveal() {
+    const imgs = document.querySelectorAll(
+      '.img-reveal, .case-study-image, .team-photo, .about-img, .work-img'
+    );
+    if (!imgs.length) return;
+
+    imgs.forEach((el) => {
+      gsap.set(el, { clipPath: 'inset(100% 0 0% 0)', willChange: 'clip-path' });
+
+      ScrollTrigger.create({
+        trigger: el,
+        start:   'top 88%',
+        once:    true,
+        onEnter: () => {
+          gsap.to(el, {
+            clipPath:  'inset(0% 0 0% 0)',
+            duration:  0.9,
+            ease:      'power3.out',
+          });
+        },
+      });
+    });
+  })();
+
+  /* ─────────────────────────────────────────────────
+   * 15. PAGE TRANSITION OVERLAY
+   * Red wipe between page navigations.
+   * ───────────────────────────────────────────────── */
+  (function pageTransition() {
+    // Auto-inject overlay if not already in DOM
+    let overlay = document.querySelector('.page-transition');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'page-transition';
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.insertBefore(overlay, document.body.firstChild);
+    }
+
+    // Page entrance: overlay already covering — wipe up to reveal page
+    gsap.set(overlay, { scaleY: 1, transformOrigin: 'top', pointerEvents: 'none' });
+    gsap.to(overlay, {
+      scaleY:   0,
+      duration: 0.65,
+      ease:     'power3.inOut',
+      delay:    0.05,
+    });
+
+    // Page exit: wipe down on any internal link click
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (
+        !href ||
+        href.startsWith('#') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:') ||
+        href.startsWith('http') ||
+        href.startsWith('//') ||
+        link.target === '_blank'
+      ) return;
+
+      e.preventDefault();
+
+      gsap.set(overlay, { transformOrigin: 'bottom', scaleY: 0, pointerEvents: 'all' });
+      gsap.to(overlay, {
+        scaleY:   1,
+        duration: 0.5,
+        ease:     'power3.inOut',
+        onComplete: () => { window.location.href = href; },
+      });
+    });
   })();
 
   /* ─────────────────────────────────────────────────

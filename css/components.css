@@ -173,21 +173,42 @@
   pointer-events: all;
 }
 
-.mobile-menu .mobile-link {
+.mobile-menu .mobile-link,
+.mobile-menu .mobile-menu-link {
   font-family:     var(--font-display);
-  font-size:       56px;
+  font-size:       clamp(36px, 8vw, 56px);
   color:           var(--ivory);
   text-decoration: none;
   letter-spacing:  0.02em;
   transition:      color 0.2s;
 }
 
-.mobile-menu .mobile-link:hover {
+.mobile-menu .mobile-link:hover,
+.mobile-menu .mobile-menu-link:hover {
   color: var(--corp-red);
 }
 
-.mobile-menu .mobile-cta {
-  margin-top: 40px;
+.mobile-menu .mobile-cta,
+.mobile-menu .mobile-menu-close {
+  margin-top: 12px;
+}
+
+/* Close button */
+.mobile-menu-close {
+  position:   absolute;
+  top:        28px;
+  right:      28px;
+  background: none;
+  border:     none;
+  color:      var(--steel);
+  font-size:  24px;
+  cursor:     pointer;
+  padding:    8px;
+  transition: color 0.2s;
+}
+
+.mobile-menu-close:hover {
+  color: var(--ivory);
 }
 
 @media (max-width: 1024px) {

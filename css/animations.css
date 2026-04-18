@@ -136,9 +136,65 @@
 .page-transition {
   position:         fixed;
   inset:            0;
-  background:       var(--void);
+  background:       var(--corp-red);
   z-index:          9000;
   pointer-events:   none;
   transform-origin: bottom;
   transform:        scaleY(0);
 }
+
+/* ─── 3D Card Tilt ────────────────────────────────────────── */
+
+.service-card,
+.case-study-card {
+  transform-style: preserve-3d;
+  will-change:     transform;
+}
+
+/* ─── Elastic Button Hover (CSS fallback, GSAP preferred) ─── */
+
+/* Ensure transform is part of the transition chain */
+.btn-primary,
+.btn-secondary {
+  will-change: transform;
+}
+
+/* ─── Mobile Menu Link Stagger (CSS fallback) ─────────────── */
+/* Applied when GSAP is not running or not yet loaded          */
+
+.mobile-menu .mobile-menu-link,
+.mobile-menu .mobile-link {
+  opacity:    0;
+  transform:  translateX(-40px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.mobile-menu.is-open .mobile-menu-link,
+.mobile-menu.is-open .mobile-link {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+/* Stagger via nth-child */
+.mobile-menu.is-open .mobile-menu-link:nth-child(2),
+.mobile-menu.is-open .mobile-link:nth-child(2) { transition-delay: 0.14s; }
+.mobile-menu.is-open .mobile-menu-link:nth-child(3),
+.mobile-menu.is-open .mobile-link:nth-child(3) { transition-delay: 0.21s; }
+.mobile-menu.is-open .mobile-menu-link:nth-child(4),
+.mobile-menu.is-open .mobile-link:nth-child(4) { transition-delay: 0.28s; }
+.mobile-menu.is-open .mobile-menu-link:nth-child(5),
+.mobile-menu.is-open .mobile-link:nth-child(5) { transition-delay: 0.35s; }
+.mobile-menu.is-open .mobile-menu-link:nth-child(6),
+.mobile-menu.is-open .mobile-link:nth-child(6) { transition-delay: 0.42s; }
+
+/* ─── Image Reveal clip-path class ───────────────────────── */
+
+.img-reveal {
+  clip-path:  inset(100% 0 0% 0);
+  transition: clip-path 0s; /* GSAP drives the animation */
+}
+
+.img-reveal.is-revealed {
+  clip-path: inset(0% 0 0% 0);
+}
+
