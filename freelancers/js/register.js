@@ -558,6 +558,9 @@ async function handleSubmit() {
   regSuccess.style.display = '';
   document.getElementById('success-email').textContent = resolvedEmail;
   document.getElementById('success-fl-id').textContent = `FL-${uid.slice(0,8).toUpperCase()}`;
+
+  // Redirect to dashboard after 3 seconds
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 3000);
 }
 
 function friendlyAuthError(error) {

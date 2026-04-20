@@ -281,6 +281,39 @@ export async function updateFreelancerProfile(uid, data) {
   });
 }
 
+/**
+ * Add a single gallery item to the freelancer's portfolioItems array.
+ * Item shape: { id, title, category, storageUrl, thumbnail, description, tools[], approved, rejectionReason }
+ */
+export async function addGalleryItem(uid, item) {
+  const ref  = doc(db, 'freelancers', uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  const items = snap.data().portfolioItems || [];
+  items.push(item);
+  await updateDoc(ref, { portfolioItems: items, lastActive: serverTimestamp() });
+}
+
+/**
+ * Remove a gallery item by id and delete its file from Storage.
+ */
+export async function removeGalleryItem(uid, itemId, storageUrl) {
+  // Remove from Firestore array
+  const docRef = doc(db, 'freelancers', uid);
+  const snap   = await getDoc(docRef);
+  if (!snap.exists()) return;
+  const items = (snap.data().portfolioItems || []).filter(i => i.id !== itemId);
+  await updateDoc(docRef, { portfolioItems: items, lastActive: serverTimestamp() });
+
+  // Delete from Storage (best-effort — don't block on failure)
+  if (storageUrl) {
+    try {
+      const path = decodeURIComponent(storageUrl.split('/o/')[1]?.split('?')[0] || '');
+      if (path) await deleteObject(ref(storage, path));
+    } catch (_) { /* ignore storage delete errors */ }
+  }
+}
+
 export async function getAllFreelancers() {
   const snap = await getDocs(collection(db, 'freelancers'));
   return snap.docs.map(d => ({ ...d.data(), uid: d.id }));
