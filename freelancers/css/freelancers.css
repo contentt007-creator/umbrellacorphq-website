@@ -1,0 +1,725 @@
+/* ═══════════════════════════════════════════════════════════
+   FREELANCERS.CSS — Umbrella Corp HQ
+   Public showcase page: hero, stats bar, filters, grid cards,
+   portfolio modal, lightbox, CTA section.
+═══════════════════════════════════════════════════════════ */
+
+/* ─── Hero ────────────────────────────────────────────────── */
+
+.fl-hero {
+  padding:    160px 0 100px;
+  text-align: center;
+  position:   relative;
+  overflow:   hidden;
+}
+
+.fl-hero::before {
+  content:    '';
+  position:   absolute;
+  top:        0;
+  left:       50%;
+  transform:  translateX(-50%);
+  width:      600px;
+  height:     600px;
+  background: radial-gradient(circle, rgba(193,18,31,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.fl-hero-eyebrow {
+  font-family:    var(--font-display);
+  font-size:      13px;
+  letter-spacing: 0.25em;
+  color:          var(--corp-red);
+  margin-bottom:  24px;
+}
+
+.fl-hero-heading {
+  font-family:    var(--font-display);
+  font-size:      clamp(48px, 7vw, 96px);
+  line-height:    1.05;
+  color:          var(--ivory);
+  margin-bottom:  28px;
+}
+
+.fl-hero-sub {
+  font-size:      18px;
+  color:          rgba(240,237,232,0.65);
+  max-width:      540px;
+  margin:         0 auto;
+  line-height:    1.7;
+}
+
+/* ─── Stats Bar ───────────────────────────────────────────── */
+
+.fl-stats-bar {
+  border-top:    1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding:       48px 0;
+  background:    rgba(255,255,255,0.02);
+}
+
+.fl-stats-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   0;
+}
+
+.fl-stat {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            6px;
+  padding:        0 24px;
+  border-right:   1px solid rgba(255,255,255,0.06);
+}
+
+.fl-stat:last-child {
+  border-right: none;
+}
+
+.fl-stat-num {
+  font-family:    var(--font-display);
+  font-size:      clamp(32px, 4vw, 52px);
+  color:          var(--corp-red);
+  line-height:    1;
+}
+
+.fl-stat-label {
+  font-size:      12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--steel);
+}
+
+/* ─── Filters ─────────────────────────────────────────────── */
+
+.fl-filters-section {
+  padding: 64px 0 40px;
+}
+
+.fl-filter-group {
+  margin-bottom: 20px;
+}
+
+.fl-filter-label {
+  font-size:      11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--steel);
+  margin-bottom:  10px;
+}
+
+.fl-filter-tabs {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       8px;
+}
+
+.fl-filter-tab {
+  background:     transparent;
+  border:         1px solid rgba(255,255,255,0.1);
+  color:          rgba(240,237,232,0.6);
+  font-family:    var(--font-body);
+  font-size:      13px;
+  padding:        6px 16px;
+  cursor:         pointer;
+  transition:     all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.fl-filter-tab:hover {
+  border-color: rgba(193,18,31,0.5);
+  color:        var(--ivory);
+}
+
+.fl-filter-tab.active {
+  background:   var(--corp-red);
+  border-color: var(--corp-red);
+  color:        var(--ivory);
+}
+
+.fl-filter-row {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       40px;
+  margin-top: 8px;
+}
+
+/* ─── Grid ────────────────────────────────────────────────── */
+
+.fl-grid-section {
+  padding: 20px 0 100px;
+}
+
+.fl-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap:                   28px;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+
+.fl-card {
+  background:  #111111;
+  border:      1px solid rgba(255,255,255,0.06);
+  overflow:    hidden;
+  transition:  border-color 0.25s ease, transform 0.25s ease;
+  display:     flex;
+  flex-direction: column;
+}
+
+.fl-card:hover {
+  border-color: rgba(193,18,31,0.4);
+  transform:    translateY(-4px);
+}
+
+.fl-card-photo {
+  position:    relative;
+  width:       100%;
+  aspect-ratio: 4/3;
+  overflow:    hidden;
+  background:  #1a1a1a;
+}
+
+.fl-card-photo img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transition: transform 0.4s ease;
+}
+
+.fl-card:hover .fl-card-photo img {
+  transform: scale(1.04);
+}
+
+.fl-tier-badge {
+  position:       absolute;
+  top:            12px;
+  left:           12px;
+  font-size:      10px;
+  font-family:    var(--font-body);
+  font-weight:    500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding:        3px 9px;
+  background:     rgba(10,10,10,0.85);
+  border:         1px solid currentColor;
+  backdrop-filter: blur(4px);
+}
+
+.fl-tier-gold   { color: #FFD700; border-color: rgba(255,215,0,0.5); }
+.fl-tier-silver { color: #c0c0c0; border-color: rgba(192,192,192,0.5); }
+.fl-tier-bronze { color: #cd7f32; border-color: rgba(205,127,50,0.5); }
+
+.fl-avail-dot {
+  position:         absolute;
+  top:              12px;
+  right:            12px;
+  width:            10px;
+  height:           10px;
+  border-radius:    50%;
+  background:       #22c55e;
+  box-shadow:       0 0 0 2px rgba(34,197,94,0.3);
+  animation:        fl-pulse 2s infinite;
+}
+
+@keyframes fl-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(34,197,94,0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0   rgba(34,197,94,0); }
+}
+
+.fl-card-body {
+  padding:        20px;
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+}
+
+.fl-card-name {
+  font-family:    var(--font-display);
+  font-size:      22px;
+  letter-spacing: 0.03em;
+  color:          var(--ivory);
+  line-height:    1.1;
+}
+
+.fl-card-spec {
+  font-size:  13px;
+  color:      var(--steel);
+  margin-top: -2px;
+}
+
+.fl-card-rating {
+  display:     flex;
+  align-items: center;
+  gap:         2px;
+}
+
+.fl-star--full  { color: #FFD700; font-size: 14px; }
+.fl-star--half  { color: #FFD700; font-size: 14px; }
+.fl-star--empty { color: rgba(255,255,255,0.18); font-size: 14px; }
+
+.fl-card-skills {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       5px;
+  margin-top: 4px;
+}
+
+.fl-skill-tag {
+  font-size:      11px;
+  letter-spacing: 0.04em;
+  padding:        3px 8px;
+  background:     rgba(193,18,31,0.12);
+  border:         1px solid rgba(193,18,31,0.25);
+  color:          rgba(240,237,232,0.75);
+}
+
+.fl-card-jobs {
+  font-size:  12px;
+  color:      rgba(255,255,255,0.35);
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.fl-card-cta {
+  margin-top:     12px;
+  background:     transparent;
+  border:         1px solid rgba(193,18,31,0.5);
+  color:          var(--corp-red);
+  font-family:    var(--font-body);
+  font-size:      13px;
+  letter-spacing: 0.06em;
+  padding:        10px 16px;
+  cursor:         pointer;
+  width:          100%;
+  text-align:     left;
+  transition:     all 0.2s ease;
+}
+
+.fl-card-cta:hover {
+  background:   var(--corp-red);
+  border-color: var(--corp-red);
+  color:        var(--ivory);
+}
+
+/* ─── Loading & Empty States ──────────────────────────────── */
+
+.fl-loading {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            20px;
+  padding:        80px 0;
+  color:          var(--steel);
+  font-size:      14px;
+}
+
+.fl-loading-spinner {
+  width:        40px;
+  height:       40px;
+  border:       2px solid rgba(255,255,255,0.08);
+  border-top:   2px solid var(--corp-red);
+  border-radius: 50%;
+  animation:    fl-spin 0.8s linear infinite;
+}
+
+@keyframes fl-spin {
+  to { transform: rotate(360deg); }
+}
+
+.fl-empty {
+  padding:     80px 0;
+  text-align:  center;
+  color:       var(--steel);
+  font-size:   15px;
+}
+
+/* ─── Portfolio Modal ─────────────────────────────────────── */
+
+.fl-modal {
+  position:       fixed;
+  inset:          0;
+  z-index:        2000;
+  display:        flex;
+  align-items:    flex-start;
+  justify-content: center;
+  padding:        40px 20px;
+  overflow-y:     auto;
+}
+
+.fl-modal-overlay {
+  position:   fixed;
+  inset:      0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  z-index:    -1;
+}
+
+.fl-modal-inner {
+  position:   relative;
+  background: #111111;
+  border:     1px solid rgba(255,255,255,0.08);
+  width:      100%;
+  max-width:  900px;
+  padding:    48px;
+  z-index:    1;
+  margin:     auto;
+}
+
+.fl-modal-close {
+  position:        absolute;
+  top:             20px;
+  right:           20px;
+  background:      transparent;
+  border:          1px solid rgba(255,255,255,0.12);
+  color:           rgba(255,255,255,0.5);
+  font-size:       22px;
+  width:           40px;
+  height:          40px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  line-height:     1;
+}
+
+.fl-modal-close:hover {
+  background:   var(--corp-red);
+  border-color: var(--corp-red);
+  color:        var(--ivory);
+}
+
+.fl-modal-header {
+  display:     flex;
+  align-items: flex-start;
+  gap:         24px;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.fl-modal-avatar {
+  width:        80px;
+  height:       80px;
+  flex-shrink:  0;
+  overflow:     hidden;
+  border:       1px solid rgba(255,255,255,0.1);
+  background:   #1a1a1a;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+}
+
+.fl-modal-avatar img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.fl-modal-avatar-initials {
+  font-family:    var(--font-display);
+  font-size:      28px;
+  color:          var(--corp-red);
+  letter-spacing: 0.05em;
+}
+
+.fl-modal-name {
+  font-family:    var(--font-display);
+  font-size:      36px;
+  color:          var(--ivory);
+  letter-spacing: 0.03em;
+  line-height:    1.05;
+  margin-bottom:  6px;
+}
+
+.fl-modal-spec {
+  font-size:    14px;
+  color:        var(--steel);
+  margin-bottom: 12px;
+}
+
+.fl-modal-skills {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       6px;
+}
+
+.fl-modal-skill-tag {
+  font-size:  11px;
+  padding:    3px 9px;
+  background: rgba(255,255,255,0.05);
+  border:     1px solid rgba(255,255,255,0.1);
+  color:      rgba(240,237,232,0.65);
+}
+
+/* Portfolio grid — masonry-like multi-column */
+.fl-modal-portfolio {
+  column-count: 2;
+  column-gap:   20px;
+  margin-bottom: 40px;
+}
+
+.fl-modal-no-portfolio {
+  column-span:  all;
+  color:        var(--steel);
+  font-size:    14px;
+  padding:      32px 0;
+  text-align:   center;
+}
+
+.fl-portfolio-item {
+  break-inside:  avoid;
+  margin-bottom: 20px;
+  background:    #0e0e0e;
+  border:        1px solid rgba(255,255,255,0.06);
+  overflow:      hidden;
+}
+
+.fl-portfolio-thumb {
+  position:   relative;
+  overflow:   hidden;
+  cursor:     pointer;
+  background: #1a1a1a;
+}
+
+.fl-portfolio-thumb img {
+  width:      100%;
+  height:     auto;
+  display:    block;
+  transition: transform 0.35s ease;
+}
+
+.fl-portfolio-thumb:hover img {
+  transform: scale(1.04);
+}
+
+.fl-portfolio-thumb--no-img {
+  width:        100%;
+  height:       140px;
+  background:   repeating-linear-gradient(
+    45deg,
+    #1a1a1a,
+    #1a1a1a 10px,
+    #111111 10px,
+    #111111 20px
+  );
+}
+
+.fl-portfolio-overlay {
+  position:        absolute;
+  inset:           0;
+  background:      rgba(0,0,0,0.45);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  opacity:         0;
+  transition:      opacity 0.25s ease;
+}
+
+.fl-portfolio-thumb:hover .fl-portfolio-overlay {
+  opacity: 1;
+}
+
+.fl-portfolio-zoom {
+  font-size:  28px;
+  color:      var(--ivory);
+  line-height: 1;
+}
+
+.fl-portfolio-meta {
+  padding: 12px 14px 14px;
+}
+
+.fl-portfolio-title {
+  font-size:     14px;
+  font-weight:   500;
+  color:         var(--ivory);
+  margin-bottom: 4px;
+}
+
+.fl-portfolio-cat {
+  font-size:  12px;
+  color:      var(--steel);
+  margin-bottom: 8px;
+}
+
+.fl-portfolio-tools {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       4px;
+}
+
+.fl-portfolio-tool {
+  font-size:  10px;
+  padding:    2px 7px;
+  background: rgba(193,18,31,0.1);
+  border:     1px solid rgba(193,18,31,0.2);
+  color:      rgba(240,237,232,0.6);
+}
+
+/* Modal CTA footer */
+.fl-modal-cta {
+  border-top:  1px solid rgba(255,255,255,0.07);
+  padding-top: 32px;
+  display:     flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap:   wrap;
+  gap:         16px;
+}
+
+.fl-modal-cta p {
+  font-size:  15px;
+  color:      rgba(240,237,232,0.6);
+}
+
+/* ─── Lightbox ────────────────────────────────────────────── */
+
+.fl-lightbox {
+  position:        fixed;
+  inset:           0;
+  z-index:         3000;
+  background:      rgba(0,0,0,0.95);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         40px;
+  cursor:          zoom-out;
+}
+
+.fl-lightbox-close {
+  position:   absolute;
+  top:        20px;
+  right:      20px;
+  background: transparent;
+  border:     1px solid rgba(255,255,255,0.2);
+  color:      rgba(255,255,255,0.7);
+  font-size:  24px;
+  width:      44px;
+  height:     44px;
+  display:    flex;
+  align-items: center;
+  justify-content: center;
+  cursor:     pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.fl-lightbox-close:hover {
+  background: var(--corp-red);
+  border-color: var(--corp-red);
+  color: var(--ivory);
+}
+
+.fl-lightbox img {
+  max-width:    100%;
+  max-height:   90vh;
+  object-fit:   contain;
+  display:      block;
+  cursor:       default;
+  box-shadow:   0 0 80px rgba(0,0,0,0.8);
+}
+
+/* ─── CTA Section ─────────────────────────────────────────── */
+
+.fl-cta-section {
+  padding:    100px 0;
+  text-align: center;
+}
+
+.fl-cta-inner {
+  max-width:  640px;
+  margin:     0 auto;
+}
+
+.fl-cta-sub {
+  font-size:    17px;
+  color:        rgba(240,237,232,0.6);
+  line-height:  1.7;
+  margin-top:   20px;
+  margin-bottom: 40px;
+}
+
+.fl-cta-btns {
+  display:         flex;
+  gap:             16px;
+  justify-content: center;
+  flex-wrap:       wrap;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .fl-modal-portfolio {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .fl-hero {
+    padding: 120px 0 72px;
+  }
+
+  .fl-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .fl-stat {
+    background: var(--void);
+    border-right: none;
+    padding: 24px;
+  }
+
+  .fl-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .fl-modal-inner {
+    padding: 28px 20px;
+  }
+
+  .fl-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fl-modal-portfolio {
+    column-count: 1;
+  }
+
+  .fl-modal-cta {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .fl-filter-row {
+    gap: 24px;
+  }
+
+  .fl-lightbox {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fl-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fl-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fl-cta-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+}

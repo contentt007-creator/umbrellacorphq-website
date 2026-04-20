@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Marketing Tools for Bangladesh | Umbrella Corp HQ</title>
+  <meta name="description" content="Free business tools built for Bangladesh. Marketing ROI Predictor, Brand Score Audit, Ad Budget Allocator & more. No fluff. Just numbers. Used by 800+ BD businesses.">
+  <meta name="keywords" content="free marketing tools bangladesh, marketing roi calculator bangladesh, brand audit tool dhaka, ad budget allocator bangladesh, digital marketing tools bd, free business tools dhaka">
+  <meta name="author" content="Umbrella Corp HQ">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://umbrellacorphq.com/tools.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://umbrellacorphq.com/tools.html">
+  <meta property="og:title" content="Free Marketing Tools for Bangladesh | Umbrella Corp HQ">
+  <meta property="og:description" content="Free business tools built for Bangladesh. Marketing ROI Predictor, Brand Score Audit & more. No fluff. Just numbers.">
+  <meta property="og:image" content="https://umbrellacorphq.com/assets/images/og-image.jpg">
+  <meta property="og:locale" content="en_BD">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Marketing Tools for Bangladesh | Umbrella Corp HQ">
+  <meta name="twitter:description" content="Free business tools built for Bangladesh. No fluff. Just numbers.">
+  <meta name="twitter:image" content="https://umbrellacorphq.com/assets/images/og-image.jpg">
+  <meta name="geo.region" content="BD-13">
+  <meta name="geo.placename" content="Dhaka, Bangladesh">
+  <meta name="geo.position" content="23.8103;90.4125">
+  <meta name="ICBM" content="23.8103, 90.4125">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    /* Tools hero */
+    .tools-hero { min-height: 50vh; display: flex; align-items: center; background: var(--void); position: relative; overflow: hidden; }
+    .tools-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(193,18,31,0.08) 0%, transparent 70%); pointer-events: none; }
+    .tools-hero-heading { font-family: var(--font-display); font-size: clamp(52px, 8vw, 96px); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 24px; }
+    .tools-hero-sub { font-size: 18px; color: var(--steel); font-weight: 300; max-width: 500px; margin-bottom: 32px; line-height: 1.7; }
+    .tools-hero-stats { display: flex; gap: 40px; }
+    .tools-hero-stat { font-family: var(--font-display); font-size: 18px; color: var(--steel); letter-spacing: 0.05em; }
+    .tools-hero-stat span { color: var(--corp-red); }
+
+    /* Tools grid */
+    .tools-grid-section { padding: 100px 0; background: var(--void); }
+    .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .tool-card-hub { background: var(--carbon); padding: 48px 40px; border: 1px solid rgba(255,255,255,0.04); position: relative; display: flex; flex-direction: column; transition: border-color 0.3s; }
+    .tool-card-hub.is-active { border-color: rgba(193,18,31,0.3); }
+    .tool-card-hub.is-active:hover { border-color: var(--corp-red); }
+    .tool-card-hub.is-coming-soon { opacity: 0.5; }
+    .tool-card-icon { width: 44px; height: 44px; margin-bottom: 24px; color: var(--corp-red); }
+    .tool-card-tag { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--corp-red); margin-bottom: 12px; }
+    .tool-card-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.02em; color: var(--ivory); margin-bottom: 16px; line-height: 1.1; }
+    .tool-card-desc { font-size: 13px; color: var(--steel); line-height: 1.75; flex: 1; margin-bottom: 32px; }
+    .tool-launch-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 16px; letter-spacing: 0.05em; color: var(--ivory); background: var(--corp-red); padding: 12px 24px; text-decoration: none; transition: background 0.2s; align-self: flex-start; }
+    .tool-launch-btn:hover { background: #a00f19; }
+    .tool-coming-soon-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); padding: 8px 16px; border: 1px solid rgba(255,255,255,0.08); cursor: not-allowed; align-self: flex-start; }
+
+    @media (max-width: 1024px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .tools-grid { grid-template-columns: 1fr; } .tool-card-hub { padding: 32px 24px; } }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Umbrella Corp HQ Home">
+      <svg class="nav-logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1"/>
+        <line x1="15" y1="15" x2="85" y2="85" stroke="#c1121f" stroke-width="0.8" opacity="0.35"/>
+        <line x1="85" y1="15" x2="15" y2="85" stroke="#c1121f" stroke-width="0.8" opacity="0.35"/>
+        <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+        <circle cx="50" cy="50" r="2.5" fill="#0a0a0a"/>
+      </svg>
+      <span class="nav-logo-text">Umbrella Corp HQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="work.html" class="nav-link">Work</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <div class="nav-dropdown-wrap">
+        <button class="nav-link nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">Freelancers <span class="nav-dropdown-arrow">&#9660;</span></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="freelancers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Our Talent</span>
+            <span class="dropdown-item-desc">Browse our vetted freelancer network</span>
+          </a>
+          <a href="freelancers/register.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Join The Team</span>
+            <span class="dropdown-item-desc">Apply as a freelancer</span>
+          </a>
+          <a href="freelancers/login.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Freelancer Login</span>
+            <span class="dropdown-item-desc">Access your dashboard</span>
+          </a>
+        </div>
+      </div>
+      <div class="nav-dropdown-wrap">
+        <button class="nav-link nav-dropdown-trigger active" aria-haspopup="true" aria-expanded="false">
+          Free Tools <span class="nav-dropdown-arrow">&#9660;</span>
+        </button>
+        <div class="nav-dropdown" role="menu">
+          <a href="tools/roi-predictor.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Marketing ROI Predictor</span>
+            <span class="dropdown-item-desc">Calculate your real revenue potential</span>
+          </a>
+          <span class="nav-dropdown-item is-coming-soon">
+            <span class="dropdown-item-name">Brand Score Audit <span class="nav-cs-badge">Soon</span></span>
+            <span class="dropdown-item-desc">Score your brand against competitors</span>
+          </span>
+          <span class="nav-dropdown-item is-coming-soon">
+            <span class="dropdown-item-name">Ad Budget Allocator <span class="nav-cs-badge">Soon</span></span>
+            <span class="dropdown-item-desc">Optimal spend distribution</span>
+          </span>
+          <span class="nav-dropdown-item is-coming-soon">
+            <span class="dropdown-item-name">Growth Roadmap <span class="nav-cs-badge">Soon</span></span>
+            <span class="dropdown-item-desc">90-day marketing strategy</span>
+          </span>
+          <span class="nav-dropdown-item is-coming-soon">
+            <span class="dropdown-item-name">Website Health Checker <span class="nav-cs-badge">Soon</span></span>
+            <span class="dropdown-item-desc">SEO &amp; performance audit</span>
+          </span>
+          <div class="nav-dropdown-divider"></div>
+          <a href="tools.html" class="nav-dropdown-all" role="menuitem">All Free Tools &#8594;</a>
+        </div>
+      </div>
+      <a href="contact.html" class="nav-cta">Get a Quote</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" aria-hidden="true">
+    <button class="mobile-menu-close" aria-label="Close menu">&#10005;</button>
+    <a href="index.html" class="mobile-menu-link">Home</a>
+    <a href="services.html" class="mobile-menu-link">Services</a>
+    <a href="work.html" class="mobile-menu-link">Work</a>
+    <a href="about.html" class="mobile-menu-link">About</a>
+    <a href="contact.html" class="mobile-menu-link">Contact</a>
+    <a href="freelancers.html" class="mobile-menu-link">Freelancers</a>
+    <a href="tools.html" class="mobile-menu-link">Free Tools</a>
+    <a href="contact.html" class="btn-primary" style="margin-top:40px;display:inline-block">Get a Quote</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ TOOLS HERO ═══ -->
+<section class="tools-hero" aria-label="Free marketing tools for Bangladesh businesses">
+  <div class="container">
+    <h1 class="tools-hero-heading">
+      Tools That<br><span style="color:var(--corp-red)">Tell The Truth.</span>
+    </h1>
+    <p class="tools-hero-sub">Free business tools built for Bangladesh. No fluff. Just numbers.</p>
+    <div class="tools-hero-stats">
+      <div class="tools-hero-stat"><span>800+</span> BD Businesses</div>
+      <div class="tools-hero-stat"><span>100%</span> Free, Always</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TOOLS GRID ═══ -->
+<section class="tools-grid-section" aria-labelledby="tools-grid-heading">
+  <div class="container">
+    <div class="tools-grid">
+
+      <!-- Card 1 — ACTIVE: Marketing ROI Predictor -->
+      <article class="tool-card-hub is-active" aria-label="Marketing ROI Predictor — launch tool">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="28" width="6" height="12" rx="1" fill="currentColor" opacity="0.5"/>
+          <rect x="13" y="20" width="6" height="20" rx="1" fill="currentColor" opacity="0.7"/>
+          <rect x="22" y="12" width="6" height="28" rx="1" fill="currentColor" opacity="0.85"/>
+          <rect x="31" y="6" width="6" height="34" rx="1" fill="currentColor"/>
+          <polyline points="7,26 16,18 25,10 34,4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+        </svg>
+        <p class="tool-card-tag">AI-Powered</p>
+        <h2 class="tool-card-title">Marketing ROI Predictor</h2>
+        <p class="tool-card-desc">Enter your ad spend and revenue. Get a personalised AI report comparing you to 847 BD businesses &mdash; with a downloadable PDF.</p>
+        <a href="tools/roi-predictor.html" class="tool-launch-btn" aria-label="Launch Marketing ROI Predictor">Launch Tool &#8594;</a>
+      </article>
+
+      <!-- Card 2 — COMING SOON: Brand Score Audit -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Brand Score Audit — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="22" cy="22" r="16" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M22 10 L24.5 17.5 L32 17.5 L26 22.5 L28.5 30 L22 25.5 L15.5 30 L18 22.5 L12 17.5 L19.5 17.5 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+        <p class="tool-card-tag">Brand Analysis</p>
+        <h2 class="tool-card-title">Brand Score Audit</h2>
+        <p class="tool-card-desc">Rate your brand identity, messaging, and visual consistency against top BD brands.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 3 — COMING SOON: Ad Budget Allocator -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Ad Budget Allocator — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="22" cy="22" r="16" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M22 6 A16 16 0 0 1 38 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M22 6 A16 16 0 0 0 10 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+          <path d="M10 32 A16 16 0 0 0 38 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.25"/>
+          <circle cx="22" cy="22" r="4" fill="currentColor" opacity="0.4"/>
+        </svg>
+        <p class="tool-card-tag">Budget Planning</p>
+        <h2 class="tool-card-title">Ad Budget Allocator</h2>
+        <p class="tool-card-desc">Tell us your goal and budget. Get the optimal split across Meta, Google, and offline channels.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 4 — COMING SOON: Growth Roadmap Generator -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Growth Roadmap Generator — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 36 L14 24 L22 28 L30 16 L38 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="14" cy="24" r="2.5" fill="currentColor" opacity="0.6"/>
+          <circle cx="22" cy="28" r="2.5" fill="currentColor" opacity="0.6"/>
+          <circle cx="30" cy="16" r="2.5" fill="currentColor" opacity="0.6"/>
+          <circle cx="38" cy="8" r="3" fill="currentColor"/>
+          <rect x="6" y="33" width="32" height="1" rx="0.5" fill="currentColor" opacity="0.2"/>
+        </svg>
+        <p class="tool-card-tag">Strategy</p>
+        <h2 class="tool-card-title">Growth Roadmap Generator</h2>
+        <p class="tool-card-desc">90-day marketing roadmap tailored to your industry, budget, and growth stage.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 5 — COMING SOON: Website Health Checker -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Website Health Checker — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="6" y="8" width="32" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M14 36 h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M22 30 v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M16 21 L19 18 L22 22 L25 15 L28 19" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="tool-card-tag">SEO &amp; Performance</p>
+        <h2 class="tool-card-title">Website Health Checker</h2>
+        <p class="tool-card-desc">SEO audit, Core Web Vitals, and conversion rate analysis for your website.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 6 — COMING SOON: Competitor Ad Spy -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Competitor Ad Spy — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="11" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M28 28 L38 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="20" r="5" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="20" cy="20" r="2" fill="currentColor" opacity="0.7"/>
+        </svg>
+        <p class="tool-card-tag">Competitive Intel</p>
+        <h2 class="tool-card-title">Competitor Ad Spy</h2>
+        <p class="tool-card-desc">See what your competitors are running on Meta and Google in Bangladesh.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 7 — COMING SOON: Content Calendar Builder -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Content Calendar Builder — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="6" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 18 h32" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+          <path d="M15 6 v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M29 6 v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="12" y="23" width="5" height="4" rx="0.5" fill="currentColor" opacity="0.5"/>
+          <rect x="20" y="23" width="5" height="4" rx="0.5" fill="currentColor" opacity="0.7"/>
+          <rect x="28" y="23" width="5" height="4" rx="0.5" fill="currentColor" opacity="0.3"/>
+        </svg>
+        <p class="tool-card-tag">Content Strategy</p>
+        <h2 class="tool-card-title">Content Calendar Builder</h2>
+        <p class="tool-card-desc">AI-generated monthly content plan for your industry and audience.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 8 — COMING SOON: Customer Persona Creator -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Customer Persona Creator — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="22" cy="16" r="7" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 38 C8 30 14 26 22 26 C30 26 36 30 36 38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M32 14 C34 14 36 15.5 36 18 C36 20.5 33 22 32 23" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          <circle cx="36" cy="24" r="1" fill="currentColor" opacity="0.5"/>
+        </svg>
+        <p class="tool-card-tag">Audience Research</p>
+        <h2 class="tool-card-title">Customer Persona Creator</h2>
+        <p class="tool-card-desc">Build detailed buyer personas based on Bangladesh market data.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+      <!-- Card 9 — COMING SOON: Email Marketing Scorer -->
+      <article class="tool-card-hub is-coming-soon" aria-label="Email Marketing Scorer — coming soon">
+        <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="10" width="36" height="26" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <polyline points="4,10 22,24 40,10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M28 26 L36 26 M32 22 L36 26 L32 30" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+        </svg>
+        <p class="tool-card-tag">Email Marketing</p>
+        <h2 class="tool-card-title">Email Marketing Scorer</h2>
+        <p class="tool-card-desc">Rate your email strategy and get a step-by-step improvement plan.</p>
+        <span class="tool-coming-soon-badge" aria-label="Coming soon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Coming Soon
+        </span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BOTTOM CTA ═══ -->
+<section class="cta-section" aria-labelledby="tools-cta-heading">
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="cta-heading" id="tools-cta-heading">Can&#8217;t find the tool you need?</h2>
+      <p class="cta-subtext">We build custom strategies. Book a free consultation.</p>
+      <div class="cta-btn-wrap" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="contact.html" class="btn-cta" aria-label="Start a project with Umbrella Corp HQ">Start a Project</a>
+        <a href="https://wa.me/8801700000000?text=Hi%20Umbrella%20Corp%20HQ%2C%20I%27d%20like%20to%20discuss%20a%20custom%20strategy" class="btn-secondary" aria-label="Chat with us on WhatsApp" target="_blank" rel="noopener">WhatsApp Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:16px">
+            <svg class="nav-logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
+              <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="1" stroke-dasharray="4 4"/>
+              <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1"/>
+              <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1"/>
+              <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+              <circle cx="50" cy="50" r="2.5" fill="#0a0a0a"/>
+            </svg>
+            <span class="nav-logo-text">Umbrella Corp HQ</span>
+          </a>
+          <p class="footer-tagline">"We Cover Everything."</p>
+          <p style="font-size:13px;color:var(--steel);max-width:260px;margin-top:8px;line-height:1.6">Full-service marketing agency in Dhaka, Bangladesh.</p>
+          <div class="footer-social" style="margin-top:24px">
+            <a href="https://facebook.com/umbrellacorphq" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://instagram.com/umbrellacorphq" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/umbrellacorphq" class="footer-social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://x.com/umbrellacorphq" class="footer-social-link" aria-label="X (Twitter)" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-nav-heading">Navigate</h3>
+          <nav class="footer-nav-list" aria-label="Footer navigation">
+            <a href="index.html" class="footer-nav-link">Home</a>
+            <a href="services.html" class="footer-nav-link">Services</a>
+            <a href="work.html" class="footer-nav-link">Case Studies</a>
+            <a href="about.html" class="footer-nav-link">About Us</a>
+            <a href="contact.html" class="footer-nav-link">Contact</a>
+            <a href="tools.html" class="footer-nav-link">Free Tools</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-contact-heading">Get In Touch</h3>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c1121f" stroke-width="1.5" style="width:18px;height:18px;flex-shrink:0;margin-top:2px" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-key="contact_address" data-default="Dhaka, Bangladesh">Dhaka, Bangladesh</span>
+          </div>
+          <div class="footer-contact-item" style="margin-top:14px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c1121f" stroke-width="1.5" style="width:18px;height:18px;flex-shrink:0;margin-top:2px" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:hello@umbrellacorphq.com" data-key="contact_email" data-default="hello@umbrellacorphq.com">hello@umbrellacorphq.com</a>
+          </div>
+          <div class="footer-contact-item" style="margin-top:14px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c1121f" stroke-width="1.5" style="width:18px;height:18px;flex-shrink:0;margin-top:2px" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.1 2.1 2 2 0 012.08 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            <a href="tel:+8801XXXXXXXXX" data-key="contact_phone" data-default="+880 1X-XXXX-XXXX">+880 1X-XXXX-XXXX</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&#169; 2025 Umbrella Corp HQ. All rights reserved. &#8212; Dhaka, Bangladesh</p>
+      <p class="footer-seo-text">Marketing Agency in Bangladesh | Branding | Digital Marketing | Web Development</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/8801700000000?text=Hi%20Umbrella%20Corp%20HQ%2C%20I%27d%20like%20to%20discuss%20a%20project" class="whatsapp-btn" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- CDN Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+<!-- Supabase (optional — enables cloud content sync) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/content-api.js"></script>
+<!-- Site Scripts -->
+<script src="js/cursor.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+
+</body>
+</html>

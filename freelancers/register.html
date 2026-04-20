@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join as a Photographer or Cinematographer | Umbrella Corp HQ Bangladesh</title>
+  <meta name="description" content="Join the Umbrella Corp HQ talent network in Bangladesh as a photographer or cinematographer. Get paid shoots — weddings, birthdays, influencer & product content.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="css/freelancers.css">
+  <style>
+    /* ── Register-page specific styles ── */
+    .fl-register-main {
+      min-height: 100vh;
+      padding: calc(var(--nav-height) + 60px) var(--container-pad-sm) 80px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .fl-register-wrap {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    /* Page header */
+    .fl-register-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .fl-register-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 7vw, 80px);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .fl-register-header p {
+      color: var(--steel);
+      font-size: 15px;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Step progress bar ── */
+    .fl-steps-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+      gap: 0;
+    }
+
+    .fl-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .fl-step-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--steel);
+      background: var(--void);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fl-step.active .fl-step-dot {
+      border-color: var(--corp-red);
+      color: var(--corp-red);
+      box-shadow: 0 0 0 4px rgba(193, 18, 31, 0.15);
+    }
+
+    .fl-step.done .fl-step-dot {
+      border-color: var(--corp-red);
+      background: var(--corp-red);
+      color: #fff;
+    }
+
+    .fl-step-label {
+      font-size: 11px;
+      color: var(--steel);
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .fl-step.active .fl-step-label,
+    .fl-step.done .fl-step-label {
+      color: var(--ivory);
+    }
+
+    .fl-step-line {
+      flex: 1;
+      min-width: 40px;
+      height: 1px;
+      background: #333;
+      margin: 0 8px;
+      margin-bottom: 22px;
+      transition: background 0.3s ease;
+    }
+
+    .fl-step-line.done {
+      background: var(--corp-red);
+    }
+
+    /* ── Form step container ── */
+    .fl-form-step {
+      animation: fadeSlideIn 0.35s ease both;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fl-step-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      letter-spacing: 0.03em;
+      margin-bottom: 32px;
+      color: var(--ivory);
+    }
+
+    .fl-step-desc {
+      color: var(--steel);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    /* ── Grid layout ── */
+    .fl-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .fl-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .fl-form-grid .fl-field {
+      margin-bottom: 0;
+    }
+
+    .fl-field label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Inputs ── */
+    .fl-input {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      color: var(--ivory);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+    }
+
+    .fl-input:focus {
+      border-color: var(--corp-red);
+      box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
+    }
+
+    .fl-input::placeholder {
+      color: #444;
+    }
+
+    .fl-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 36px;
+    }
+
+    .fl-select option {
+      background: #1a1a1a;
+      color: var(--ivory);
+    }
+
+    .fl-textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.6;
+    }
+
+    /* ── Char counter ── */
+    .fl-char-counter {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--steel);
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* ── Input error state ── */
+    .fl-input.has-error {
+      border-color: #e63946;
+    }
+
+    .fl-field-error {
+      font-size: 11px;
+      color: #e63946;
+      margin-top: -4px;
+    }
+
+    /* ── Photo upload ── */
+    .fl-photo-upload {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+      cursor: pointer;
+    }
+
+    .fl-photo-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px dashed #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: border-color 0.2s ease;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .fl-photo-preview:hover {
+      border-color: var(--corp-red);
+    }
+
+    .fl-photo-preview p {
+      font-size: 11px;
+      color: var(--steel);
+      margin: 0;
+    }
+
+    .fl-photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Slider ── */
+    .fl-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: #2a2a2a;
+      border-radius: 2px;
+      outline: none;
+      padding: 0;
+      border: none;
+    }
+
+    .fl-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--corp-red);
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+
+    .fl-slider::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 4px rgba(193, 18, 31, 0.2);
+    }
+
+    .fl-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border: none;
+      border-radius: 50%;
+      background: var(--corp-red);
+      cursor: pointer;
+    }
+
+    .fl-slider-marks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--steel);
+      margin-top: 4px;
+    }
+
+    /* ── Tag input ── */
+    .fl-tag-input-wrap {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 46px;
+      cursor: text;
+      transition: border-color 0.2s ease;
+    }
+
+    .fl-tag-input-wrap:focus-within {
+      border-color: var(--corp-red);
+      box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
+    }
+
+    .fl-tags-display {
+      display: contents;
+    }
+
+    .fl-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(193, 18, 31, 0.15);
+      border: 1px solid rgba(193, 18, 31, 0.35);
+      border-radius: 3px;
+      padding: 3px 8px;
+      font-size: 12px;
+      color: var(--ivory);
+    }
+
+    .fl-tag-remove {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .fl-tag-remove:hover {
+      color: #e63946;
+    }
+
+    .fl-tag-input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--ivory);
+      font-family: var(--font-body);
+      font-size: 13px;
+      min-width: 120px;
+      flex: 1;
+      padding: 2px 4px;
+    }
+
+    .fl-tag-input::placeholder {
+      color: #444;
+    }
+
+    .fl-tag-suggestions {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      max-height: 180px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .fl-tag-suggestions.visible {
+      display: block;
+    }
+
+    .fl-tag-suggestion {
+      padding: 9px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--ivory);
+      transition: background 0.15s;
+    }
+
+    .fl-tag-suggestion:hover {
+      background: rgba(193, 18, 31, 0.12);
+    }
+
+    /* ── Social links grid ── */
+    .fl-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* ── Portfolio ── */
+    .fl-portfolio-item {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .fl-portfolio-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid #1e1e1e;
+      background: #161616;
+    }
+
+    .fl-portfolio-item-header span {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ivory);
+    }
+
+    .fl-remove-item {
+      background: none;
+      border: 1px solid #333;
+      border-radius: 3px;
+      color: var(--steel);
+      font-size: 12px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+
+    .fl-remove-item:hover {
+      border-color: #e63946;
+      color: #e63946;
+    }
+
+    .fl-portfolio-item-body {
+      padding: 20px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .fl-portfolio-item-body .fl-field {
+      margin-bottom: 0;
+    }
+
+    .fl-portfolio-item-body .fl-field:nth-child(3),
+    .fl-portfolio-item-body .fl-field:nth-child(4),
+    .fl-portfolio-item-body .fl-field:nth-child(5) {
+      grid-column: 1 / -1;
+    }
+
+    .fl-img-upload-area {
+      background: #0d0d0d;
+      border: 2px dashed #2a2a2a;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      overflow: hidden;
+      min-height: 80px;
+    }
+
+    .fl-img-upload-area:hover {
+      border-color: var(--corp-red);
+    }
+
+    .pi-thumb-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80px;
+      padding: 12px;
+    }
+
+    .pi-thumb-preview p {
+      font-size: 12px;
+      color: #444;
+      margin: 0;
+    }
+
+    .pi-thumb-preview img {
+      width: 100%;
+      max-height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .fl-add-portfolio-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: 1px dashed #333;
+      border-radius: 4px;
+      color: var(--steel);
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 12px 20px;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .fl-add-portfolio-btn:hover {
+      border-color: var(--corp-red);
+      color: var(--corp-red);
+    }
+
+    .fl-portfolio-note {
+      font-size: 11px;
+      color: var(--steel);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* ── NDA box ── */
+    .fl-nda-box {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-left: 3px solid var(--corp-red);
+      border-radius: 4px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .fl-nda-box h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      color: var(--ivory);
+      margin-bottom: 12px;
+    }
+
+    .fl-nda-box p {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .fl-nda-box ol {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .fl-nda-box li {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    /* ── Agreement checkboxes ── */
+    .fl-agreements {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .fl-check-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--ivory);
+      line-height: 1.5;
+    }
+
+    .fl-check-label input[type="checkbox"] {
+      display: none;
+    }
+
+    .fl-checkmark {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #333;
+      border-radius: 3px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+
+    .fl-checkmark::after {
+      content: '';
+      width: 5px;
+      height: 9px;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(45deg) translateY(-1px);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .fl-check-label input:checked ~ .fl-checkmark {
+      background: var(--corp-red);
+      border-color: var(--corp-red);
+    }
+
+    .fl-check-label input:checked ~ .fl-checkmark::after {
+      opacity: 1;
+    }
+
+    /* ── Error message ── */
+    .fl-error-msg {
+      background: rgba(230, 57, 70, 0.12);
+      border: 1px solid rgba(230, 57, 70, 0.35);
+      border-radius: 4px;
+      color: #e63946;
+      font-size: 13px;
+      padding: 12px 16px;
+      margin-top: 16px;
+    }
+
+    /* ── Navigation buttons ── */
+    .fl-form-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 36px;
+      gap: 16px;
+    }
+
+    .fl-btn-back {
+      background: none;
+      border: 1px solid #333;
+      border-radius: 4px;
+      color: var(--steel);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 13px 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .fl-btn-back:hover {
+      border-color: var(--ivory);
+      color: var(--ivory);
+    }
+
+    .fl-btn-next,
+    .fl-btn-submit {
+      background: var(--corp-red);
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px 32px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: auto;
+      letter-spacing: 0.02em;
+    }
+
+    .fl-btn-next:hover,
+    .fl-btn-submit:hover {
+      background: var(--deep-red);
+      transform: translateX(2px);
+    }
+
+    .fl-btn-submit:disabled,
+    .fl-btn-next:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── Success screen ── */
+    .fl-success-screen {
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeSlideIn 0.5s ease both;
+    }
+
+    .fl-success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid #3ecf8e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .fl-success-screen h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      letter-spacing: 0.03em;
+      margin-bottom: 16px;
+    }
+
+    .fl-success-screen p {
+      color: var(--steel);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .fl-success-screen strong {
+      color: var(--ivory);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .fl-register-main {
+        padding: calc(var(--nav-height) + 32px) 20px 60px;
+      }
+
+      .fl-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fl-form-grid .fl-field[style*="grid-column"] {
+        grid-column: 1 !important;
+      }
+
+      .fl-portfolio-item-body {
+        grid-template-columns: 1fr;
+      }
+
+      .fl-portfolio-item-body .fl-field:nth-child(n) {
+        grid-column: 1;
+      }
+
+      .fl-links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fl-steps-bar {
+        gap: 0;
+      }
+
+      .fl-step-label {
+        display: none;
+      }
+
+      .fl-step-line {
+        min-width: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-logo" aria-label="Umbrella Corp HQ Home">
+      <svg class="nav-logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1"/>
+        <line x1="15" y1="15" x2="85" y2="85" stroke="#c1121f" stroke-width="0.8" opacity="0.35"/>
+        <line x1="85" y1="15" x2="15" y2="85" stroke="#c1121f" stroke-width="0.8" opacity="0.35"/>
+        <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+        <circle cx="50" cy="50" r="2.5" fill="#0a0a0a"/>
+      </svg>
+      <span class="nav-logo-text">Umbrella Corp HQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../freelancers.html" class="nav-link">Our Talent</a>
+      <a href="register.html" class="nav-link active">Join The Team</a>
+      <a href="login.html" class="nav-link">Freelancer Login</a>
+      <a href="../contact.html" class="nav-cta">Get a Quote</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" aria-hidden="true">
+    <button class="mobile-menu-close">&#10005;</button>
+    <a href="../index.html" class="mobile-menu-link">Home</a>
+    <a href="../freelancers.html" class="mobile-menu-link">Our Talent</a>
+    <a href="register.html" class="mobile-menu-link">Join The Team</a>
+    <a href="login.html" class="mobile-menu-link">Freelancer Login</a>
+    <a href="../contact.html" class="btn-primary" style="margin-top:40px;display:inline-block">Get a Quote</a>
+  </div>
+</header>
+
+<main class="fl-register-main">
+  <div class="fl-register-wrap">
+
+    <!-- Page header -->
+    <div class="fl-register-header">
+      <h1>Apply to Join<br><span style="color:var(--corp-red)">The Network.</span></h1>
+      <p>We're looking for <strong style="color:var(--ivory)">photographers &amp; cinematographers</strong> in Bangladesh. Get matched to weddings, birthdays, influencer shoots &amp; product campaigns. We review every application within 48 hours.</p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="fl-steps-bar">
+      <div class="fl-step active" data-step="1">
+        <div class="fl-step-dot">1</div>
+        <span class="fl-step-label">Personal</span>
+      </div>
+      <div class="fl-step-line"></div>
+      <div class="fl-step" data-step="2">
+        <div class="fl-step-dot">2</div>
+        <span class="fl-step-label">Specialty</span>
+      </div>
+      <div class="fl-step-line"></div>
+      <div class="fl-step" data-step="3">
+        <div class="fl-step-dot">3</div>
+        <span class="fl-step-label">Portfolio</span>
+      </div>
+      <div class="fl-step-line"></div>
+      <div class="fl-step" data-step="4">
+        <div class="fl-step-dot">4</div>
+        <span class="fl-step-label">Agreement</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: Personal Info -->
+    <div class="fl-form-step" id="step-1">
+      <h2 class="fl-step-title">Personal Information</h2>
+
+      <!-- Google Sign-in shortcut -->
+      <div style="margin-bottom:28px">
+        <button type="button" id="btn-google-signup" style="
+          display:flex;align-items:center;justify-content:center;gap:12px;
+          width:100%;padding:13px 20px;background:#fff;color:#1a1a1a;
+          border:none;border-radius:4px;font-family:var(--font-body);
+          font-size:14px;font-weight:500;cursor:pointer;
+          transition:opacity 0.2s ease;
+        ">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+          Continue with Google
+        </button>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:20px">
+          <div style="flex:1;height:1px;background:#222"></div>
+          <span style="font-size:12px;color:var(--steel)">OR FILL IN MANUALLY</span>
+          <div style="flex:1;height:1px;background:#222"></div>
+        </div>
+      </div>
+
+      <!-- Profile photo upload -->
+      <div class="fl-photo-upload" id="photo-upload-area">
+        <input type="file" id="profile-photo-input" accept="image/*" style="display:none">
+        <div class="fl-photo-preview" id="photo-preview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:32px;height:32px;color:rgba(255,255,255,0.3)"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <p>Upload Photo</p>
+          <span style="font-size:11px;color:var(--steel)">Min 500×500px</span>
+        </div>
+      </div>
+
+      <div class="fl-form-grid">
+        <div class="fl-field">
+          <label for="fullName">Full Name *</label>
+          <input type="text" id="fullName" class="fl-input" placeholder="Your full name" required>
+        </div>
+        <div class="fl-field">
+          <label for="reg-email">Email Address *</label>
+          <input type="email" id="reg-email" class="fl-input" placeholder="you@email.com" required>
+        </div>
+        <div class="fl-field">
+          <label for="reg-phone">Phone (WhatsApp) *</label>
+          <input type="tel" id="reg-phone" class="fl-input" placeholder="+880 1X-XXXX-XXXX" required>
+        </div>
+        <div class="fl-field">
+          <label for="location">Location (District) *</label>
+          <select id="location" class="fl-input fl-select" required>
+            <option value="">Select district...</option>
+            <!-- Districts injected by JS -->
+          </select>
+        </div>
+        <div class="fl-field" style="grid-column:1/-1">
+          <label for="bio">Short Bio * <span class="fl-char-counter"><span id="bio-count">0</span>/300</span></label>
+          <textarea id="bio" class="fl-input fl-textarea" rows="3" maxlength="300" placeholder="Tell us about yourself and your work..."></textarea>
+        </div>
+        <div class="fl-field">
+          <label for="yearsExperience">Years of Experience *</label>
+          <select id="yearsExperience" class="fl-input fl-select" required>
+            <option value="">Select...</option>
+            <option value="0-1">Less than 1 year</option>
+            <option value="1-2">1–2 years</option>
+            <option value="3-5">3–5 years</option>
+            <option value="5-10">5–10 years</option>
+            <option value="10+">10+ years</option>
+          </select>
+        </div>
+        <div class="fl-field">
+          <label for="weeklyCapacity">Weekly Availability: <span id="capacity-val">20</span> hrs/week</label>
+          <input type="range" id="weeklyCapacity" class="fl-slider" min="5" max="40" value="20" step="5">
+          <div class="fl-slider-marks"><span>5</span><span>20</span><span>40</span></div>
+        </div>
+        <div class="fl-field">
+          <label for="reg-password">Create Password *</label>
+          <input type="password" id="reg-password" class="fl-input" placeholder="Min 8 characters" required minlength="8">
+        </div>
+        <div class="fl-field">
+          <label for="reg-password2">Confirm Password *</label>
+          <input type="password" id="reg-password2" class="fl-input" placeholder="Repeat password" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Specialty -->
+    <div class="fl-form-step" id="step-2" style="display:none">
+      <h2 class="fl-step-title">Your Specialty</h2>
+
+      <div class="fl-field">
+        <label for="specialisation">Talent Type *</label>
+        <select id="specialisation" class="fl-input fl-select" required>
+          <option value="">Are you a photographer or cinematographer?</option>
+          <option>Photographer</option>
+          <option>Cinematographer</option>
+        </select>
+      </div>
+
+      <div class="fl-field">
+        <label>Event Specialisations * <span style="color:var(--steel);font-size:12px;letter-spacing:0;text-transform:none;font-weight:400">(select all that apply — click or press Enter)</span></label>
+        <div class="fl-tag-input-wrap" id="skills-wrap">
+          <div class="fl-tags-display" id="skills-tags"></div>
+          <input type="text" class="fl-tag-input" id="skills-input" placeholder="e.g. Wedding, Product Shoot...">
+        </div>
+        <div class="fl-tag-suggestions" id="skills-suggestions"></div>
+      </div>
+
+      <div class="fl-field">
+        <label>Equipment &amp; Gear <span style="color:var(--steel);font-size:12px;letter-spacing:0;text-transform:none;font-weight:400">(cameras, lenses, lighting, editing software)</span></label>
+        <div class="fl-tag-input-wrap" id="tools-wrap">
+          <div class="fl-tags-display" id="tools-tags"></div>
+          <input type="text" class="fl-tag-input" id="tools-input" placeholder="e.g. Sony A7IV, DJI Ronin...">
+        </div>
+        <div class="fl-tag-suggestions" id="tools-suggestions"></div>
+      </div>
+
+      <div class="fl-field">
+        <label>Portfolio &amp; Social Links <span style="color:var(--steel);font-size:12px;letter-spacing:0;text-transform:none;font-weight:400">(optional)</span></label>
+        <div class="fl-links-grid">
+          <input type="url" id="link-instagram" class="fl-input" placeholder="Instagram URL">
+          <input type="url" id="link-youtube"   class="fl-input" placeholder="YouTube / Vimeo URL">
+          <input type="url" id="link-500px"     class="fl-input" placeholder="500px or Flickr URL">
+          <input type="url" id="link-linkedin"  class="fl-input" placeholder="LinkedIn URL">
+          <input type="url" id="link-portfolio" class="fl-input" placeholder="Personal portfolio / website URL" style="grid-column:1/-1">
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Portfolio -->
+    <div class="fl-form-step" id="step-3" style="display:none">
+      <h2 class="fl-step-title">Portfolio Submission</h2>
+      <p class="fl-step-desc">Add at least 3 of your best shots or reels. Show us your range — weddings, portraits, products, anything you've shot. Only approved items appear publicly.</p>
+
+      <div id="portfolio-items-container"></div>
+
+      <button type="button" class="fl-add-portfolio-btn" id="add-portfolio-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Portfolio Item
+      </button>
+      <p class="fl-portfolio-note">Minimum 3 items required. Maximum 10.</p>
+    </div>
+
+    <!-- STEP 4: Agreement -->
+    <div class="fl-form-step" id="step-4" style="display:none">
+      <h2 class="fl-step-title">Agreement &amp; Submit</h2>
+
+      <div class="fl-nda-box">
+        <h3>NON-DISCLOSURE AGREEMENT</h3>
+        <p>By joining the Umbrella Corp HQ freelancer network, you agree to:</p>
+        <ol>
+          <li>Never contact clients directly or share client information with any third party.</li>
+          <li>All work produced is delivered exclusively through Umbrella Corp HQ.</li>
+          <li>Client identities remain confidential at all times. You will only know Job IDs.</li>
+          <li>Work submitted to UCH becomes part of the UCH portfolio unless otherwise agreed in writing.</li>
+          <li>UCH retains 25% of all project fees as platform commission. Your payout varies by tier (Bronze: 75%, Silver: 77%, Gold: 80%).</li>
+          <li>You may not solicit UCH clients for direct work for a period of 24 months after leaving the network.</li>
+          <li>Violation of this agreement may result in immediate suspension and legal action.</li>
+          <li>UCH reserves the right to update commission rates with 30 days notice.</li>
+        </ol>
+        <p>This agreement is legally binding upon submission of your application.</p>
+      </div>
+
+      <div class="fl-agreements">
+        <label class="fl-check-label">
+          <input type="checkbox" id="agree-nda" required>
+          <span class="fl-checkmark"></span>
+          I have read and agree to the Non-Disclosure Agreement *
+        </label>
+        <label class="fl-check-label">
+          <input type="checkbox" id="agree-terms" required>
+          <span class="fl-checkmark"></span>
+          I agree to the Freelancer Terms &amp; Conditions *
+        </label>
+        <label class="fl-check-label">
+          <input type="checkbox" id="agree-original" required>
+          <span class="fl-checkmark"></span>
+          I confirm all submitted portfolio work is my own original work *
+        </label>
+      </div>
+
+      <div class="fl-field" style="margin-top:24px">
+        <label for="name-confirm">Confirm Full Name (must match Step 1) *</label>
+        <input type="text" id="name-confirm" class="fl-input" placeholder="Type your full name exactly">
+      </div>
+
+      <div class="fl-field">
+        <label>Date of Agreement</label>
+        <input type="text" id="agree-date" class="fl-input" readonly>
+      </div>
+
+    </div>
+
+    <!-- Success Screen -->
+    <div id="reg-success" class="fl-success-screen" style="display:none">
+      <div class="fl-success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3ecf8e" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Application Received.</h2>
+      <p>We'll review your portfolio within 48 hours.<br>You'll receive a confirmation at <strong id="success-email"></strong>.</p>
+      <p style="color:var(--steel);font-size:13px;margin-top:16px">Your application ID: <span id="success-fl-id" style="color:var(--corp-red);font-family:monospace"></span></p>
+      <a href="../freelancers.html" class="btn-primary" style="margin-top:32px">Browse Our Talent &rarr;</a>
+    </div>
+
+    <!-- Global error banner — visible on every step -->
+    <div id="reg-error" class="fl-error-msg" style="display:none;margin-bottom:16px"></div>
+
+    <!-- Navigation Buttons -->
+    <div class="fl-form-nav" id="form-nav">
+      <button type="button" class="fl-btn-back" id="btn-back" style="display:none">&#8592; Back</button>
+      <button type="button" class="fl-btn-next" id="btn-next">Next Step &#8594;</button>
+      <button type="button" class="fl-btn-submit" id="btn-submit" style="display:none">
+        Submit Application &#8594;
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../js/cursor.js"></script>
+<script src="../js/main.js"></script>
+<script type="module" src="js/register.js"></script>
+</body>
+</html>

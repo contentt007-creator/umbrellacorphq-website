@@ -115,6 +115,28 @@
       </button>
 
       <div class="sidebar-divider"></div>
+      <p class="sidebar-label">Platform</p>
+      <button class="sidebar-link" data-panel="freelancers">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span class="link-label">Freelancers</span>
+      </button>
+      <button class="sidebar-link" data-panel="jobs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        <span class="link-label">Jobs / Briefs</span>
+      </button>
+      <button class="sidebar-link" data-panel="notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="link-label">Notifications <span id="admin-notif-badge" class="sidebar-notif-badge" style="display:none">0</span></span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-label">Tools</p>
+      <button class="sidebar-link" data-panel="leads">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="21" x2="23" y2="19"/><line x1="19" y1="21" x2="19" y2="19"/><line x1="21" y1="17" x2="21" y2="23"/></svg>
+        <span class="link-label">ROI Leads</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
       <button class="sidebar-link" data-panel="settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M2 12h2M20 12h2"/></svg>
         <span class="link-label">Settings</span>
@@ -995,6 +1017,15 @@
       </div>
 
       <div class="editor-card">
+        <div class="editor-card-title">Integrations</div>
+        <div class="field-group">
+          <label class="field-label" for="f-webhook-url">Zapier / Make Webhook URL <span class="hint">(optional)</span></label>
+          <input class="field-input" type="url" id="f-webhook-url" data-key="webhook_url" data-default="" placeholder="https://hooks.zapier.com/hooks/catch/...">
+          <p style="font-size:12px;color:var(--steel);margin-top:8px;line-height:1.6">When set, new ROI Predictor leads are POSTed to this URL as JSON. Compatible with Zapier, Make (Integromat), and any webhook receiver.</p>
+        </div>
+      </div>
+
+      <div class="editor-card">
         <div class="editor-card-title">Security</div>
         <div class="field-group">
           <label class="field-label">Change Admin Password</label>
@@ -1026,6 +1057,254 @@
           </p>
           <button id="btn-reset" class="btn-danger">Reset All Content to Defaults</button>
         </div>
+      </div>
+    </div>
+
+    <!-- ─── ROI LEADS PANEL ─── -->
+    <div id="panel-leads" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">ROI Leads</h1>
+        <p class="panel-desc">Leads captured via the Marketing ROI Predictor. Data is stored in this browser's localStorage.</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row" id="leads-stats-row">
+        <div class="stat-card">
+          <div class="stat-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+          <div class="stat-card-value" id="ls-total">0</div>
+          <div class="stat-card-label">Total Leads</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="stat-card-value" id="ls-avg-score">—</div>
+          <div class="stat-card-label">Avg ROI Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          </div>
+          <div class="stat-card-value" id="ls-top-industry">—</div>
+          <div class="stat-card-label">Top Industry</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="stat-card-value" id="ls-downloaded">0</div>
+          <div class="stat-card-label">PDFs Downloaded</div>
+        </div>
+      </div>
+
+      <!-- Actions Bar -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;align-items:center">
+        <button id="btn-export-leads" class="btn-export">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:6px;vertical-align:middle" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+        <button id="btn-refresh-leads" class="btn-export" style="background:rgba(255,255,255,0.04)">Refresh</button>
+        <button id="btn-clear-leads" class="btn-danger" style="margin-left:auto;font-size:12px;padding:8px 16px">Clear All Leads</button>
+      </div>
+
+      <!-- Empty State -->
+      <div id="leads-empty" class="editor-card" style="text-align:center;padding:60px 24px;display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" style="width:48px;height:48px;margin-bottom:16px" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <p style="color:var(--steel);font-size:14px">No leads yet. Share the <a href="../tools/roi-predictor.html" target="_blank" style="color:var(--corp-red)">ROI Predictor</a> to start capturing leads.</p>
+      </div>
+
+      <!-- Leads Table -->
+      <div id="leads-table-wrap" class="editor-card" style="padding:0;overflow:hidden">
+        <div style="overflow-x:auto">
+          <table class="leads-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Company</th>
+                <th>Industry</th>
+                <th>Revenue</th>
+                <th>Ad Spend</th>
+                <th>Score</th>
+                <th>PDF</th>
+                <th>Status</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Notes Modal -->
+      <div id="lead-notes-modal" class="lead-notes-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="notes-modal-title">
+        <div class="lead-notes-modal-inner">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h3 id="notes-modal-title" style="font-size:15px;font-weight:500;color:var(--white)">Notes</h3>
+            <button id="notes-modal-close" style="background:none;border:none;color:var(--steel);cursor:pointer;font-size:18px">&times;</button>
+          </div>
+          <input type="hidden" id="notes-lead-id">
+          <textarea id="notes-textarea" rows="5" class="field-textarea" style="width:100%;margin-bottom:16px" placeholder="Add notes about this lead..."></textarea>
+          <div style="display:flex;gap:10px;justify-content:flex-end">
+            <button id="notes-modal-cancel" class="btn-export" style="background:transparent">Cancel</button>
+            <button id="notes-modal-save" class="btn-export">Save Note</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── FREELANCERS PANEL ─── -->
+    <div id="panel-freelancers" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Freelancers</h1>
+        <p class="panel-desc">Manage your freelancer network. Approve applications, set tiers, review portfolios.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row" id="fl-admin-stats">
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="stat-card-value" id="fl-stat-total-admin">—</div>
+          <div class="stat-card-label">Total Freelancers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="stat-card-value" id="fl-stat-pending-admin">—</div>
+          <div class="stat-card-label">Pending Review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" xmlns="http://www.w3.org/2000/svg"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="stat-card-value" id="fl-stat-active-admin">—</div>
+          <div class="stat-card-label">Active (Approved)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="stat-card-value" id="fl-stat-avg-rating">—</div>
+          <div class="stat-card-label">Avg Rating</div>
+        </div>
+      </div>
+
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="filter-tab active" data-fl-filter="all">All</button>
+        <button class="filter-tab" data-fl-filter="pending">Pending</button>
+        <button class="filter-tab" data-fl-filter="approved">Approved</button>
+        <button class="filter-tab" data-fl-filter="rejected">Rejected</button>
+        <button class="filter-tab" data-fl-filter="suspended">Suspended</button>
+      </div>
+
+      <!-- Freelancers table -->
+      <div class="editor-card" style="padding:0;overflow:hidden">
+        <div style="overflow-x:auto">
+          <table class="leads-table" id="fl-admin-table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Specialisation</th>
+                <th>Skills</th>
+                <th>Tier</th>
+                <th>Jobs</th>
+                <th>Rating</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fl-admin-tbody">
+              <tr><td colspan="9" style="text-align:center;padding:32px;color:var(--steel)">Loading freelancers…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Freelancer detail modal -->
+      <div id="fl-detail-modal" class="lead-notes-modal" style="display:none">
+        <div class="lead-notes-modal-inner" style="width:600px;max-height:80vh;overflow-y:auto">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <h3 id="fl-modal-name" style="font-size:16px;font-weight:500"></h3>
+            <button id="fl-modal-close" style="background:none;border:none;color:var(--steel);cursor:pointer;font-size:20px">&times;</button>
+          </div>
+          <div id="fl-modal-body"></div>
+          <!-- Actions -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07)" id="fl-modal-actions"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── JOBS PANEL ─── -->
+    <div id="panel-jobs" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Jobs / Client Briefs</h1>
+        <p class="panel-desc">All client project briefs. Assign freelancers, track progress, manage payouts.</p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="filter-tab active" data-job-filter="all">All</button>
+        <button class="filter-tab" data-job-filter="new">New</button>
+        <button class="filter-tab" data-job-filter="reviewing">Reviewing</button>
+        <button class="filter-tab" data-job-filter="assigned">Assigned</button>
+        <button class="filter-tab" data-job-filter="in_progress">In Progress</button>
+        <button class="filter-tab" data-job-filter="delivered">Delivered</button>
+        <button class="filter-tab" data-job-filter="completed">Completed</button>
+      </div>
+
+      <!-- Jobs table -->
+      <div class="editor-card" style="padding:0;overflow:hidden">
+        <div style="overflow-x:auto">
+          <table class="leads-table" id="jobs-admin-table">
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Date</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Budget</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-admin-tbody">
+              <tr><td colspan="9" style="text-align:center;padding:32px;color:var(--steel)">Loading jobs…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Job detail modal -->
+      <div id="job-detail-modal" class="lead-notes-modal" style="display:none">
+        <div class="lead-notes-modal-inner" style="width:640px;max-height:85vh;overflow-y:auto">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <h3 id="job-modal-title" style="font-size:16px;font-weight:500"></h3>
+            <button id="job-modal-close" style="background:none;border:none;color:var(--steel);cursor:pointer;font-size:20px">&times;</button>
+          </div>
+          <div id="job-modal-body"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07)" id="job-modal-actions"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── NOTIFICATIONS PANEL ─── -->
+    <div id="panel-notifications" class="admin-panel">
+      <div class="panel-header">
+        <h1 class="panel-title">Notifications</h1>
+        <p class="panel-desc">System events — new applications, briefs, deliverables, and messages.</p>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:20px">
+        <button id="btn-mark-all-read" class="btn-export">Mark All as Read</button>
+        <button id="btn-refresh-notifs" class="btn-export" style="background:rgba(255,255,255,0.04)">Refresh</button>
+      </div>
+      <div id="admin-notif-list" class="editor-card" style="padding:0">
+        <div style="padding:32px;text-align:center;color:var(--steel)">Loading notifications…</div>
       </div>
     </div>
 

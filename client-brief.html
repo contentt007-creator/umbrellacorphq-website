@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Photographer or Cinematographer | Umbrella Corp HQ</title>
+  <meta name="description" content="Submit your shoot brief and we'll match you with the right photographer or cinematographer. Weddings, birthdays, influencer shoots, product campaigns across Bangladesh.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="freelancers/css/freelancers.css">
+</head>
+<body>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Umbrella Corp HQ Home">
+      <svg class="nav-logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1"/>
+        <line x1="15" y1="15" x2="85" y2="85" stroke="#c1121f" stroke-width="0.8" opacity="0.35"/>
+        <line x1="85" y1="15" x2="15" y2="85" stroke="#c1121f" stroke-width="0.8" opacity="0.35"/>
+        <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+        <circle cx="50" cy="50" r="2.5" fill="#0a0a0a"/>
+      </svg>
+      <span class="nav-logo-text">Umbrella Corp HQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="work.html" class="nav-link">Work</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <div class="nav-dropdown-wrap">
+        <button class="nav-link nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">Freelancers <span class="nav-dropdown-arrow">&#9660;</span></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="freelancers.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Our Talent</span>
+            <span class="dropdown-item-desc">Browse our vetted freelancer network</span>
+          </a>
+          <a href="freelancers/register.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Join The Team</span>
+            <span class="dropdown-item-desc">Apply as a freelancer</span>
+          </a>
+          <a href="freelancers/login.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">Freelancer Login</span>
+            <span class="dropdown-item-desc">Access your dashboard</span>
+          </a>
+        </div>
+      </div>
+      <a href="contact.html" class="nav-cta">Get a Quote</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" aria-hidden="true">
+    <button class="mobile-menu-close" aria-label="Close menu">&#10005;</button>
+    <a href="index.html" class="mobile-menu-link">Home</a>
+    <a href="services.html" class="mobile-menu-link">Services</a>
+    <a href="work.html" class="mobile-menu-link">Work</a>
+    <a href="freelancers.html" class="mobile-menu-link">Freelancers</a>
+    <a href="contact.html" class="mobile-menu-link">Contact</a>
+    <a href="contact.html" class="btn-primary" style="margin-top:40px;display:inline-block">Get a Quote</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="fl-brief-hero">
+    <div class="container">
+      <p class="fl-hero-eyebrow">BOOK YOUR SHOOT</p>
+      <h1 class="fl-hero-heading">
+        Tell Us About<br>
+        <span style="color:var(--corp-red)">Your Event.</span>
+      </h1>
+      <p class="fl-hero-sub">
+        Weddings, birthdays, influencer shoots, product campaigns — tell us what you need
+        and we'll match you with the right photographer or cinematographer within 24 hours.
+      </p>
+    </div>
+  </section>
+
+  <!-- BRIEF FORM -->
+  <section class="fl-brief-section">
+    <div class="container">
+      <div class="fl-brief-wrap">
+
+        <!-- Success screen -->
+        <div id="brief-success" class="fl-success-screen" style="display:none">
+          <div class="fl-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3ecf8e" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2>Brief Received.</h2>
+          <p>Your Job ID: <strong id="brief-job-id" style="color:var(--corp-red);font-family:monospace;font-size:1.1em"></strong></p>
+          <p style="color:var(--steel);margin-top:8px;font-size:14px">Our team will contact you within 24 hours at <strong id="brief-client-email"></strong>.</p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:32px">
+            <a href="index.html" class="btn-secondary">Back to Home</a>
+            <a href="freelancers.html" class="btn-primary">Browse Our Talent</a>
+          </div>
+        </div>
+
+        <form id="brief-form" novalidate>
+
+          <h2 class="fl-brief-section-heading">Your Details</h2>
+          <div class="fl-form-grid">
+            <div class="fl-field">
+              <label for="client-name">Full Name *</label>
+              <input type="text" id="client-name" class="fl-input" placeholder="Your full name" required>
+            </div>
+            <div class="fl-field">
+              <label for="client-email">Email Address *</label>
+              <input type="email" id="client-email" class="fl-input" placeholder="you@company.com" required>
+            </div>
+            <div class="fl-field">
+              <label for="client-phone">Phone / WhatsApp *</label>
+              <input type="tel" id="client-phone" class="fl-input" placeholder="+880 1X-XXXX-XXXX" required>
+            </div>
+            <div class="fl-field">
+              <label for="client-company">Company Name</label>
+              <input type="text" id="client-company" class="fl-input" placeholder="Your company (optional)">
+            </div>
+            <div class="fl-field">
+              <label for="client-industry">Industry</label>
+              <select id="client-industry" class="fl-input fl-select">
+                <option value="">Select industry...</option>
+                <option>Food &amp; Beverage</option>
+                <option>Fashion &amp; Apparel</option>
+                <option>Technology &amp; Software</option>
+                <option>E-commerce &amp; Retail</option>
+                <option>Real Estate</option>
+                <option>Healthcare &amp; Pharma</option>
+                <option>Education</option>
+                <option>Finance &amp; Banking</option>
+                <option>Hospitality &amp; Tourism</option>
+                <option>Manufacturing</option>
+                <option>Media &amp; Entertainment</option>
+                <option>NGO / Non-profit</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <h2 class="fl-brief-section-heading" style="margin-top:40px">Project Details</h2>
+          <div class="fl-form-grid">
+            <div class="fl-field" style="grid-column:1/-1">
+              <label for="project-title">Project / Event Title *</label>
+              <input type="text" id="project-title" class="fl-input" placeholder="e.g. Rahman Wedding — Gulshan, 12 May 2026" required>
+            </div>
+            <div class="fl-field">
+              <label for="service-type">Event Type *</label>
+              <select id="service-type" class="fl-input fl-select" required>
+                <option value="">Select event type...</option>
+                <optgroup label="📷 Photography">
+                  <option>Wedding / Marriage — Photography</option>
+                  <option>Birthday Party — Photography</option>
+                  <option>Influencer Shoot — Photography</option>
+                  <option>Product Shoot — Photography</option>
+                  <option>Corporate Event — Photography</option>
+                  <option>Fashion / Editorial — Photography</option>
+                  <option>Engagement / Pre-wedding — Photography</option>
+                  <option>Baby Shower — Photography</option>
+                  <option>Food Photography</option>
+                  <option>Real Estate Photography</option>
+                </optgroup>
+                <optgroup label="🎬 Cinematography / Video">
+                  <option>Wedding / Marriage — Videography</option>
+                  <option>Birthday Party — Videography</option>
+                  <option>Influencer Shoot — Videography</option>
+                  <option>Product Shoot — Videography</option>
+                  <option>Corporate Event — Videography</option>
+                  <option>Music Video</option>
+                  <option>Documentary</option>
+                  <option>Reels / Short-form Content</option>
+                </optgroup>
+                <optgroup label="📷🎬 Photo + Video Package">
+                  <option>Wedding Full Package (Photo + Video)</option>
+                  <option>Birthday Full Package (Photo + Video)</option>
+                  <option>Event Full Package (Photo + Video)</option>
+                </optgroup>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="fl-field">
+              <label for="talent-type">Talent Needed *</label>
+              <select id="talent-type" class="fl-input fl-select" required>
+                <option value="">Select...</option>
+                <option value="Photographer">Photographer only</option>
+                <option value="Cinematographer">Cinematographer only</option>
+                <option value="Both">Both — Photographer &amp; Cinematographer</option>
+              </select>
+            </div>
+            <div class="fl-field" style="grid-column:1/-1">
+              <label for="project-desc">
+                Detailed Description *
+                <span style="color:var(--steel);font-weight:400;font-size:12px">(min 100 characters)</span>
+              </label>
+              <textarea id="project-desc" class="fl-input fl-textarea" rows="5"
+                placeholder="Describe your project in detail — what you need, who it's for, what success looks like, any specific requirements..."></textarea>
+              <span id="desc-count" style="font-size:11px;color:var(--steel);display:block;margin-top:4px">0 characters</span>
+            </div>
+
+            <!-- Reference links -->
+            <div class="fl-field" style="grid-column:1/-1">
+              <label>Reference Links <span style="color:var(--steel);font-size:12px">(optional)</span></label>
+              <div id="ref-links-container">
+                <div class="fl-ref-link-row">
+                  <input type="url" class="fl-input ref-link-input" placeholder="https://example.com/reference">
+                  <button type="button" class="fl-remove-ref" style="display:none">×</button>
+                </div>
+              </div>
+              <button type="button" id="add-ref-link" class="fl-add-link-btn">+ Add another link</button>
+            </div>
+
+            <!-- File attachments -->
+            <div class="fl-field" style="grid-column:1/-1">
+              <label>
+                Attachments
+                <span style="color:var(--steel);font-size:12px">(optional — max 5 files, 10MB each)</span>
+              </label>
+              <div class="fl-upload-drop" id="brief-file-drop">
+                <input type="file" id="brief-file-input" multiple
+                  accept="image/*,.pdf,.zip,.doc,.docx,.pptx" style="display:none">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                  style="width:28px;height:28px;color:var(--steel)">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <p>Click or drag files here</p>
+                <span style="font-size:12px;color:var(--steel)">Images, PDFs, ZIP, Word, PowerPoint</span>
+              </div>
+              <div id="brief-file-list" class="fl-brief-file-list"></div>
+            </div>
+          </div>
+
+          <h2 class="fl-brief-section-heading" style="margin-top:40px">Budget &amp; Timeline</h2>
+          <div class="fl-form-grid">
+            <div class="fl-field">
+              <label for="budget">Budget Range *</label>
+              <select id="budget" class="fl-input fl-select" required>
+                <option value="">Select budget...</option>
+                <option value="under-10k">Under ৳10,000</option>
+                <option value="10k-25k">৳10,000 – ৳25,000</option>
+                <option value="25k-50k">৳25,000 – ৳50,000</option>
+                <option value="50k-1lac">৳50,000 – ৳1,00,000</option>
+                <option value="1lac-2.5lac">৳1,00,000 – ৳2,50,000</option>
+                <option value="2.5lac+">৳2,50,000+</option>
+                <option value="uch-recommend">Let UCH Recommend</option>
+              </select>
+            </div>
+            <div class="fl-field">
+              <label for="deadline">Deadline *</label>
+              <select id="deadline" class="fl-input fl-select" required>
+                <option value="">Select timeline...</option>
+                <option value="urgent">Urgent — within 72 hours (urgency fee applies)</option>
+                <option value="1-week">Within 1 week</option>
+                <option value="2-weeks">Within 2 weeks</option>
+                <option value="1-month">Within 1 month</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+            <div class="fl-field">
+              <label for="heard-from">How did you hear about us?</label>
+              <select id="heard-from" class="fl-input fl-select">
+                <option value="">Select...</option>
+                <option>Google Search</option>
+                <option>Social Media</option>
+                <option>Referral</option>
+                <option>Previous client</option>
+                <option>LinkedIn</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fl-agreements" style="margin-top:36px">
+            <label class="fl-check-label">
+              <input type="checkbox" id="brief-agree" required>
+              <span class="fl-checkmark"></span>
+              I understand my project will be handled by the UCH team and I will not contact any individual freelancer directly *
+            </label>
+          </div>
+
+          <div id="brief-error" class="fl-error-msg" style="display:none;margin-top:16px"></div>
+
+          <button type="submit" id="btn-submit-brief" class="btn-primary"
+            style="margin-top:32px;font-size:15px;padding:16px 40px">
+            <span id="brief-btn-text">Submit Brief →</span>
+            <span id="brief-btn-spinner" style="display:none">Submitting…</span>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg class="nav-logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="32" stroke="#c1121f" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="4" y1="50" x2="96" y2="50" stroke="#c1121f" stroke-width="1"/>
+          <line x1="50" y1="4" x2="50" y2="96" stroke="#c1121f" stroke-width="1"/>
+          <circle cx="50" cy="50" r="6" fill="#c1121f"/>
+          <circle cx="50" cy="50" r="2.5" fill="#0a0a0a"/>
+        </svg>
+        <span class="footer-brand-name">Umbrella Corp HQ</span>
+        <p class="footer-tagline">We Cover Everything.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="freelancers.html">Freelancers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Umbrella Corp HQ. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="freelancers/js/brief.js"></script>
+
+</body>
+</html>
