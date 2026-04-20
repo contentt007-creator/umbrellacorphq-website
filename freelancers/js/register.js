@@ -58,7 +58,8 @@ function setupGoogleSignIn() {
         code === 'auth/popup-closed-by-user'    ? 'Popup was closed. Try again.' :
         code === 'auth/popup-blocked'            ? 'Popup was blocked by your browser. Allow popups for this site and try again.' :
         code === 'auth/cancelled-popup-request'  ? 'Another sign-in is already in progress.' :
-        code === 'auth/unauthorized-domain'      ? 'Add localhost to Firebase Console → Auth → Authorized Domains.' :
+        code === 'auth/unauthorized-domain'       ? 'Add localhost to Firebase Console → Auth → Authorized Domains.' :
+        code === 'auth/configuration-not-found'   ? 'Google Sign-In is not enabled. Go to Firebase Console → Authentication → Sign-in method → Google → Enable.' :
         'Google sign-in failed. Please try again.';
       showError(msg);
       return;
