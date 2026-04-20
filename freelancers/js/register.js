@@ -2,7 +2,7 @@
  * register.js — Freelancer Registration (4-step form)
  * Imports from Firebase utility layer
  */
-import { registerFreelancer, signInWithGoogle, createGoogleFreelancerProfile, getFreelancerProfile, updateFreelancerProfile, getCurrentUser, EVENT_TYPES, EQUIPMENT_TAGS, BD_DISTRICTS, generateId } from '../../js/firebase.js';
+import { registerFreelancer, signInWithGoogle, createGoogleFreelancerProfile, getFreelancerProfile, updateFreelancerProfile, uploadDataUrl, getCurrentUser, EVENT_TYPES, EQUIPMENT_TAGS, BD_DISTRICTS, generateId } from '../../js/firebase.js';
 
 // ─── State ────────────────────────────────────────────────────────────────────
 let currentStep    = 1;
@@ -87,9 +87,17 @@ function setupGoogleSignIn() {
     try {
       existing = await getFreelancerProfile(uid);
     } catch (profileErr) {
-      // Firestore might be blocked by security rules for this user
+      const code = profileErr?.code || '';
       setGoogleBtn(btn, 'default');
-      showError('Could not reach the database. Check your Firestore security rules allow authenticated reads, then try again.');
+      if (code === 'permission-denied') {
+        showError(
+          '🔒 Firestore rules are blocking this request. ' +
+          'Go to Firebase Console → Firestore Database → Rules and set: ' +
+          'allow read, write: if request.auth != null;'
+        );
+      } else {
+        showError(`Database error (${code || profileErr?.message || 'unknown'}). Check your internet connection and try again.`);
+      }
       return;
     }
 
@@ -104,8 +112,17 @@ function setupGoogleSignIn() {
     try {
       await createGoogleFreelancerProfile({ uid, email, name, photo });
     } catch (createErr) {
+      const code = createErr?.code || '';
       setGoogleBtn(btn, 'default');
-      showError('Failed to create your profile. Check Firestore security rules allow authenticated writes, then try again.');
+      if (code === 'permission-denied') {
+        showError(
+          '🔒 Firestore rules are blocking writes. ' +
+          'Go to Firebase Console → Firestore Database → Rules and set: ' +
+          'allow read, write: if request.auth != null;'
+        );
+      } else {
+        showError(`Could not create your profile (${code || createErr?.message || 'unknown'}). Try again.`);
+      }
       return;
     }
 
@@ -507,19 +524,73 @@ function validateStep4() {
 async function handleSubmit() {
   if (!validateStep(4)) return;
 
-  btnSubmit.disabled   = true;
+  btnSubmit.disabled    = true;
   btnSubmit.textContent = 'Submitting…';
 
-  const fullName    = document.getElementById('fullName').value.trim();
-  const email       = document.getElementById('reg-email').value.trim();
-  const phone       = document.getElementById('reg-phone').value.trim();
-  const location    = document.getElementById('location').value;
-  const bio         = document.getElementById('bio').value.trim();
-  const yrsExp      = document.getElementById('yearsExperience').value;
-  const capacity    = document.getElementById('weeklyCapacity').value;
-  const password    = document.getElementById('reg-password').value;
-  const spec        = document.getElementById('specialisation').value;
+  const fullName = document.getElementById('fullName')?.value.trim()   || '';
+  const email    = document.getElementById('reg-email')?.value.trim()  || '';
+  const phone    = document.getElementById('reg-phone')?.value.trim()  || '';
+  const location = document.getElementById('location')?.value           || '';
+  const bio      = document.getElementById('bio')?.value.trim()         || '';
+  const yrsExp   = document.getElementById('yearsExperience')?.value    || '';
+  const capacity = document.getElementById('weeklyCapacity')?.value     || '20';
+  const password = document.getElementById('reg-password')?.value       || '';
+  const spec     = document.getElementById('specialisation')?.value     || '';
 
+  // Determine uid early (needed for Storage paths)
+  const user = getCurrentUser();
+  const earlyUid = user?.uid || null;
+
+  // ── Upload profile photo to Storage (skip base64 in Firestore) ──────────
+  let profilePhotoUrl = '';
+  if (profilePhotoDataUrl && earlyUid) {
+    try {
+      btnSubmit.textContent = 'Uploading photo…';
+      profilePhotoUrl = await uploadDataUrl(
+        `freelancers/${earlyUid}/profile/photo`,
+        profilePhotoDataUrl
+      );
+    } catch (_) {
+      // Non-fatal — skip photo if upload fails
+    }
+  } else if (user?.photoURL) {
+    // Use Google profile photo URL directly (already a URL, not base64)
+    profilePhotoUrl = user.photoURL;
+  }
+
+  // ── Upload portfolio thumbnails to Storage ───────────────────────────────
+  btnSubmit.textContent = `Uploading portfolio (0/${portfolioItems.length})…`;
+  const uploadedItems = [];
+  for (let i = 0; i < portfolioItems.length; i++) {
+    const item = portfolioItems[i];
+    let thumbUrl = '';
+    if (item.thumbnailDataUrl && earlyUid) {
+      try {
+        btnSubmit.textContent = `Uploading portfolio (${i + 1}/${portfolioItems.length})…`;
+        thumbUrl = await uploadDataUrl(
+          `freelancers/${earlyUid}/portfolio/${item.id}/thumb`,
+          item.thumbnailDataUrl
+        );
+      } catch (_) {
+        // Use empty string if upload fails — admin can see it's missing
+      }
+    }
+    uploadedItems.push({
+      id:              item.id,
+      title:           item.title,
+      category:        item.category,
+      thumbnail:       thumbUrl,        // Storage URL, not base64
+      storageUrl:      thumbUrl,
+      mediaType:       'image',
+      description:     item.description,
+      tools:           [...item.tools],
+      approved:        false,
+      rejectionReason: '',
+      uploadedAt:      new Date().toISOString(),
+    });
+  }
+
+  // ── Build profile data (no base64 blobs) ────────────────────────────────
   const profileData = {
     fullName,
     phone,
@@ -533,71 +604,60 @@ async function handleSubmit() {
     skills:           [...skillsArray],
     equipment:        [...toolsArray],
     tools:            [...toolsArray],
-    profilePhoto:     profilePhotoDataUrl || '',
+    profilePhoto:     profilePhotoUrl,
     socialLinks: {
-      instagram:     document.getElementById('link-instagram')?.value.trim()  || '',
-      youtube:       document.getElementById('link-youtube')?.value.trim()    || '',
-      fivehundredpx: document.getElementById('link-500px')?.value.trim()      || '',
-      linkedin:      document.getElementById('link-linkedin')?.value.trim()   || '',
-      portfolio:     document.getElementById('link-portfolio')?.value.trim()  || '',
+      instagram:      document.getElementById('link-instagram')?.value.trim()  || '',
+      youtube:        document.getElementById('link-youtube')?.value.trim()    || '',
+      fivehundredpx:  document.getElementById('link-500px')?.value.trim()      || '',
+      linkedin:       document.getElementById('link-linkedin')?.value.trim()   || '',
+      portfolio:      document.getElementById('link-portfolio')?.value.trim()  || '',
     },
-    portfolioItems: portfolioItems.map(item => ({
-      id:              item.id,
-      title:           item.title,
-      category:        item.category,
-      thumbnail:       item.thumbnailDataUrl || '',
-      description:     item.description,
-      tools:           [...item.tools],
-      approved:        false,
-      rejectionReason: '',
-    })),
+    portfolioItems: uploadedItems,
     ndaAgreed:    true,
     ndaTimestamp: new Date().toISOString(),
     termsAgreed:  true,
     availableForWork: true,
   };
 
-  let uid, error, resolvedEmail;
+  // ── Save to Firestore ────────────────────────────────────────────────────
+  btnSubmit.textContent = 'Saving application…';
 
-  if (googleSignedIn) {
-    // Google user — profile stub already created; just update it with full data
-    const currentUser = getCurrentUser();
-    uid           = currentUser?.uid;
-    resolvedEmail = currentUser?.email || '';
-    if (uid) {
-      const { error: updateErr } = await updateFreelancerProfile(uid, profileData).then(
-        ()  => ({ error: null }),
-        err => ({ error: err })
-      );
-      error = updateErr;
+  let uid, saveError, resolvedEmail;
+
+  try {
+    if (googleSignedIn) {
+      // Google user — stub already exists, update it with full profile
+      uid           = earlyUid;
+      resolvedEmail = user?.email || '';
+      if (!uid) throw { code: 'no-user' };
+      await updateFreelancerProfile(uid, profileData);
+      saveError = null;
     } else {
-      error = { code: 'no-user' };
+      // Email/password — create Auth account + Firestore profile
+      resolvedEmail = email;
+      const result = await registerFreelancer(email, password, profileData);
+      uid       = result.uid;
+      saveError = result.error;
     }
-  } else {
-    // Email/password registration
-    resolvedEmail = email;
-    const result = await registerFreelancer(email, password, profileData);
-    uid   = result.uid;
-    error = result.error;
+  } catch (err) {
+    saveError = err;
   }
 
-  if (error) {
-    btnSubmit.disabled   = false;
+  if (saveError) {
+    btnSubmit.disabled    = false;
     btnSubmit.textContent = 'Submit Application →';
-    const msg = friendlyAuthError(error);
-    showError(msg);
+    showError(friendlyAuthError(saveError));
     return;
   }
 
-  // Success
+  // ── Success ──────────────────────────────────────────────────────────────
   formNav.style.display = 'none';
   document.querySelectorAll('.fl-form-step').forEach(s => s.style.display = 'none');
   document.querySelector('.fl-steps-bar').style.display = 'none';
   regSuccess.style.display = '';
-  document.getElementById('success-email').textContent = resolvedEmail;
-  document.getElementById('success-fl-id').textContent = `FL-${uid.slice(0,8).toUpperCase()}`;
+  document.getElementById('success-email').textContent  = resolvedEmail;
+  document.getElementById('success-fl-id').textContent  = `FL-${(uid || '').slice(0, 8).toUpperCase()}`;
 
-  // Redirect to dashboard after 3 seconds
   setTimeout(() => { window.location.href = 'dashboard.html'; }, 3000);
 }
 
