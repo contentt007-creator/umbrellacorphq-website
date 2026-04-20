@@ -165,52 +165,52 @@ export async function registerFreelancer(email, password, profileData) {
 }
 
 /**
- * Register or sign in a freelancer with Google OAuth.
- * If the user already has a Firestore document, treat as login.
- * Otherwise, create a minimal pending profile then let them complete the form.
- * Returns { uid, isNew, error }
+ * Open the Google OAuth popup and return the signed-in user details.
+ * Does NOT touch Firestore — caller decides what to do next.
+ * Returns { uid, email, name, photo, error }
  */
 export async function signInWithGoogle() {
   try {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    const cred   = await signInWithPopup(auth, provider);
-    const uid    = cred.user.uid;
-    const email  = cred.user.email;
-    const name   = cred.user.displayName || '';
-    const photo  = cred.user.photoURL    || '';
-
-    // Check if profile already exists
-    const existing = await getFreelancerProfile(uid);
-    if (existing) {
-      return { uid, isNew: false, status: existing.status, error: null };
-    }
-
-    // First time — create a minimal pending profile
-    await setDoc(doc(db, 'freelancers', uid), {
-      id:            `FL-${uid.slice(0, 8).toUpperCase()}`,
-      uid,
-      email,
-      fullName:      name,
-      profilePhoto:  photo,
-      status:        'pending',
-      tier:          'bronze',
-      joinDate:      serverTimestamp(),
-      lastActive:    serverTimestamp(),
-      completedJobs: 0,
-      totalEarnings: 0,
-      rating:        0,
-      skills:        [],
-      eventTypes:    [],
-      equipment:     [],
-      portfolioItems: [],
-      availableForWork: true,
-      ndaAgreed:     false,
-    });
-    return { uid, isNew: true, status: 'pending', error: null };
+    const cred  = await signInWithPopup(auth, provider);
+    return {
+      uid:   cred.user.uid,
+      email: cred.user.email   || '',
+      name:  cred.user.displayName || '',
+      photo: cred.user.photoURL    || '',
+      error: null,
+    };
   } catch (err) {
-    return { uid: null, isNew: false, error: err };
+    return { uid: null, email: '', name: '', photo: '', error: err };
   }
+}
+
+/**
+ * Create a minimal pending Firestore profile for a Google-authenticated user.
+ * Call this after signInWithGoogle() when the profile doesn't yet exist.
+ */
+export async function createGoogleFreelancerProfile({ uid, email, name, photo }) {
+  await setDoc(doc(db, 'freelancers', uid), {
+    id:            `FL-${uid.slice(0, 8).toUpperCase()}`,
+    uid,
+    email,
+    fullName:      name,
+    profilePhoto:  photo,
+    status:        'pending',
+    tier:          'bronze',
+    joinDate:      serverTimestamp(),
+    lastActive:    serverTimestamp(),
+    completedJobs: 0,
+    totalEarnings: 0,
+    rating:        0,
+    skills:        [],
+    eventTypes:    [],
+    equipment:     [],
+    portfolioItems: [],
+    availableForWork: true,
+    ndaAgreed:     false,
+  });
 }
 
 /**

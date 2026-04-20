@@ -2,7 +2,7 @@
  * register.js — Freelancer Registration (4-step form)
  * Imports from Firebase utility layer
  */
-import { registerFreelancer, signInWithGoogle, updateFreelancerProfile, getCurrentUser, EVENT_TYPES, EQUIPMENT_TAGS, BD_DISTRICTS, generateId } from '../../js/firebase.js';
+import { registerFreelancer, signInWithGoogle, createGoogleFreelancerProfile, getFreelancerProfile, updateFreelancerProfile, getCurrentUser, EVENT_TYPES, EQUIPMENT_TAGS, BD_DISTRICTS, generateId } from '../../js/firebase.js';
 
 // ─── State ────────────────────────────────────────────────────────────────────
 let currentStep    = 1;
@@ -36,56 +36,94 @@ document.addEventListener('DOMContentLoaded', () => {
 // ─── Google Sign-in ───────────────────────────────────────────────────────────
 let googleSignedIn = false; // true when user completed Google auth (skip password fields)
 
+const GOOGLE_BTN_DEFAULT_HTML = `<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google`;
+
+function setGoogleBtn(btn, state, msg = '') {
+  const styles = {
+    default:    { bg: '#fff',    color: '#1a1a1a', border: 'none',              cursor: 'pointer',  html: GOOGLE_BTN_DEFAULT_HTML },
+    loading:    { bg: '#f0f0f0', color: '#666',    border: 'none',              cursor: 'wait',     html: msg || 'Connecting…' },
+    checking:   { bg: '#f0f0f0', color: '#666',    border: 'none',              cursor: 'wait',     html: msg || 'Checking account…' },
+    success:    { bg: '#0a2a0a', color: '#3ecf8e', border: '1px solid #3ecf8e', cursor: 'default',  html: msg || '✓ Google account connected — continue below' },
+  };
+  const s = styles[state] || styles.default;
+  btn.disabled         = state === 'loading' || state === 'checking';
+  btn.style.background = s.bg;
+  btn.style.color      = s.color;
+  btn.style.border     = s.border;
+  btn.style.cursor     = s.cursor;
+  btn.innerHTML        = s.html;
+}
+
 function setupGoogleSignIn() {
   const btn = document.getElementById('btn-google-signup');
   if (!btn) return;
 
   btn.addEventListener('click', async () => {
-    btn.disabled    = true;
-    btn.textContent = 'Connecting…';
+    clearError();
 
-    window.__googleAuthInProgress = true;
-    const { uid, isNew, error } = await signInWithGoogle();
-    window.__googleAuthInProgress = false;
+    // ── Step 1: open Google popup ──────────────────────────────────────────
+    setGoogleBtn(btn, 'loading', 'Opening Google sign-in…');
 
-    // Restore button
-    btn.disabled  = false;
-    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google`;
+    const { uid, email, name, photo, error: authError } = await signInWithGoogle();
 
-    if (error) {
-      const code = error.code || '';
-      const msg =
-        code === 'auth/popup-closed-by-user'    ? 'Popup was closed. Try again.' :
-        code === 'auth/popup-blocked'            ? 'Popup was blocked by your browser. Allow popups for this site and try again.' :
-        code === 'auth/cancelled-popup-request'  ? 'Another sign-in is already in progress.' :
-        code === 'auth/unauthorized-domain'       ? 'Add localhost to Firebase Console → Auth → Authorized Domains.' :
-        code === 'auth/configuration-not-found'   ? 'Google Sign-In is not enabled. Go to Firebase Console → Authentication → Sign-in method → Google → Enable.' :
-        'Google sign-in failed. Please try again.';
-      showError(msg);
+    if (authError) {
+      setGoogleBtn(btn, 'default');
+      const code = authError.code || '';
+      showError(
+        code === 'auth/popup-closed-by-user'   ? 'Sign-in popup was closed. Try again.' :
+        code === 'auth/popup-blocked'           ? 'Pop-up blocked by browser — allow pop-ups for localhost and retry.' :
+        code === 'auth/cancelled-popup-request' ? 'Another sign-in is already in progress.' :
+        code === 'auth/unauthorized-domain'     ? 'localhost is not authorised. Add it in Firebase Console → Auth → Authorized Domains.' :
+        code === 'auth/configuration-not-found' ? 'Google Sign-In is not enabled. Firebase Console → Authentication → Sign-in method → Google → Enable.' :
+        `Google sign-in failed (${code || 'unknown'}). Try again.`
+      );
       return;
     }
 
-    if (!isNew) {
-      // Already has a profile — go to dashboard
+    // ── Step 2: check if profile already exists ───────────────────────────
+    setGoogleBtn(btn, 'checking', 'Checking your account…');
+
+    let existing = null;
+    try {
+      existing = await getFreelancerProfile(uid);
+    } catch (profileErr) {
+      // Firestore might be blocked by security rules for this user
+      setGoogleBtn(btn, 'default');
+      showError('Could not reach the database. Check your Firestore security rules allow authenticated reads, then try again.');
+      return;
+    }
+
+    if (existing) {
+      // Already registered — send straight to dashboard
       window.location.href = 'dashboard.html';
       return;
     }
 
-    // New Google account — skip Step 1 (name/email/password), go straight to Step 2
-    googleSignedIn = true;
-    clearError();
+    // ── Step 3: first time — create minimal profile stub ──────────────────
+    setGoogleBtn(btn, 'checking', 'Setting up your account…');
+    try {
+      await createGoogleFreelancerProfile({ uid, email, name, photo });
+    } catch (createErr) {
+      setGoogleBtn(btn, 'default');
+      showError('Failed to create your profile. Check Firestore security rules allow authenticated writes, then try again.');
+      return;
+    }
 
-    // Hide password fields (not needed for Google users)
+    // ── Step 4: pre-fill Step 1 fields from Google account data ──────────
+    googleSignedIn = true;
+
+    // Hide password fields — not needed for Google users
     document.getElementById('reg-password')?.closest('.fl-field')?.style.setProperty('display', 'none');
     document.getElementById('reg-password2')?.closest('.fl-field')?.style.setProperty('display', 'none');
 
-    // Show a success indicator on the Google button
-    btn.style.background    = '#0a2a0a';
-    btn.style.color         = '#3ecf8e';
-    btn.style.border        = '1px solid #3ecf8e';
-    btn.innerHTML           = '✓ Google account connected — continue below';
-    btn.style.cursor        = 'default';
+    // Pre-fill name and email from Google
+    const nameEl  = document.getElementById('fullName');
+    const emailEl = document.getElementById('reg-email');
+    if (nameEl  && !nameEl.value)  nameEl.value  = name;
+    if (emailEl && !emailEl.value) emailEl.value = email;
 
+    setGoogleBtn(btn, 'success', '✓ Google account connected — continue below →');
+    clearError();
     goToStep(2);
   });
 }
