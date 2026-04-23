@@ -78,6 +78,7 @@ async function initDashboard(profile) {
 
   // Wire up tabs, topbar actions
   setupTabs();
+  setupMobileSidebar();
   setupNotifBell();
   document.getElementById('fl-logout')?.addEventListener('click', async () => {
     await logoutFreelancer();
@@ -87,6 +88,39 @@ async function initDashboard(profile) {
   // Load overview immediately
   await loadOverview(profile);
   await loadNotifications();
+}
+
+// ─── Mobile sidebar toggle ─────────────────────────────────────────────────
+function setupMobileSidebar() {
+  const toggle  = document.getElementById('fl-sidebar-toggle');
+  const sidebar = document.querySelector('.fl-dash-sidebar');
+  const overlay = document.getElementById('fl-sidebar-overlay');
+  if (!toggle || !sidebar) return;
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay?.classList.add('active');
+    toggle.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay?.classList.remove('active');
+    toggle.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', () => {
+    sidebar.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
+  });
+  overlay?.addEventListener('click', closeSidebar);
+
+  // Close sidebar when a nav tab is clicked on mobile
+  document.querySelectorAll('.fl-dash-nav-btn[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (window.innerWidth <= 768) closeSidebar();
+    });
+  });
 }
 
 // ─── Status banner ────────────────────────────────────────────────────────────

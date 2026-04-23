@@ -437,14 +437,78 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
     }
 
-    /* ── Responsive ── */
+    /* ── Hamburger (mobile only) ── */
+    .fl-dash-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-right: 8px;
+    }
+    .fl-dash-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ivory);
+      border-radius: 1px;
+      transition: all 0.25s;
+    }
+    .fl-dash-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .fl-dash-hamburger.open span:nth-child(2) { opacity: 0; }
+    .fl-dash-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Sidebar overlay ── */
+    .fl-sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+      backdrop-filter: blur(2px);
+    }
+    .fl-sidebar-overlay.active { display: block; }
+
+    /* ── Mobile responsive ── */
     @media (max-width: 768px) {
-      .fl-dash-sidebar { display: none; }
-      .fl-dash-main { padding: 20px; }
-      .fl-dash-stats { grid-template-columns: 1fr 1fr; }
+      .fl-dash-hamburger { display: flex; }
+
+      .fl-dash-sidebar {
+        position: fixed;
+        top: 56px;
+        left: -240px;
+        width: 240px;
+        height: calc(100vh - 56px);
+        z-index: 100;
+        transition: left 0.28s ease;
+        overflow-y: auto;
+      }
+      .fl-dash-sidebar.mobile-open { left: 0; }
+
+      .fl-dash-main { padding: 20px 16px; max-width: 100%; }
+      .fl-dash-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .fl-dash-stat-val { font-size: 22px; }
       .fl-form-2col { grid-template-columns: 1fr; }
       .fl-earnings-cards { grid-template-columns: 1fr; }
-      .fl-gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
+      .fl-gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; }
+      .fl-dash-welcome { display: none; }
+      .fl-topbar-tier { display: none; }
+      .fl-job-row-top { flex-wrap: wrap; gap: 8px; }
+      .fl-job-meta { flex-direction: column; gap: 4px; }
+      .fl-tier-card { padding: 16px; }
+      .fl-save-row { flex-direction: column; align-items: flex-start; }
+      .fl-profile-photo-row { flex-direction: column; align-items: flex-start; }
+      .fl-earnings-table { font-size: 11px; }
+      .fl-earnings-table th, .fl-earnings-table td { padding: 8px 6px; }
+    }
+
+    @media (max-width: 420px) {
+      .fl-dash-stats { grid-template-columns: 1fr 1fr; }
+      .fl-gallery-grid { grid-template-columns: 1fr 1fr; }
+      .fl-dash-main { padding: 16px 12px; }
     }
   </style>
 </head>
@@ -460,6 +524,9 @@
 
   <!-- Top bar -->
   <div class="fl-dash-topbar">
+    <button class="fl-dash-hamburger" id="fl-sidebar-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
     <a href="../index.html" class="fl-dash-logo">
       <svg viewBox="0 0 100 100" fill="none" style="width:26px;height:26px">
         <circle cx="50" cy="50" r="46" stroke="#c1121f" stroke-width="1.5"/>
@@ -481,6 +548,7 @@
     </div>
   </div>
 
+  <div class="fl-sidebar-overlay" id="fl-sidebar-overlay"></div>
   <div class="fl-dash-layout">
 
     <!-- Sidebar -->

@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupBioCounter();
   setupCapacitySlider();
   setupProfilePhoto();
-  setupSkillTagInput();
-  setupToolTagInput();
+  setupEventChips();
+  setupEquipmentChips();
   setupPortfolioSection();
   setupStepNavigation();
   setupAgreementDate();
@@ -195,72 +195,63 @@ function setupProfilePhoto() {
   });
 }
 
-// ─── Tag input (event specialisations) ───────────────────────────────────────
-function setupSkillTagInput() {
-  setupTagInput(
-    'skills-input', 'skills-tags', 'skills-suggestions',
-    skillsArray, EVENT_TYPES
-  );
-}
-
-function setupToolTagInput() {
-  setupTagInput(
-    'tools-input', 'tools-tags', 'tools-suggestions',
-    toolsArray, EQUIPMENT_TAGS
-  );
-}
-
-function setupTagInput(inputId, tagsId, suggestionsId, arr, suggestions) {
-  const input     = document.getElementById(inputId);
-  const tagsEl    = document.getElementById(tagsId);
-  const suggestEl = suggestionsId ? document.getElementById(suggestionsId) : null;
-  if (!input || !tagsEl) return;
-
-  function renderTags() {
-    tagsEl.innerHTML = arr.map(t => `
-      <span class="fl-tag-chip">${t}
-        <button type="button" class="fl-tag-remove" data-tag="${t}" aria-label="Remove ${t}">×</button>
-      </span>`).join('');
-    tagsEl.querySelectorAll('.fl-tag-remove').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = arr.indexOf(btn.dataset.tag);
-        if (idx > -1) { arr.splice(idx, 1); renderTags(); }
-      });
+// ─── Event specialisation chips ──────────────────────────────────────────────
+function setupEventChips() {
+  const grid = document.getElementById('event-chip-grid');
+  if (!grid) return;
+  EVENT_TYPES.forEach(type => {
+    const btn = document.createElement('button');
+    btn.type      = 'button';
+    btn.className = 'fl-chip-select';
+    btn.textContent = type;
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('selected');
+      const idx = skillsArray.indexOf(type);
+      if (idx > -1) skillsArray.splice(idx, 1);
+      else skillsArray.push(type);
     });
-  }
+    grid.appendChild(btn);
+  });
+}
 
-  function addTag(value) {
-    const v = value.trim();
-    if (v && !arr.includes(v)) { arr.push(v); renderTags(); }
-    input.value = '';
-    if (suggestEl) suggestEl.innerHTML = '';
-  }
+// ─── Equipment chips ──────────────────────────────────────────────────────────
+function setupEquipmentChips() {
+  const grid    = document.getElementById('equipment-chip-grid');
+  const showBtn = document.getElementById('btn-show-more-equip');
+  if (!grid) return;
 
-  input.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ',') && input.value.trim()) {
-      e.preventDefault();
-      addTag(input.value);
-    }
-    if (e.key === 'Backspace' && !input.value && arr.length) {
-      arr.pop(); renderTags();
-    }
+  const ALWAYS_SHOW = 12; // show first 12 by default
+  EQUIPMENT_TAGS.forEach((tag, i) => {
+    const btn = document.createElement('button');
+    btn.type      = 'button';
+    btn.className = 'fl-chip-select' + (i >= ALWAYS_SHOW ? ' hidden' : '');
+    btn.textContent = tag;
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('selected');
+      const idx = toolsArray.indexOf(tag);
+      if (idx > -1) toolsArray.splice(idx, 1);
+      else toolsArray.push(tag);
+    });
+    grid.appendChild(btn);
   });
 
-  if (suggestEl) {
-    input.addEventListener('input', () => {
-      const q = input.value.toLowerCase().trim();
-      if (!q) { suggestEl.innerHTML = ''; return; }
-      const matches = suggestions.filter(s =>
-        s.toLowerCase().includes(q) && !arr.includes(s)
-      ).slice(0, 8);
-      suggestEl.innerHTML = matches.map(m =>
-        `<div class="fl-suggestion-item" data-val="${m}">${m}</div>`
-      ).join('');
-      suggestEl.querySelectorAll('.fl-suggestion-item').forEach(item => {
-        item.addEventListener('click', () => addTag(item.dataset.val));
-      });
+  let expanded = false;
+  showBtn?.addEventListener('click', () => {
+    expanded = !expanded;
+    grid.querySelectorAll('.fl-chip-select.hidden, .fl-chip-select[style*="none"]').forEach(c => {
+      c.classList.toggle('hidden', !expanded);
     });
-  }
+    // After expanding, only hide chips that were initially hidden and not selected
+    if (expanded) {
+      grid.querySelectorAll('.fl-chip-select').forEach(c => c.classList.remove('hidden'));
+      showBtn.textContent = 'Show fewer options ▴';
+    } else {
+      grid.querySelectorAll('.fl-chip-select').forEach((c, i) => {
+        if (i >= ALWAYS_SHOW && !c.classList.contains('selected')) c.classList.add('hidden');
+      });
+      showBtn.textContent = 'Show all equipment options ▾';
+    }
+  });
 }
 
 // ─── Portfolio section ────────────────────────────────────────────────────────
