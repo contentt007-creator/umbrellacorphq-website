@@ -17,7 +17,7 @@
  *   jobs/{jobId}/deliverables/{file}         — freelancer-uploaded deliverables
  */
 
-import { auth, db, storage } from '../firebase-config.js';
+import { auth, db } from '../firebase-config.js';
 
 import {
   createUserWithEmailAndPassword,
@@ -37,9 +37,10 @@ import {
   serverTimestamp, onSnapshot, increment, Timestamp,
 } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
 
-import {
-  ref, uploadBytes, uploadString, getDownloadURL, deleteObject,
-} from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js';
+
+// ─── Cloudinary (replaces Firebase Storage — free 25 GB / 25 GB BW per month) ─
+const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';   // ← paste your Cloud name here
+const CLOUDINARY_UPLOAD_PRESET = 'YOUR_PRESET_NAME';  // ← paste your unsigned preset name here
 
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -305,13 +306,8 @@ export async function removeGalleryItem(uid, itemId, storageUrl) {
   const items = (snap.data().portfolioItems || []).filter(i => i.id !== itemId);
   await updateDoc(docRef, { portfolioItems: items, lastActive: serverTimestamp() });
 
-  // Delete from Storage (best-effort — don't block on failure)
-  if (storageUrl) {
-    try {
-      const path = decodeURIComponent(storageUrl.split('/o/')[1]?.split('?')[0] || '');
-      if (path) await deleteObject(ref(storage, path));
-    } catch (_) { /* ignore storage delete errors */ }
-  }
+  // Note: Cloudinary free plan doesn't support client-side deletion — file stays in cloud
+  // but is removed from the freelancer's gallery and will no longer be displayed.
 }
 
 export async function getAllFreelancers() {
@@ -505,35 +501,53 @@ export function listenAdminNotifications(callback) {
 
 
 // ─────────────────────────────────────────────────────────────────────────────
-// STORAGE HELPERS
+// STORAGE HELPERS  (Cloudinary — free 25 GB, no credit card needed)
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Upload a File object to Firebase Storage.
- * @returns {Promise<string>} download URL
+ * Internal Cloudinary upload.
+ * Accepts a File, Blob, or base64 data URL string.
+ * Returns a permanent HTTPS URL (secure_url).
  */
-export async function uploadFile(storagePath, file) {
-  const storageRef = ref(storage, storagePath);
-  await uploadBytes(storageRef, file);
-  return getDownloadURL(storageRef);
+async function _cloudinaryUpload(fileOrDataUrl) {
+  if (!CLOUDINARY_CLOUD_NAME || CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') {
+    throw new Error('Cloudinary not configured — set CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET in js/firebase.js');
+  }
+  const formData = new FormData();
+  formData.append('file',           fileOrDataUrl);
+  formData.append('upload_preset',  CLOUDINARY_UPLOAD_PRESET);
+  formData.append('folder',         'uchhq');
+
+  const res  = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    { method: 'POST', body: formData }
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error?.message || 'Cloudinary upload failed');
+  return data.secure_url;
 }
 
 /**
- * Upload a base64 data URL to Firebase Storage.
- * @param {string} dataUrl  e.g. "data:image/png;base64,..."
- * @returns {Promise<string>} download URL
+ * Upload a File / Blob to Cloudinary.
+ * Same signature as the old Firebase Storage version — no call-site changes needed.
+ * @returns {Promise<string>} permanent HTTPS URL
  */
-export async function uploadDataUrl(storagePath, dataUrl) {
-  const storageRef = ref(storage, storagePath);
-  await uploadString(storageRef, dataUrl, 'data_url');
-  return getDownloadURL(storageRef);
+export async function uploadFile(_storagePath, file) {
+  return _cloudinaryUpload(file);
 }
 
-export async function deleteStorageFile(storagePath) {
-  try {
-    await deleteObject(ref(storage, storagePath));
-  } catch (_) { /* file may not exist */ }
+/**
+ * Upload a base64 data URL to Cloudinary.
+ * Same signature as the old Firebase Storage version — no call-site changes needed.
+ * @param {string} dataUrl  e.g. "data:image/png;base64,..."
+ * @returns {Promise<string>} permanent HTTPS URL
+ */
+export async function uploadDataUrl(_storagePath, dataUrl) {
+  return _cloudinaryUpload(dataUrl);
 }
+
+/** No-op — Cloudinary deletion requires a server-side API key (not safe for browsers). */
+export async function deleteStorageFile(_storagePath) { /* intentional no-op */ }
 
 
 // ─────────────────────────────────────────────────────────────────────────────
