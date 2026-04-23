@@ -22,6 +22,7 @@ import { auth, db } from '../firebase-config.js';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInAnonymously,
   signOut,
   onAuthStateChanged,
   updatePassword,
@@ -239,6 +240,17 @@ export async function loginFreelancer(email, password) {
 
 export async function logoutFreelancer() {
   await signOut(auth);
+}
+
+/**
+ * Sign in to Firebase anonymously.
+ * Used by the admin panel (which has no Firebase account) so Firestore
+ * rules that require request.auth != null are satisfied.
+ * Safe to call multiple times — skips if already signed in.
+ */
+export async function signInAnon() {
+  if (auth.currentUser) return; // already signed in
+  try { await signInAnonymously(auth); } catch (_) {}
 }
 
 export function onAuthChange(callback) {

@@ -666,6 +666,9 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadFBModule() {
     if (fbModule) return fbModule;
     fbModule = await import('../../js/firebase.js');
+    // Admin has no Firebase account — sign in anonymously so Firestore
+    // rules (require request.auth != null) allow reads.
+    await fbModule.signInAnon();
     return fbModule;
   }
 
@@ -686,7 +689,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let flFilter = 'all';
 
   async function loadAdminFreelancers(fb) {
-    allFreelancers = await fb.getAllFreelancers();
+    const tbody = document.getElementById('fl-admin-tbody');
+    try {
+      if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--steel)">Loading…</td></tr>`;
+      allFreelancers = await fb.getAllFreelancers();
+    } catch (err) {
+      console.error('loadAdminFreelancers failed', err);
+      if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--corp-red)">
+        ⚠️ Could not load freelancers: ${err?.code || err?.message || 'unknown error'}<br>
+        <span style="font-size:11px;color:var(--steel)">Check Firestore Rules — set <code>allow read: if request.auth != null</code></span>
+      </td></tr>`;
+      return;
+    }
     renderFreelancersTable();
     updateFlStats();
 
