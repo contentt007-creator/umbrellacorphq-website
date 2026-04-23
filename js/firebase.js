@@ -39,8 +39,8 @@ import {
 
 
 // ─── Cloudinary (replaces Firebase Storage — free 25 GB / 25 GB BW per month) ─
-const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';   // ← paste your Cloud name here
-const CLOUDINARY_UPLOAD_PRESET = 'YOUR_PRESET_NAME';  // ← paste your unsigned preset name here
+const CLOUDINARY_CLOUD_NAME    = 'dsyriylox';
+const CLOUDINARY_UPLOAD_PRESET = 'umbrella_gallery';
 
 
 // ─────────────────────────────────────────────────────────────────────────────
