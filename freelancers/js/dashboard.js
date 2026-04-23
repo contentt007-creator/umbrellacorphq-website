@@ -394,22 +394,57 @@ function setupGalleryUpload() {
 
 async function handleFiles(files) {
   const validFiles = files.filter(f => {
-    if (f.size > 50 * 1024 * 1024) {
-      alert(`"${f.name}" exceeds the 50 MB limit and was skipped.`);
+    if (!f.type.startsWith('image/')) {
+      showGalleryError(`"${f.name}" skipped — only photos (JPG, PNG, WebP) are supported on the free plan.`);
       return false;
     }
-    if (!/^(image|video)\//.test(f.type)) {
-      alert(`"${f.name}" is not a supported image or video file.`);
+    if (f.size > 10 * 1024 * 1024) {
+      showGalleryError(`"${f.name}" is over 10 MB. Please reduce the file size and try again.`);
       return false;
     }
     return true;
   });
   if (!validFiles.length) return;
 
-  // Upload each file
   for (const file of validFiles) {
-    await uploadGalleryFile(file);
+    // Compress image to max 1200px wide, 80% JPEG quality before uploading
+    const compressed = await compressImage(file, 1200, 0.82);
+    await uploadGalleryFile(compressed, file.name);
   }
+}
+
+// Compress an image File to max maxW wide at given quality, returns a new File
+function compressImage(file, maxW, quality) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const scale  = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width  = Math.round(img.width  * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(blob => {
+        if (!blob) { resolve(file); return; } // fallback to original if canvas fails
+        const compressed = new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' });
+        // Only use compressed version if it's actually smaller
+        resolve(compressed.size < file.size ? compressed : file);
+      }, 'image/jpeg', quality);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
+function showGalleryError(msg) {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  const el = document.createElement('div');
+  el.style.cssText = 'grid-column:1/-1;padding:12px 16px;background:rgba(193,18,31,0.1);border:1px solid rgba(193,18,31,0.3);border-radius:4px;font-size:13px;color:#e66;display:flex;align-items:center;justify-content:space-between;gap:12px';
+  el.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;color:inherit;cursor:pointer;font-size:16px;flex-shrink:0">✕</button>`;
+  grid.prepend(el);
+  setTimeout(() => el.remove(), 6000);
 }
 
 async function uploadGalleryFile(file) {
