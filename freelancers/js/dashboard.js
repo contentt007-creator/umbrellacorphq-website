@@ -456,9 +456,17 @@ async function uploadGalleryFile(file) {
     if (progEl) progEl.style.width = progValue + '%';
   }, 200);
 
+  // 30-second timeout — surfaces Storage rule / CORS errors instead of hanging
+  const withTimeout = (promise, ms) => Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Upload timed out — check Firebase Storage security rules allow authenticated writes.')), ms)
+    ),
+  ]);
+
   try {
     // Upload to Firebase Storage
-    const downloadUrl = await uploadFile(path, file);
+    const downloadUrl = await withTimeout(uploadFile(path, file), 30000);
 
     // Generate thumbnail (first frame for video, full image for photo)
     let thumbnail = downloadUrl;
@@ -502,6 +510,12 @@ async function uploadGalleryFile(file) {
   } catch (err) {
     clearInterval(progInterval);
     console.error('Upload failed', err);
+    const errCode = err?.code || '';
+    const errMsg  =
+      errCode === 'storage/unauthorized'  ? '🔒 Storage rules blocked this upload. Update Firebase Storage Rules to allow authenticated writes.' :
+      errCode === 'storage/canceled'      ? 'Upload was cancelled.' :
+      errCode === 'storage/unknown'       ? 'Network error. Check your connection and try again.' :
+      err?.message || 'Upload failed — try again.';
     placeholder.innerHTML = `
       <div class="fl-gallery-thumb" style="background:rgba(193,18,31,0.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:28px;height:28px;color:var(--corp-red)">
@@ -510,8 +524,8 @@ async function uploadGalleryFile(file) {
       </div>
       <div class="fl-gallery-item-info">
         <div class="fl-gallery-item-title" style="color:var(--corp-red)">Upload failed</div>
-        <div class="fl-gallery-item-cat">${file.name}</div>
-        <button onclick="this.closest('.fl-gallery-item').remove()" style="background:none;border:none;color:var(--steel);font-size:11px;cursor:pointer;padding:0;margin-top:4px">✕ Dismiss</button>
+        <div class="fl-gallery-item-cat" style="font-size:10px;line-height:1.4;color:#888;margin-top:4px">${errMsg}</div>
+        <button onclick="this.closest('.fl-gallery-item').remove()" style="background:none;border:none;color:var(--steel);font-size:11px;cursor:pointer;padding:0;margin-top:6px">✕ Dismiss</button>
       </div>`;
   }
 }
