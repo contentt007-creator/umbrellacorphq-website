@@ -244,13 +244,19 @@ export async function logoutFreelancer() {
 
 /**
  * Sign in to Firebase anonymously.
- * Used by the admin panel (which has no Firebase account) so Firestore
- * rules that require request.auth != null are satisfied.
+ * Used by the admin panel so Firestore rules (request.auth != null) are satisfied.
+ * Returns true if signed in, false if anonymous auth is not enabled in Firebase Console.
  * Safe to call multiple times — skips if already signed in.
  */
 export async function signInAnon() {
-  if (auth.currentUser) return; // already signed in
-  try { await signInAnonymously(auth); } catch (_) {}
+  if (auth.currentUser) return true;
+  try {
+    await signInAnonymously(auth);
+    return true;
+  } catch (err) {
+    console.warn('[UCH] Firebase anonymous sign-in failed:', err?.code, '— Firestore reads may be blocked.');
+    return false;
+  }
 }
 
 export function onAuthChange(callback) {

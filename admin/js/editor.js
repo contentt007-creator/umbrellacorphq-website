@@ -666,9 +666,12 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadFBModule() {
     if (fbModule) return fbModule;
     fbModule = await import('../../js/firebase.js');
-    // Admin has no Firebase account — sign in anonymously so Firestore
-    // rules (require request.auth != null) allow reads.
-    await fbModule.signInAnon();
+    // Sign in anonymously so Firestore rules (request.auth != null) allow reads.
+    // Requires Anonymous Auth enabled: Firebase Console → Auth → Sign-in method → Anonymous → Enable
+    const anonOk = await fbModule.signInAnon();
+    if (!anonOk) {
+      console.warn('[UCH Admin] Anonymous sign-in failed. Enable Anonymous Auth in Firebase Console OR set Firestore rules to: allow read: if true');
+    }
     return fbModule;
   }
 
@@ -695,9 +698,18 @@ document.addEventListener('DOMContentLoaded', () => {
       allFreelancers = await fb.getAllFreelancers();
     } catch (err) {
       console.error('loadAdminFreelancers failed', err);
-      if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--corp-red)">
-        ⚠️ Could not load freelancers: ${err?.code || err?.message || 'unknown error'}<br>
-        <span style="font-size:11px;color:var(--steel)">Check Firestore Rules — set <code>allow read: if request.auth != null</code></span>
+      const code = err?.code || err?.message || 'unknown';
+      const hint = code.includes('permission') || code.includes('PERMISSION')
+        ? `Firestore rules are blocking reads.<br>
+           <strong style="color:#fff">Fix 1 (recommended):</strong> Firebase Console → Authentication → Sign-in method → Anonymous → <strong>Enable</strong><br>
+           <strong style="color:#fff">Then update Firestore Rules:</strong><br>
+           <code style="font-size:10px;display:block;margin:6px 0;background:rgba(255,255,255,0.05);padding:6px;border-radius:3px;white-space:pre">match /freelancers/{uid} {
+  allow read: if request.auth != null;
+  allow write: if request.auth != null && request.auth.uid == uid;
+}</code>`
+        : `Error: ${code}`;
+      if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="padding:20px 16px;color:var(--corp-red);line-height:1.8;font-size:12px">
+        ⚠️ Could not load freelancers<br>${hint}
       </td></tr>`;
       return;
     }
