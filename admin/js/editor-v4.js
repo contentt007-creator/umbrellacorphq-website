@@ -64,6 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
       previewBtn.style.display = pageFile ? 'block' : 'none';
       previewBtn.dataset.page = pageFile || '';
     }
+
+    // Firebase platform panels — called directly here so sidebar click handlers
+    // always trigger them (window.activatePanel overrides are bypassed by closures)
+    if (panelId === 'freelancers')   loadAdminFreelancers();
+    if (panelId === 'jobs')          loadAdminJobs();
+    if (panelId === 'notifications') loadAdminNotifications();
   }
 
   sidebarLinks.forEach(link => {
@@ -778,17 +784,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!res.ok) throw new Error(rows.error?.message || `HTTP ${res.status}`);
     return rows.filter(r => r.document).map(r => _fsParseDoc(r.document));
   }
-
-  // Hook into activatePanel to trigger Firebase panels
-  const FIREBASE_PANELS = ['freelancers', 'jobs', 'notifications'];
-  const _origActivate = window.activatePanel;
-  window.activatePanel = async function(panelId) {
-    _origActivate(panelId);
-    if (!FIREBASE_PANELS.includes(panelId)) return;
-    if (panelId === 'freelancers')    loadAdminFreelancers();
-    if (panelId === 'jobs')           loadAdminJobs();
-    if (panelId === 'notifications')  loadAdminNotifications();
-  };
 
   // ─── Freelancers panel ───────────────────────────────────────────────────────
 
