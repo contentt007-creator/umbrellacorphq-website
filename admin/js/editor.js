@@ -689,7 +689,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('fl-admin-tbody');
     try {
       if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--steel)">Loading…</td></tr>`;
-      allFreelancers = await fb.getAllFreelancers();
+      console.log('[UCH Admin] Fetching freelancers from Firestore…');
+      const timeout = new Promise((_, rej) =>
+        setTimeout(() => rej(new Error('timeout — Firestore did not respond in 10s. Firestore rules may still require auth. Set: allow read: if true')), 10000)
+      );
+      allFreelancers = await Promise.race([fb.getAllFreelancers(), timeout]);
+      console.log('[UCH Admin] Loaded', allFreelancers.length, 'freelancer(s)');
     } catch (err) {
       console.error('loadAdminFreelancers failed', err);
       const code = err?.code || err?.message || 'unknown';
