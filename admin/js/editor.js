@@ -666,6 +666,9 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadFBModule() {
     if (fbModule) return fbModule;
     fbModule = await import('../../js/firebase.js');
+    // Sign in anonymously so Firestore rules (request.auth != null) are satisfied.
+    // Requires Anonymous sign-in enabled in Firebase Console → Auth → Sign-in method.
+    await fbModule.signInAnon();
     return fbModule;
   }
 
