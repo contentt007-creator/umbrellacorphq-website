@@ -658,27 +658,136 @@ document.addEventListener('DOMContentLoaded', () => {
   applySettings();
 
   // ─── Admin Firebase Platform Panels ─────────────────────────────────────────
-  // Lazy-load Firebase only when Freelancers/Jobs/Notifications panels are opened
+  // All Firestore access via plain fetch() — NO Firebase SDK, NO dynamic imports.
+  // Dynamic imports were hanging/caching in the admin context; inline REST is reliable.
 
-  const FIREBASE_PANELS = ['freelancers', 'jobs', 'notifications'];
-  let fbModule = null;
+  const _FS_PROJECT = 'umbrella-corp-hq';
+  const _FS_API_KEY  = 'AIzaSyC2nm9K8-X4dCwNG50MMHTlhdJkIHo_B5U';
+  const _FS_BASE     = `https://firestore.googleapis.com/v1/projects/${_FS_PROJECT}/databases/(default)/documents`;
+  const _IT_URL      = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${_FS_API_KEY}`;
 
-  async function loadFBModule() {
-    if (fbModule) return fbModule;
-    // Use dedicated REST-API module — avoids Firebase SDK hanging in admin context
-    fbModule = await import('./firebase-admin.js');
-    return fbModule;
+  let _fsToken = null, _fsTokenExp = 0;
+
+  async function _fsGetToken() {
+    if (_fsToken && Date.now() < _fsTokenExp) return _fsToken;
+    const res  = await fetch(_IT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ returnSecureToken: true }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error('Anon auth failed: ' + (data.error?.message || res.status));
+    _fsToken    = data.idToken;
+    _fsTokenExp = Date.now() + (Number(data.expiresIn || 3600) - 120) * 1000;
+    return _fsToken;
   }
 
-  // Hook into activatePanel to lazy-load Firebase panels
+  function _fsParseVal(v) {
+    if (!v) return null;
+    if ('stringValue'    in v) return v.stringValue;
+    if ('integerValue'   in v) return Number(v.integerValue);
+    if ('doubleValue'    in v) return v.doubleValue;
+    if ('booleanValue'   in v) return v.booleanValue;
+    if ('nullValue'      in v) return null;
+    if ('timestampValue' in v) return { toDate: () => new Date(v.timestampValue), _raw: v.timestampValue };
+    if ('arrayValue'     in v) return (v.arrayValue.values || []).map(_fsParseVal);
+    if ('mapValue'       in v) {
+      const out = {};
+      for (const [k, val] of Object.entries(v.mapValue.fields || {})) out[k] = _fsParseVal(val);
+      return out;
+    }
+    return null;
+  }
+
+  function _fsEncodeVal(v) {
+    if (v === null || v === undefined)  return { nullValue: null };
+    if (typeof v === 'boolean')         return { booleanValue: v };
+    if (typeof v === 'number')          return Number.isInteger(v) ? { integerValue: `${v}` } : { doubleValue: v };
+    if (typeof v === 'string')          return { stringValue: v };
+    if (Array.isArray(v))               return { arrayValue: { values: v.map(_fsEncodeVal) } };
+    if (typeof v === 'object') {
+      const fields = {};
+      for (const [k, val] of Object.entries(v)) if (val !== undefined) fields[k] = _fsEncodeVal(val);
+      return { mapValue: { fields } };
+    }
+    return { stringValue: String(v) };
+  }
+
+  function _fsParseDoc(raw) {
+    const id   = raw.name.split('/').pop();
+    const data = {};
+    for (const [k, v] of Object.entries(raw.fields || {})) data[k] = _fsParseVal(v);
+    return { uid: id, id, ...data };
+  }
+
+  async function _fsPatch(col, docId, updates) {
+    const token  = await _fsGetToken();
+    const fields = {};
+    for (const [k, v] of Object.entries(updates)) fields[k] = _fsEncodeVal(v);
+    const mask = Object.keys(updates).map(k => `updateMask.fieldPaths=${encodeURIComponent(k)}`).join('&');
+    const res = await fetch(`${_FS_BASE}/${col}/${docId}?${mask}`, {
+      method:  'PATCH',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body:    JSON.stringify({ fields }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${res.status}`);
+    }
+  }
+
+  async function _fsGetFreelancers() {
+    const res  = await fetch(`${_FS_BASE}/freelancers?pageSize=200`);
+    const data = await res.json();
+    if (!res.ok) throw new Error('Freelancer read failed: ' + (data.error?.message || `HTTP ${res.status}`));
+    return (data.documents || []).map(_fsParseDoc);
+  }
+
+  async function _fsGetJobs() {
+    const token = await _fsGetToken();
+    const res   = await fetch(`${_FS_BASE}/jobs?pageSize=200`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    const data  = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`);
+    const toMs = ts => {
+      if (!ts) return 0;
+      if (ts._raw)   return new Date(ts._raw).getTime();
+      if (ts.toDate) return ts.toDate().getTime();
+      return new Date(ts).getTime();
+    };
+    return (data.documents || []).map(_fsParseDoc).sort((a, b) => toMs(b.submittedAt) - toMs(a.submittedAt));
+  }
+
+  async function _fsGetNotifications(limitN = 100) {
+    const token = await _fsGetToken();
+    const body  = {
+      structuredQuery: {
+        from:    [{ collectionId: 'notifications' }],
+        where:   { fieldFilter: { field: { fieldPath: 'forAdmin' }, op: 'EQUAL', value: { booleanValue: true } } },
+        orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+        limit:   limitN,
+      },
+    };
+    const res  = await fetch(`${_FS_BASE}:runQuery`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body:    JSON.stringify(body),
+    });
+    const rows = await res.json();
+    if (!res.ok) throw new Error(rows.error?.message || `HTTP ${res.status}`);
+    return rows.filter(r => r.document).map(r => _fsParseDoc(r.document));
+  }
+
+  // Hook into activatePanel to trigger Firebase panels
+  const FIREBASE_PANELS = ['freelancers', 'jobs', 'notifications'];
   const _origActivate = window.activatePanel;
   window.activatePanel = async function(panelId) {
     _origActivate(panelId);
     if (!FIREBASE_PANELS.includes(panelId)) return;
-    const fb = await loadFBModule();
-    if (panelId === 'freelancers')    loadAdminFreelancers(fb);
-    if (panelId === 'jobs')           loadAdminJobs(fb);
-    if (panelId === 'notifications')  loadAdminNotifications(fb);
+    if (panelId === 'freelancers')    loadAdminFreelancers();
+    if (panelId === 'jobs')           loadAdminJobs();
+    if (panelId === 'notifications')  loadAdminNotifications();
   };
 
   // ─── Freelancers panel ───────────────────────────────────────────────────────
@@ -686,30 +795,17 @@ document.addEventListener('DOMContentLoaded', () => {
   let allFreelancers = [];
   let flFilter = 'all';
 
-  async function loadAdminFreelancers(fb) {
+  async function loadAdminFreelancers() {
     const tbody = document.getElementById('fl-admin-tbody');
     try {
       if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--steel)">Loading…</td></tr>`;
-      console.log('[UCH Admin] Fetching freelancers from Firestore…');
-      const timeout = new Promise((_, rej) =>
-        setTimeout(() => rej(new Error('timeout — Firestore did not respond in 10s. Firestore rules may still require auth. Set: allow read: if true')), 10000)
-      );
-      allFreelancers = await Promise.race([fb.getAllFreelancers(), timeout]);
+      console.log('[UCH Admin] Fetching freelancers…');
+      allFreelancers = await _fsGetFreelancers();
       console.log('[UCH Admin] Loaded', allFreelancers.length, 'freelancer(s)');
     } catch (err) {
-      console.error('loadAdminFreelancers failed', err);
-      const code = err?.code || err?.message || 'unknown';
-      const hint = code.includes('permission') || code.includes('PERMISSION')
-        ? `Firestore rules are blocking reads.<br>
-           <strong style="color:#fff">Fix 1 (recommended):</strong> Firebase Console → Authentication → Sign-in method → Anonymous → <strong>Enable</strong><br>
-           <strong style="color:#fff">Then update Firestore Rules:</strong><br>
-           <code style="font-size:10px;display:block;margin:6px 0;background:rgba(255,255,255,0.05);padding:6px;border-radius:3px;white-space:pre">match /freelancers/{uid} {
-  allow read: if request.auth != null;
-  allow write: if request.auth != null && request.auth.uid == uid;
-}</code>`
-        : `Error: ${code}`;
+      console.error('[UCH Admin] loadAdminFreelancers failed', err);
       if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="padding:20px 16px;color:var(--corp-red);line-height:1.8;font-size:12px">
-        ⚠️ Could not load freelancers<br>${hint}
+        ⚠️ Could not load freelancers: ${escapeHtml(err.message || 'unknown error')}
       </td></tr>`;
       return;
     }
@@ -815,38 +911,37 @@ document.addEventListener('DOMContentLoaded', () => {
         <textarea id="fl-admin-notes" class="field-textarea" rows="2">${fl.adminNotes||''}</textarea>
       </div>`;
 
-    const fb = await loadFBModule();
     actEl.innerHTML = '';
 
     if (fl.status === 'pending') {
       addModalBtn(actEl, 'Approve', 'btn-export', async () => {
-        await fb.adminUpdateFreelancer(fl.uid, { status: 'approved' });
+        await _fsPatch('freelancers', fl.uid, { status: 'approved' });
         fl.status = 'approved';
         showToast('Freelancer approved.'); modal.style.display='none'; renderFreelancersTable(); updateFlStats();
       });
       addModalBtn(actEl, 'Reject', 'btn-danger', async () => {
         const reason = prompt('Rejection reason (shown to freelancer):');
         if (reason === null) return;
-        await fb.adminUpdateFreelancer(fl.uid, { status: 'rejected', adminNotes: reason });
+        await _fsPatch('freelancers', fl.uid, { status: 'rejected', adminNotes: reason });
         fl.status = 'rejected'; modal.style.display='none'; renderFreelancersTable(); updateFlStats();
       });
     }
     if (fl.status === 'approved') {
       addModalBtn(actEl, 'Suspend', 'btn-danger', async () => {
-        await fb.adminUpdateFreelancer(fl.uid, { status: 'suspended' });
+        await _fsPatch('freelancers', fl.uid, { status: 'suspended' });
         fl.status = 'suspended'; modal.style.display='none'; renderFreelancersTable();
       });
     }
     ['bronze','silver','gold'].forEach(tier => {
       addModalBtn(actEl, '→ ' + tier.charAt(0).toUpperCase()+tier.slice(1), 'btn-export', async () => {
-        await fb.adminUpdateFreelancer(fl.uid, { tier });
+        await _fsPatch('freelancers', fl.uid, { tier });
         fl.tier = tier; showToast(`Tier set to ${tier}.`);
       });
     });
     addModalBtn(actEl, 'Save Rating & Notes', 'btn-export', async () => {
       const rating = parseFloat(document.getElementById('fl-set-rating')?.value) || 0;
       const notes  = document.getElementById('fl-admin-notes')?.value || '';
-      await fb.adminUpdateFreelancer(fl.uid, { rating, adminNotes: notes });
+      await _fsPatch('freelancers', fl.uid, { rating, adminNotes: notes });
       showToast('Saved.');
     });
 
@@ -866,8 +961,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let allJobs = [];
   let jobFilter = 'all';
 
-  async function loadAdminJobs(fb) {
-    allJobs = await fb.getAllJobs();
+  async function loadAdminJobs() {
+    allJobs = await _fsGetJobs();
     renderJobsTable();
 
     document.querySelectorAll('[data-job-filter]').forEach(btn => {
@@ -954,13 +1049,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <textarea id="job-admin-notes" class="field-textarea" rows="2">${job.adminNotes||''}</textarea>
       </div>`;
 
-    const fb = await loadFBModule();
     actEl.innerHTML = '';
     addModalBtn(actEl, 'Save Changes', 'btn-export', async () => {
       const newStatus = document.getElementById('job-status-select')?.value;
       const newCut    = parseInt(document.getElementById('job-cut-input')?.value) || 25;
       const notes     = document.getElementById('job-admin-notes')?.value || '';
-      await fb.updateJob(job.id, { status: newStatus, uchCutPercent: newCut, adminNotes: notes });
+      await _fsPatch('jobs', job.id, { status: newStatus, uchCutPercent: newCut, adminNotes: notes });
       job.status = newStatus; job.uchCutPercent = newCut; job.adminNotes = notes;
       showToast('Job updated.'); renderJobsTable();
     });
@@ -979,18 +1073,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── Notifications panel ─────────────────────────────────────────────────────
 
-  async function loadAdminNotifications(fb) {
-    const notifs = await fb.getAdminNotifications(100);
-    renderAdminNotifications(notifs, fb);
+  async function loadAdminNotifications() {
+    const notifs = await _fsGetNotifications(100);
+    renderAdminNotifications(notifs);
 
     document.getElementById('btn-refresh-notifs')?.addEventListener('click', async () => {
-      const fresh = await fb.getAdminNotifications(100);
-      renderAdminNotifications(fresh, fb);
+      const fresh = await _fsGetNotifications(100);
+      renderAdminNotifications(fresh);
     });
     document.getElementById('btn-mark-all-read')?.addEventListener('click', async () => {
-      await Promise.all(notifs.filter(n=>!n.read).map(n => fb.markNotificationRead(n.id)));
+      await Promise.all(notifs.filter(n=>!n.read).map(n => _fsPatch('notifications', n.id, { read: true })));
       notifs.forEach(n => n.read = true);
-      renderAdminNotifications(notifs, fb);
+      renderAdminNotifications(notifs);
       const badge = document.getElementById('admin-notif-badge');
       if (badge) badge.style.display = 'none';
     });
@@ -1001,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (badge) { badge.textContent = unread; badge.style.display = unread ? '' : 'none'; }
   }
 
-  function renderAdminNotifications(notifs, fb) {
+  function renderAdminNotifications(notifs) {
     const el = document.getElementById('admin-notif-list');
     if (!el) return;
     if (!notifs.length) { el.innerHTML = '<div style="padding:32px;text-align:center;color:var(--steel)">No notifications yet.</div>'; return; }
@@ -1024,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     el.querySelectorAll('[data-id]').forEach(item => {
       item.addEventListener('click', () => {
-        fb.markNotificationRead(item.dataset.id);
+        _fsPatch('notifications', item.dataset.id, { read: true });
         item.classList.remove('unread-notif');
         item.querySelector('span[style*="border-radius:50%"]')?.remove();
       });
