@@ -890,12 +890,25 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div style="margin-top:16px">
         <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--steel);margin-bottom:8px">Portfolio (${(fl.portfolioItems||[]).length} items)</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px">
+        <div id="fl-portfolio-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px">
           ${(fl.portfolioItems||[]).map(item => `
-            <div style="position:relative">
-              <div style="aspect-ratio:1;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;${item.thumbnail?`background-image:url(${item.thumbnail});background-size:cover`:''}">${!item.thumbnail?'<span style="color:var(--steel);font-size:11px;display:flex;align-items:center;justify-content:center;height:100%">No img</span>':''}</div>
-              <p style="font-size:10px;color:var(--steel);margin-top:4px">${escapeHtml(item.title||'')}</p>
-              <span style="font-size:10px;color:${item.approved?'#3ecf8e':'var(--warning)'}">${item.approved?'✓':'Pending'}</span>
+            <div data-item-id="${escapeHtml(item.id||'')}">
+              <div style="aspect-ratio:1;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;position:relative">
+                ${item.thumbnail
+                  ? `<img src="${item.thumbnail}" style="width:100%;height:100%;object-fit:cover">`
+                  : `<span style="color:var(--steel);font-size:10px;display:flex;align-items:center;justify-content:center;height:100%;padding:4px;text-align:center">No image</span>`}
+              </div>
+              <p style="font-size:10px;color:var(--steel);margin:4px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(item.title||'Untitled')}</p>
+              <div style="display:flex;gap:4px;margin-top:4px">
+                <button class="fl-portfolio-approve-btn" data-item-id="${escapeHtml(item.id||'')}" data-action="approve"
+                  style="flex:1;font-size:10px;padding:3px 4px;border-radius:3px;border:1px solid ${item.approved?'#3ecf8e':'rgba(62,207,142,0.3)'};background:${item.approved?'rgba(62,207,142,0.15)':'transparent'};color:${item.approved?'#3ecf8e':'rgba(62,207,142,0.6)'};cursor:pointer">
+                  ${item.approved ? '✓ Approved' : 'Approve'}
+                </button>
+                <button class="fl-portfolio-approve-btn" data-item-id="${escapeHtml(item.id||'')}" data-action="reject"
+                  style="font-size:10px;padding:3px 6px;border-radius:3px;border:1px solid rgba(193,18,31,0.3);background:transparent;color:${!item.approved&&item.rejectionReason?'var(--corp-red)':'rgba(193,18,31,0.5)'};cursor:pointer">
+                  ✕
+                </button>
+              </div>
             </div>`).join('')}
         </div>
       </div>
@@ -905,6 +918,33 @@ document.addEventListener('DOMContentLoaded', () => {
         <label style="font-size:12px;color:var(--steel);display:block;margin-top:12px;margin-bottom:6px">Admin Notes</label>
         <textarea id="fl-admin-notes" class="field-textarea" rows="2">${fl.adminNotes||''}</textarea>
       </div>`;
+
+    // ── Portfolio approve / reject buttons ──────────────────────────────────
+    document.getElementById('fl-portfolio-grid')?.querySelectorAll('.fl-portfolio-approve-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const itemId = btn.dataset.itemId;
+        const action = btn.dataset.action;   // 'approve' | 'reject'
+
+        const items = (fl.portfolioItems || []).map(item => {
+          if (item.id !== itemId) return item;
+          if (action === 'approve') return { ...item, approved: true,  rejectionReason: '' };
+          return { ...item, approved: false, rejectionReason: 'Rejected by admin' };
+        });
+
+        btn.textContent = '…';
+        btn.disabled = true;
+        try {
+          await _fsPatch('freelancers', fl.uid, { portfolioItems: items });
+          fl.portfolioItems = items;
+          showToast(action === 'approve' ? 'Portfolio item approved.' : 'Portfolio item rejected.');
+          // Re-render the modal body to reflect changes
+          showFreelancerModal(fl);
+        } catch (err) {
+          showToast('Error: ' + err.message);
+          btn.disabled = false;
+        }
+      });
+    });
 
     actEl.innerHTML = '';
 

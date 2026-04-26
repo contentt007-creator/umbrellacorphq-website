@@ -85,6 +85,7 @@ function renderCard(fl) {
   const eventTypes  = fl.skills || fl.eventTypes || [];
   const visEvents   = eventTypes.slice(0, 3);
   const photoUrl    = fl.profilePhoto || fl.photoUrl || '';
+  const initials    = (fl.fullName || 'U').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
   const rating      = typeof fl.rating === 'number' ? fl.rating : 0;
   const jobs        = typeof fl.completedJobs === 'number' ? fl.completedJobs : 0;
   const talentType  = fl.talentType || fl.specialisation || '';
@@ -110,11 +111,8 @@ function renderCard(fl) {
          data-tier="${tier}"
          data-available="${isAvail}">
       <div class="fl-card-photo">
-        <img
-          src="${photoUrl}"
-          alt="${fl.fullName || 'Talent'}"
-          loading="lazy"
-          onerror="this.src='assets/icons/favicon.svg'">
+        <div class="fl-card-initials-bg">${initials}</div>
+        ${photoUrl ? `<img src="${photoUrl}" alt="${fl.fullName || 'Talent'}" loading="lazy" onerror="this.style.opacity='0'">` : ''}
         <span class="fl-tier-badge fl-tier-${tier}">${tierInfo.label}</span>
         ${availDot}
       </div>
@@ -245,19 +243,13 @@ function openModal(fl) {
     .map(s => `<span class="fl-modal-skill-tag">${s}</span>`)
     .join('');
 
-  // Avatar
-  const avatarSrc = fl.profilePhoto || fl.photoUrl || '';
-  if (avatarSrc) {
-    modalAvatar.innerHTML = `<img src="${avatarSrc}" alt="${fl.fullName || ''}" onerror="this.src='assets/icons/favicon.svg'">`;
-  } else {
-    const initials = (fl.fullName || 'U')
-      .split(' ')
-      .map(w => w[0])
-      .slice(0, 2)
-      .join('')
-      .toUpperCase();
-    modalAvatar.innerHTML = `<span class="fl-modal-avatar-initials">${initials}</span>`;
-  }
+  // Avatar — always show initials, overlay photo if available
+  const avatarSrc   = fl.profilePhoto || fl.photoUrl || '';
+  const modalInits  = (fl.fullName || 'U').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+  modalAvatar.innerHTML = `
+    <span class="fl-modal-avatar-initials">${modalInits}</span>
+    ${avatarSrc ? `<img src="${avatarSrc}" alt="${fl.fullName || ''}" onerror="this.style.opacity='0'">` : ''}
+  `;
 
   // Portfolio items — only approved ones
   const items = (fl.portfolioItems || []).filter(item => item.approved === true);
@@ -382,6 +374,10 @@ async function init() {
 
   try {
     allFreelancers = await getApprovedFreelancers();
+    console.log('[UCH] Loaded', allFreelancers.length, 'freelancer(s)');
+    allFreelancers.forEach(f => {
+      console.log(`  → ${f.fullName} | profilePhoto: "${f.profilePhoto || '(empty)'}" | photoUrl: "${f.photoUrl || '(empty)'}" | portfolioItems: ${(f.portfolioItems||[]).length}`);
+    });
   } catch (err) {
     console.error('[showcase] Failed to load freelancers:', err);
     allFreelancers = [];
