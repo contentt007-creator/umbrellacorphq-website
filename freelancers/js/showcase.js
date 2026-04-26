@@ -84,7 +84,7 @@ function renderCard(fl) {
   const isAvail     = fl.availableForWork === true;
   const eventTypes  = fl.skills || fl.eventTypes || [];
   const visEvents   = eventTypes.slice(0, 3);
-  const photoUrl    = fl.photoUrl || '';
+  const photoUrl    = fl.profilePhoto || fl.photoUrl || '';
   const rating      = typeof fl.rating === 'number' ? fl.rating : 0;
   const jobs        = typeof fl.completedJobs === 'number' ? fl.completedJobs : 0;
   const talentType  = fl.talentType || fl.specialisation || '';
@@ -246,8 +246,9 @@ function openModal(fl) {
     .join('');
 
   // Avatar
-  if (fl.photoUrl) {
-    modalAvatar.innerHTML = `<img src="${fl.photoUrl}" alt="${fl.fullName || ''}" onerror="this.src='assets/icons/favicon.svg'">`;
+  const avatarSrc = fl.profilePhoto || fl.photoUrl || '';
+  if (avatarSrc) {
+    modalAvatar.innerHTML = `<img src="${avatarSrc}" alt="${fl.fullName || ''}" onerror="this.src='assets/icons/favicon.svg'">`;
   } else {
     const initials = (fl.fullName || 'U')
       .split(' ')
@@ -271,11 +272,11 @@ function openModal(fl) {
         .map(t => `<span class="fl-portfolio-tool">${t}</span>`)
         .join('');
 
-      const thumb = item.thumbnailUrl || item.imageUrl || '';
+      const thumb = item.thumbnail || item.thumbnailUrl || item.imageUrl || item.storageUrl || '';
 
       return `
         <div class="fl-portfolio-item">
-          <div class="fl-portfolio-thumb" data-fullimg="${item.imageUrl || thumb}">
+          <div class="fl-portfolio-thumb" data-fullimg="${item.imageUrl || item.storageUrl || thumb}">
             ${thumb
               ? `<img src="${thumb}" alt="${item.title || 'Portfolio item'}" loading="lazy" onerror="this.parentElement.classList.add('fl-portfolio-thumb--no-img')">`
               : `<div class="fl-portfolio-thumb--no-img"></div>`
