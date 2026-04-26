@@ -153,50 +153,53 @@
 
 .fl-grid {
   display:               grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap:                   28px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap:                   2px;
 }
 
 /* ─── Card ────────────────────────────────────────────────── */
 
 .fl-card {
-  background:  #111111;
-  border:      1px solid rgba(255,255,255,0.06);
-  overflow:    hidden;
-  transition:  border-color 0.25s ease, transform 0.25s ease;
-  display:     flex;
-  flex-direction: column;
-}
-
-.fl-card:hover {
-  border-color: rgba(193,18,31,0.4);
-  transform:    translateY(-4px);
-}
-
-.fl-card-photo {
   position:    relative;
-  width:       100%;
-  aspect-ratio: 4/3;
+  aspect-ratio: 3/4;
   overflow:    hidden;
-  background:  #1a1a1a;
-  display:     flex;
-  align-items: center;
-  justify-content: center;
+  cursor:      pointer;
+  background:  #0e0e0e;
 }
 
-/* Initials shown when no photo / photo fails to load */
+.fl-card::after {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  border:     1px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+  z-index:    5;
+}
+
+.fl-card:hover::after {
+  border-color: rgba(193,18,31,0.6);
+}
+
+/* ── Photo fills entire card ── */
+.fl-card-photo {
+  position: absolute;
+  inset:    0;
+  z-index:  0;
+}
+
 .fl-card-initials-bg {
-  position:    absolute;
-  inset:       0;
-  display:     flex;
-  align-items: center;
+  position:       absolute;
+  inset:          0;
+  display:        flex;
+  align-items:    center;
   justify-content: center;
-  font-size:   56px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color:       rgba(193,18,31,0.25);
-  user-select: none;
-  z-index:     0;
+  font-size:      100px;
+  font-weight:    700;
+  letter-spacing: -0.04em;
+  color:          rgba(193,18,31,0.18);
+  user-select:    none;
+  z-index:        0;
 }
 
 .fl-card-photo img {
@@ -206,125 +209,423 @@
   height:     100%;
   object-fit: cover;
   display:    block;
-  transition: transform 0.4s ease, opacity 0.3s ease;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease;
   z-index:    1;
 }
 
 .fl-card:hover .fl-card-photo img {
-  transform: scale(1.04);
+  transform: scale(1.07);
+}
+
+/* ── Gradient overlay ── */
+.fl-card-overlay {
+  position:   absolute;
+  inset:      0;
+  z-index:    2;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.97) 0%,
+    rgba(0,0,0,0.75) 28%,
+    rgba(0,0,0,0.15) 55%,
+    transparent      100%
+  );
+  display:        flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding:        22px 20px 20px;
+  transition:     background 0.4s ease;
+}
+
+.fl-card:hover .fl-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.99) 0%,
+    rgba(0,0,0,0.88) 42%,
+    rgba(0,0,0,0.3)  68%,
+    transparent      100%
+  );
+}
+
+/* ── Badges (top of card) ── */
+.fl-card-badges {
+  position:        absolute;
+  top:             14px;
+  left:            14px;
+  right:           14px;
+  display:         flex;
+  justify-content: space-between;
+  align-items:     flex-start;
+  z-index:         3;
 }
 
 .fl-tier-badge {
-  position:       absolute;
-  top:            12px;
-  left:           12px;
-  font-size:      10px;
+  font-size:      9px;
   font-family:    var(--font-body);
-  font-weight:    500;
-  letter-spacing: 0.1em;
+  font-weight:    600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding:        3px 9px;
-  background:     rgba(10,10,10,0.85);
+  padding:        4px 10px;
+  background:     rgba(5,5,5,0.8);
   border:         1px solid currentColor;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
 }
 
-.fl-tier-gold   { color: #FFD700; border-color: rgba(255,215,0,0.5); }
-.fl-tier-silver { color: #c0c0c0; border-color: rgba(192,192,192,0.5); }
-.fl-tier-bronze { color: #cd7f32; border-color: rgba(205,127,50,0.5); }
+.fl-tier-gold   { color: #FFD700; }
+.fl-tier-silver { color: #c0c0c0; }
+.fl-tier-bronze { color: #cd7f32; }
 
 .fl-avail-dot {
-  position:         absolute;
-  top:              12px;
-  right:            12px;
-  width:            10px;
-  height:           10px;
-  border-radius:    50%;
-  background:       #22c55e;
-  box-shadow:       0 0 0 2px rgba(34,197,94,0.3);
-  animation:        fl-pulse 2s infinite;
+  width:         10px;
+  height:        10px;
+  border-radius: 50%;
+  background:    #22c55e;
+  box-shadow:    0 0 0 3px rgba(34,197,94,0.25);
+  animation:     fl-pulse 2.2s ease-in-out infinite;
+  flex-shrink:   0;
+  margin-top:    5px;
 }
 
 @keyframes fl-pulse {
-  0%   { box-shadow: 0 0 0 0   rgba(34,197,94,0.4); }
-  70%  { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
-  100% { box-shadow: 0 0 0 0   rgba(34,197,94,0); }
+  0%, 100% { box-shadow: 0 0 0 0   rgba(34,197,94,0.5); }
+  60%       { box-shadow: 0 0 0 8px rgba(34,197,94,0);   }
 }
 
-.fl-card-body {
-  padding:        20px;
-  flex:           1;
-  display:        flex;
-  flex-direction: column;
-  gap:            8px;
-}
-
-.fl-card-name {
-  font-family:    var(--font-display);
-  font-size:      22px;
-  letter-spacing: 0.03em;
-  color:          var(--ivory);
-  line-height:    1.1;
-}
-
-.fl-card-spec {
-  font-size:  13px;
-  color:      var(--steel);
-  margin-top: -2px;
-}
+/* ── Card info (bottom overlay) ── */
+.fl-card-info { position: relative; z-index: 3; }
 
 .fl-card-rating {
   display:     flex;
   align-items: center;
   gap:         2px;
+  margin-bottom: 5px;
+  opacity:     0;
+  transform:   translateY(6px);
+  transition:  opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s;
 }
 
-.fl-star--full  { color: #FFD700; font-size: 14px; }
-.fl-star--half  { color: #FFD700; font-size: 14px; }
-.fl-star--empty { color: rgba(255,255,255,0.18); font-size: 14px; }
+.fl-card:hover .fl-card-rating {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.fl-star--full  { color: #FFD700; font-size: 12px; }
+.fl-star--half  { color: #FFD700; font-size: 12px; }
+.fl-star--empty { color: rgba(255,255,255,0.2); font-size: 12px; }
+
+.fl-card-name {
+  font-family:    var(--font-display);
+  font-size:      clamp(22px, 2.5vw, 28px);
+  letter-spacing: 0.04em;
+  color:          var(--ivory);
+  line-height:    1.05;
+  margin-bottom:  4px;
+}
+
+.fl-card-spec {
+  font-size:      11px;
+  color:          rgba(255,255,255,0.55);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display:        flex;
+  align-items:    center;
+  gap:            5px;
+  margin-bottom:  0;
+}
 
 .fl-card-skills {
-  display:   flex;
-  flex-wrap: wrap;
-  gap:       5px;
-  margin-top: 4px;
+  display:    flex;
+  flex-wrap:  wrap;
+  gap:        5px;
+  margin-top: 10px;
+  max-height: 0;
+  overflow:   hidden;
+  opacity:    0;
+  transition: max-height 0.4s ease, opacity 0.35s ease;
+}
+
+.fl-card:hover .fl-card-skills {
+  max-height: 80px;
+  opacity:    1;
 }
 
 .fl-skill-tag {
-  font-size:      11px;
-  letter-spacing: 0.04em;
-  padding:        3px 8px;
-  background:     rgba(193,18,31,0.12);
-  border:         1px solid rgba(193,18,31,0.25);
-  color:          rgba(240,237,232,0.75);
+  font-size:      10px;
+  letter-spacing: 0.05em;
+  padding:        3px 9px;
+  background:     rgba(193,18,31,0.15);
+  border:         1px solid rgba(193,18,31,0.3);
+  color:          rgba(240,237,232,0.8);
 }
 
 .fl-card-jobs {
-  font-size:  12px;
-  color:      rgba(255,255,255,0.35);
-  margin-top: auto;
-  padding-top: 8px;
+  font-size:  11px;
+  color:      rgba(255,255,255,0.3);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
 }
 
 .fl-card-cta {
-  margin-top:     12px;
-  background:     transparent;
-  border:         1px solid rgba(193,18,31,0.5);
-  color:          var(--corp-red);
+  margin-top:     14px;
+  background:     var(--corp-red);
+  border:         none;
+  color:          #fff;
   font-family:    var(--font-body);
-  font-size:      13px;
-  letter-spacing: 0.06em;
-  padding:        10px 16px;
+  font-size:      12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding:        11px 16px;
   cursor:         pointer;
   width:          100%;
-  text-align:     left;
-  transition:     all 0.2s ease;
+  text-align:     center;
+  opacity:        0;
+  transform:      translateY(10px);
+  transition:     opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s, background 0.2s ease;
+}
+
+.fl-card:hover .fl-card-cta {
+  opacity:   1;
+  transform: translateY(0);
 }
 
 .fl-card-cta:hover {
-  background:   var(--corp-red);
-  border-color: var(--corp-red);
-  color:        var(--ivory);
+  background: #a00e1a;
+}
+
+/* ─── Mobile Swipe Deck ───────────────────────────────────── */
+
+.fl-swipe-section {
+  display:         none;
+  padding:         0 0 80px;
+}
+
+.fl-swipe-stage {
+  position:        relative;
+  height:          72vw;
+  max-height:      520px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  margin-bottom:   28px;
+}
+
+.fl-swipe-card {
+  position:        absolute;
+  width:           84vw;
+  max-width:       360px;
+  aspect-ratio:    3/4;
+  border-radius:   16px;
+  overflow:        hidden;
+  cursor:          grab;
+  user-select:     none;
+  touch-action:    pan-y;
+  will-change:     transform;
+  box-shadow:      0 20px 60px rgba(0,0,0,0.7);
+  transition:      box-shadow 0.3s ease;
+}
+
+.fl-swipe-card:active { cursor: grabbing; }
+
+.fl-swipe-card-photo {
+  position:   absolute;
+  inset:      0;
+}
+
+.fl-swipe-card-initials {
+  position:       absolute;
+  inset:          0;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  font-size:      90px;
+  font-weight:    700;
+  color:          rgba(193,18,31,0.2);
+  z-index:        0;
+}
+
+.fl-swipe-card-photo img {
+  position:   absolute;
+  inset:      0;
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  z-index:    1;
+  pointer-events: none;
+}
+
+.fl-swipe-card-overlay {
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(to top,
+    rgba(0,0,0,0.96) 0%,
+    rgba(0,0,0,0.5)  40%,
+    transparent      70%
+  );
+  z-index:    2;
+  display:    flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding:    24px 20px 20px;
+}
+
+.fl-swipe-card-badges {
+  position:        absolute;
+  top:             16px;
+  left:            16px;
+  right:           16px;
+  display:         flex;
+  justify-content: space-between;
+  z-index:         3;
+}
+
+.fl-swipe-card-name {
+  font-family:    var(--font-display);
+  font-size:      30px;
+  color:          #fff;
+  letter-spacing: 0.04em;
+  line-height:    1;
+  margin-bottom:  5px;
+}
+
+.fl-swipe-card-spec {
+  font-size:      12px;
+  color:          rgba(255,255,255,0.6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom:  8px;
+}
+
+.fl-swipe-card-skills {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       5px;
+}
+
+.fl-swipe-card-skills span {
+  font-size:  10px;
+  padding:    3px 9px;
+  background: rgba(193,18,31,0.2);
+  border:     1px solid rgba(193,18,31,0.35);
+  color:      rgba(255,255,255,0.8);
+  border-radius: 2px;
+}
+
+/* Swipe vote indicators */
+.fl-swipe-like,
+.fl-swipe-nope {
+  position:       absolute;
+  top:            32px;
+  font-size:      22px;
+  font-weight:    800;
+  letter-spacing: 0.12em;
+  padding:        8px 18px;
+  border-radius:  6px;
+  opacity:        0;
+  z-index:        10;
+  pointer-events: none;
+  transition:     opacity 0.1s;
+}
+
+.fl-swipe-like {
+  right:   28px;
+  color:   #22c55e;
+  border:  3px solid #22c55e;
+  transform: rotate(12deg);
+}
+
+.fl-swipe-nope {
+  left:    28px;
+  color:   var(--corp-red);
+  border:  3px solid var(--corp-red);
+  transform: rotate(-12deg);
+}
+
+/* Action buttons */
+.fl-swipe-actions {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             24px;
+  margin-bottom:   16px;
+}
+
+.fl-swipe-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  border-radius:   50%;
+  cursor:          pointer;
+  border:          none;
+  font-size:       22px;
+  transition:      transform 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink:     0;
+}
+
+.fl-swipe-btn:active { transform: scale(0.9) !important; }
+
+.fl-swipe-btn-skip {
+  width:      56px;
+  height:     56px;
+  background: rgba(193,18,31,0.12);
+  border:     2px solid rgba(193,18,31,0.4);
+  color:      var(--corp-red);
+}
+
+.fl-swipe-btn-skip:hover {
+  background:  rgba(193,18,31,0.22);
+  box-shadow:  0 4px 20px rgba(193,18,31,0.3);
+  transform:   scale(1.08);
+}
+
+.fl-swipe-btn-view {
+  width:      72px;
+  height:     72px;
+  background: var(--corp-red);
+  border:     2px solid var(--corp-red);
+  color:      #fff;
+  font-size:  26px;
+}
+
+.fl-swipe-btn-view:hover {
+  background:  #a00e1a;
+  box-shadow:  0 6px 28px rgba(193,18,31,0.5);
+  transform:   scale(1.08);
+}
+
+.fl-swipe-btn-back {
+  width:      56px;
+  height:     56px;
+  background: rgba(255,255,255,0.06);
+  border:     2px solid rgba(255,255,255,0.12);
+  color:      rgba(255,255,255,0.5);
+  font-size:  18px;
+}
+
+.fl-swipe-btn-back:hover {
+  background: rgba(255,255,255,0.1);
+  transform:  scale(1.08);
+}
+
+.fl-swipe-counter {
+  font-size:      12px;
+  letter-spacing: 0.1em;
+  color:          var(--steel);
+  min-width:      50px;
+  text-align:     center;
+}
+
+.fl-swipe-hint {
+  text-align:     center;
+  font-size:      11px;
+  color:          rgba(255,255,255,0.2);
+  letter-spacing: 0.06em;
+}
+
+.fl-swipe-empty {
+  text-align:  center;
+  padding:     60px 20px;
+  color:       var(--steel);
+  font-size:   15px;
+  line-height: 1.8;
 }
 
 /* ─── Loading & Empty States ──────────────────────────────── */
@@ -675,72 +976,66 @@
 
 /* ─── Responsive ──────────────────────────────────────────── */
 
+@media (max-width: 1200px) {
+  .fl-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 1024px) {
+  .fl-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .fl-modal-portfolio {
     column-count: 2;
   }
 }
 
 @media (max-width: 768px) {
-  .fl-hero {
-    padding: 120px 0 72px;
-  }
+  .fl-hero { padding: 120px 0 72px; }
 
   .fl-stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1px;
     background: rgba(255,255,255,0.05);
   }
-
   .fl-stat {
     background: var(--void);
     border-right: none;
     padding: 24px;
   }
 
-  .fl-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-  }
+  .fl-modal-inner  { padding: 28px 20px; }
+  .fl-modal-header { flex-direction: column; align-items: flex-start; }
+  .fl-modal-portfolio { column-count: 1; }
+  .fl-modal-cta    { flex-direction: column; text-align: center; }
+  .fl-filter-row   { gap: 24px; }
+  .fl-lightbox     { padding: 20px; }
+}
 
-  .fl-modal-inner {
-    padding: 28px 20px;
-  }
+/* Mobile: hide grid, show swipe deck */
+@media (max-width: 640px) {
+  .fl-grid-section .fl-grid { display: none !important; }
+  .fl-grid-section #fl-loading,
+  .fl-grid-section #fl-empty  { display: none !important; }
+  .fl-swipe-section            { display: block; }
 
-  .fl-modal-header {
-    flex-direction: column;
-    align-items: flex-start;
+  .fl-filters-section {
+    padding: 40px 0 24px;
   }
-
-  .fl-modal-portfolio {
-    column-count: 1;
+  .fl-filter-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-
-  .fl-modal-cta {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .fl-filter-row {
-    gap: 24px;
-  }
-
-  .fl-lightbox {
-    padding: 20px;
-  }
+  .fl-filter-tabs::-webkit-scrollbar { display: none; }
+  .fl-filter-tab  { white-space: nowrap; }
+  .fl-filter-row  { flex-direction: column; gap: 16px; }
 }
 
 @media (max-width: 480px) {
-  .fl-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .fl-stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .fl-cta-btns {
-    flex-direction: column;
-    align-items: center;
-  }
+  .fl-stats-grid { grid-template-columns: 1fr 1fr; }
+  .fl-cta-btns   { flex-direction: column; align-items: center; }
 }
