@@ -32,6 +32,8 @@
   <link rel="stylesheet" href="../css/components.css">
   <!-- Tool CSS -->
   <link rel="stylesheet" href="css/roi-predictor.css">
+  <link rel="stylesheet" href="../css/apple-theme.css">
+  <link rel="stylesheet" href="../css/light-theme.css">
   <!-- Schema: SoftwareApplication -->
   <script type="application/ld+json">
   {
@@ -126,10 +128,14 @@
             <span class="dropdown-item-name">Ad Copy Generator <span class="nav-cs-badge">Soon</span></span>
             <span class="dropdown-item-desc">AI-written ads for BD audiences</span>
           </span>
-          <span class="nav-dropdown-item is-coming-soon" role="menuitem" aria-disabled="true">
-            <span class="dropdown-item-name">Brand Audit Checklist <span class="nav-cs-badge">Soon</span></span>
-            <span class="dropdown-item-desc">40-point brand health check</span>
-          </span>
+          <a href="brand-score-audit.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">&#11088; Brand Score Audit</span>
+            <span class="dropdown-item-desc">AI brand health check in 3 minutes</span>
+          </a>
+          <a href="competitor-tracker.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">&#127919; Competitor Tracker</span>
+            <span class="dropdown-item-desc">AI analysis of up to 5 rivals</span>
+          </a>
           <span class="nav-dropdown-item is-coming-soon" role="menuitem" aria-disabled="true">
             <span class="dropdown-item-name">Budget Planner <span class="nav-cs-badge">Soon</span></span>
             <span class="dropdown-item-desc">Allocate your marketing spend</span>
@@ -940,6 +946,7 @@
 <!-- Config (UCH_PROXY_URL — gitignored, optional) -->
 <script src="../config.js" onerror="console.log('config.js not found — proxy defaults to localhost:3001')"></script>
 <!-- Site scripts -->
+<script src="../js/theme-lang.js"></script>
 <script src="../js/cursor.js"></script>
 <script src="../js/main.js"></script>
 <!-- Tool script -->

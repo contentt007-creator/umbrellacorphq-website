@@ -1,0 +1,449 @@
+/* ═══════════════════════════════════════════════════════════
+   APPLE-THEME.CSS — Umbrella Corp HQ
+   Apple design language (fonts, layout, radius, spacing)
+   with UCH brand colours preserved exactly
+═══════════════════════════════════════════════════════════ */
+
+/* Font loaded in global.css — no duplicate import needed */
+
+/* ─── Typography tokens — kept in sync with global.css ───── */
+:root {
+  --font-display: -apple-system, BlinkMacSystemFont,
+                  "SF Pro Display", "Inter",
+                  "Helvetica Neue", Arial, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont,
+                  "SF Pro Text", "Inter",
+                  "Helvetica Neue", Arial, sans-serif;
+
+  --transition-fast: 0.2s ease;
+  --transition-med:  0.3s ease;
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Body — Apple defaults ──────────────────────────────── */
+body {
+  font-family:             var(--font-body) !important;
+  font-size:               17px !important;
+  line-height:             1.47 !important;
+  -webkit-font-smoothing:  antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+p, span, li, a, label, input, textarea, select, button {
+  font-family: var(--font-body) !important;
+}
+
+/* ─── Headings — Apple scale ──────────────────────────────── */
+h1 {
+  font-family:    var(--font-display) !important;
+  font-weight:    700 !important;
+  line-height:    1.05 !important;
+  letter-spacing: -0.005em !important;
+  text-transform: none !important;
+}
+
+h2 {
+  font-family:    var(--font-display) !important;
+  font-weight:    700 !important;
+  line-height:    1.07 !important;
+  letter-spacing: -0.003em !important;
+  text-transform: none !important;
+}
+
+h3 {
+  font-family:    var(--font-display) !important;
+  font-weight:    600 !important;
+  line-height:    1.1 !important;
+  letter-spacing: -0.002em !important;
+  text-transform: none !important;
+}
+
+h4, h5, h6 {
+  font-family:    var(--font-display) !important;
+  font-weight:    600 !important;
+  line-height:    1.15 !important;
+  letter-spacing: -0.001em !important;
+  text-transform: none !important;
+}
+
+.section-tag {
+  font-size:      12px !important;
+  letter-spacing: 0.08em !important;
+  font-weight:    600 !important;
+  text-transform: uppercase !important;
+}
+
+.section-heading {
+  font-family:    var(--font-display) !important;
+  font-size:      clamp(40px, 5.5vw, 80px) !important;
+  font-weight:    700 !important;
+  line-height:    1.07 !important;
+  letter-spacing: -0.003em !important;
+  text-transform: none !important;
+}
+
+.section-subtext {
+  font-size:   21px !important;
+  line-height: 1.47 !important;
+  font-weight: 400 !important;
+}
+
+/* ─── Buttons — Apple pill shape, UCH colours ───────────── */
+.btn {
+  border-radius:  980px !important;
+  padding:        14px 30px !important;
+  font-size:      15px !important;
+  font-weight:    500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  transition:     all 0.2s ease !important;
+}
+
+/* ─── Navigation — Apple frosted glass, UCH dark ────────── */
+.nav {
+  background:        rgba(10, 10, 10, 0.82) !important;
+  backdrop-filter:   saturate(180%) blur(20px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+  border-bottom:     1px solid rgba(193, 18, 31, 0.12) !important;
+  padding:           0 var(--container-pad) !important;
+  height:            56px !important;
+}
+
+.nav--scrolled {
+  background:    rgba(10, 10, 10, 0.95) !important;
+  border-bottom: 1px solid rgba(193, 18, 31, 0.18) !important;
+  padding:       0 var(--container-pad) !important;
+}
+
+.nav-logo-text {
+  font-family:    var(--font-display) !important;
+  font-size:      18px !important;
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+.nav-link {
+  font-size:      13px !important;
+  font-weight:    400 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+/* Dropdown */
+.nav-dropdown {
+  border-radius: 14px !important;
+  box-shadow:    0 8px 40px rgba(0, 0, 0, 0.5) !important;
+  border:        1px solid rgba(193, 18, 31, 0.15) !important;
+  overflow:      hidden !important;
+}
+
+/* ─── Cards — Apple radius, UCH dark bg ─────────────────── */
+.service-card {
+  border-radius: 20px !important;
+  transition:    all 0.3s ease !important;
+}
+
+.service-card:hover {
+  transform:  translateY(-4px) !important;
+  box-shadow: 0 20px 60px rgba(193, 18, 31, 0.12) !important;
+}
+
+.service-card-title {
+  font-size:      22px !important;
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+/* ─── Case study cards ───────────────────────────────────── */
+.case-study-card {
+  border-radius: 20px !important;
+  overflow:      hidden !important;
+  transition:    all 0.3s ease !important;
+}
+
+.case-study-card:hover {
+  transform:  translateY(-6px) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4) !important;
+}
+
+.case-study-tag {
+  border-radius: 980px !important;
+}
+
+.case-study-title {
+  font-weight:    700 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+}
+
+/* ─── Stats ──────────────────────────────────────────────── */
+.stat-number {
+  font-size:      clamp(48px, 6vw, 80px) !important;
+  font-weight:    700 !important;
+  letter-spacing: -0.03em !important;
+  font-family:    var(--font-display) !important;
+  text-transform: none !important;
+}
+
+.stat-label {
+  font-size:   15px !important;
+  font-weight: 400 !important;
+}
+
+/* ─── Process ────────────────────────────────────────────── */
+.process-step-title {
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+/* ─── Testimonials ───────────────────────────────────────── */
+.testimonial-card {
+  border-radius: 20px !important;
+}
+
+.testimonial-quote {
+  font-size:   20px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+/* ─── Service detail cards ───────────────────────────────── */
+.service-detail-card {
+  border-radius: 20px !important;
+  transition:    all 0.3s ease !important;
+}
+
+.service-detail-card-title {
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+.service-detail-tag {
+  border-radius: 980px !important;
+}
+
+/* ─── FAQ ────────────────────────────────────────────────── */
+.faq-item {
+  border-radius: 14px !important;
+  margin-bottom: 8px !important;
+}
+
+.faq-question {
+  font-size:   17px !important;
+  font-weight: 500 !important;
+}
+
+.faq-icon {
+  border-radius: 50% !important;
+  width:         28px !important;
+  height:        28px !important;
+}
+
+.faq-answer {
+  font-size: 15px !important;
+}
+
+/* ─── Team cards ─────────────────────────────────────────── */
+.team-card {
+  border-radius: 20px !important;
+  overflow:      hidden !important;
+  transition:    all 0.3s ease !important;
+}
+
+.team-card:hover {
+  transform:  translateY(-6px) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35) !important;
+}
+
+.team-name {
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+/* ─── Award cards ────────────────────────────────────────── */
+.award-card {
+  border-radius: 16px !important;
+  transition:    all 0.3s ease !important;
+}
+
+.award-card:hover {
+  transform:  translateY(-4px) !important;
+}
+
+.award-title {
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+.award-year {
+  border-radius: 980px !important;
+  padding:       3px 10px !important;
+  font-size:     12px !important;
+  font-weight:   500 !important;
+}
+
+/* ─── Filter bar ─────────────────────────────────────────── */
+.filter-bar {
+  border-radius: 980px !important;
+  padding:       6px !important;
+}
+
+.filter-btn {
+  border-radius:  980px !important;
+  font-size:      14px !important;
+  padding:        8px 20px !important;
+  font-weight:    400 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  transition:     all 0.2s ease !important;
+}
+
+.filter-btn.active {
+  font-weight: 500 !important;
+}
+
+/* ─── Tool cards ─────────────────────────────────────────── */
+.tool-card {
+  border-radius: 20px !important;
+  transition:    all 0.3s ease !important;
+}
+
+.tool-card:hover {
+  transform:  translateY(-6px) !important;
+  box-shadow: 0 20px 60px rgba(193, 18, 31, 0.12) !important;
+}
+
+.tool-card-icon {
+  border-radius: 16px !important;
+}
+
+.tool-card-title {
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+.tool-launch-btn {
+  border-radius:  980px !important;
+  padding:        10px 24px !important;
+  font-size:      14px !important;
+  font-weight:    400 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+/* ─── Tags / badges ──────────────────────────────────────── */
+.tag {
+  border-radius: 980px !important;
+  font-weight:   500 !important;
+}
+
+/* ─── Forms — Apple radius, UCH dark ────────────────────── */
+.form-input,
+.form-textarea,
+.form-select,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+  border-radius: 12px !important;
+  font-size:     15px !important;
+  padding:       14px 18px !important;
+  transition:    border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.contact-form,
+.login-card,
+.register-card,
+.brief-card {
+  border-radius: 20px !important;
+}
+
+/* ─── Gallery items ──────────────────────────────────────── */
+.gallery-item {
+  border-radius: 16px !important;
+  overflow:      hidden !important;
+}
+
+/* ─── Hero title — tighter tracking ─────────────────────── */
+.hero-title {
+  font-size:      clamp(48px, 7vw, 112px) !important;
+  font-weight:    700 !important;
+  line-height:    1.0 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+}
+
+.hero-subtitle {
+  font-size:   21px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+.inner-hero-title {
+  font-weight:    700 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+}
+
+/* ─── CTA title ──────────────────────────────────────────── */
+.cta-title {
+  font-weight:    700 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+}
+
+/* ─── Footer ─────────────────────────────────────────────── */
+.footer-logo-text {
+  font-weight:    600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+.footer-heading {
+  font-size:      12px !important;
+  font-weight:    600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  font-family:    var(--font-body) !important;
+}
+
+.footer-link {
+  font-size:      14px !important;
+  font-weight:    400 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+/* ─── Scrollbar — slim Apple style ──────────────────────── */
+::-webkit-scrollbar {
+  width:  8px !important;
+  height: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background:    rgba(193, 18, 31, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(193, 18, 31, 0.55) !important;
+}
+
+/* ─── Focus ring — clean outline ─────────────────────────── */
+*:focus-visible {
+  outline:        2px solid var(--corp-red) !important;
+  outline-offset: 3px !important;
+  border-radius:  4px !important;
+}

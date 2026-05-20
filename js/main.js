@@ -299,6 +299,40 @@ function initNavigation() {
     });
   });
 
+  // ── Dropdown hover with grace-period delay ──
+  // Pure CSS :hover loses the dropdown when crossing the gap between
+  // the trigger and the panel. JS adds a 220ms close-delay so the
+  // mouse has time to travel into the dropdown without it vanishing.
+  document.querySelectorAll('.nav-dropdown-wrap').forEach((wrap) => {
+    let closeTimer = null;
+
+    const open  = () => {
+      clearTimeout(closeTimer);
+      wrap.classList.add('is-open');
+    };
+    const close = () => {
+      closeTimer = setTimeout(() => wrap.classList.remove('is-open'), 220);
+    };
+
+    wrap.addEventListener('mouseenter', open);
+    wrap.addEventListener('mouseleave', close);
+
+    // Also cancel the close if the mouse re-enters the dropdown panel itself
+    const panel = wrap.querySelector('.nav-dropdown');
+    if (panel) {
+      panel.addEventListener('mouseenter', open);
+      panel.addEventListener('mouseleave', close);
+    }
+  });
+
+  // Close all dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-dropdown-wrap')) {
+      document.querySelectorAll('.nav-dropdown-wrap.is-open')
+        .forEach((w) => w.classList.remove('is-open'));
+    }
+  });
+
   // ── Active nav link based on current path ──
   const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
   const navLinks = document.querySelectorAll('.nav-link, .mobile-menu a');

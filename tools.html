@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/apple-theme.css">
+  <link rel="stylesheet" href="css/light-theme.css">
 
   <style>
     /* Tools hero */
@@ -115,10 +117,14 @@
             <span class="dropdown-item-name">Marketing ROI Predictor</span>
             <span class="dropdown-item-desc">Calculate your real revenue potential</span>
           </a>
-          <span class="nav-dropdown-item is-coming-soon">
-            <span class="dropdown-item-name">Brand Score Audit <span class="nav-cs-badge">Soon</span></span>
-            <span class="dropdown-item-desc">Score your brand against competitors</span>
-          </span>
+          <a href="tools/brand-score-audit.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">&#11088; Brand Score Audit</span>
+            <span class="dropdown-item-desc">AI brand health check in 3 minutes</span>
+          </a>
+          <a href="tools/competitor-tracker.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">&#127919; Competitor Tracker</span>
+            <span class="dropdown-item-desc">AI analysis of up to 5 rivals</span>
+          </a>
           <span class="nav-dropdown-item is-coming-soon">
             <span class="dropdown-item-name">Ad Budget Allocator <span class="nav-cs-badge">Soon</span></span>
             <span class="dropdown-item-desc">Optimal spend distribution</span>
@@ -127,10 +133,10 @@
             <span class="dropdown-item-name">Growth Roadmap <span class="nav-cs-badge">Soon</span></span>
             <span class="dropdown-item-desc">90-day marketing strategy</span>
           </span>
-          <span class="nav-dropdown-item is-coming-soon">
-            <span class="dropdown-item-name">Website Health Checker <span class="nav-cs-badge">Soon</span></span>
-            <span class="dropdown-item-desc">SEO &amp; performance audit</span>
-          </span>
+          <a href="tools/website-health-checker.html" class="nav-dropdown-item" role="menuitem">
+            <span class="dropdown-item-name">&#128268; Website Health Checker</span>
+            <span class="dropdown-item-desc">Real PageSpeed + AI recommendations</span>
+          </a>
           <div class="nav-dropdown-divider"></div>
           <a href="tools.html" class="nav-dropdown-all" role="menuitem">All Free Tools &#8594;</a>
         </div>
@@ -190,19 +196,16 @@
         <a href="tools/roi-predictor.html" class="tool-launch-btn" aria-label="Launch Marketing ROI Predictor">Launch Tool &#8594;</a>
       </article>
 
-      <!-- Card 2 — COMING SOON: Brand Score Audit -->
-      <article class="tool-card-hub is-coming-soon" aria-label="Brand Score Audit — coming soon">
+      <!-- Card 2 — Brand Score Audit -->
+      <article class="tool-card-hub" aria-label="Brand Score Audit">
         <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="22" cy="22" r="16" stroke="currentColor" stroke-width="1.5"/>
           <path d="M22 10 L24.5 17.5 L32 17.5 L26 22.5 L28.5 30 L22 25.5 L15.5 30 L18 22.5 L12 17.5 L19.5 17.5 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
         </svg>
-        <p class="tool-card-tag">Brand Analysis</p>
+        <p class="tool-card-tag">AI-Powered</p>
         <h2 class="tool-card-title">Brand Score Audit</h2>
-        <p class="tool-card-desc">Rate your brand identity, messaging, and visual consistency against top BD brands.</p>
-        <span class="tool-coming-soon-badge" aria-label="Coming soon">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Coming Soon
-        </span>
+        <p class="tool-card-desc">Answer 20 quick questions. Get an AI-generated score across 5 brand dimensions with specific recommendations for your Bangladesh business.</p>
+        <a href="tools/brand-score-audit.html" class="tool-launch-btn" aria-label="Launch Brand Score Audit">Launch Tool &#8594;</a>
       </article>
 
       <!-- Card 3 — COMING SOON: Ad Budget Allocator -->
@@ -242,8 +245,8 @@
         </span>
       </article>
 
-      <!-- Card 5 — COMING SOON: Website Health Checker -->
-      <article class="tool-card-hub is-coming-soon" aria-label="Website Health Checker — coming soon">
+      <!-- Card 5 — Website Health Checker (LIVE) -->
+      <article class="tool-card-hub" aria-label="Website Health Checker">
         <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="6" y="8" width="32" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
           <path d="M14 36 h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -252,28 +255,25 @@
         </svg>
         <p class="tool-card-tag">SEO &amp; Performance</p>
         <h2 class="tool-card-title">Website Health Checker</h2>
-        <p class="tool-card-desc">SEO audit, Core Web Vitals, and conversion rate analysis for your website.</p>
-        <span class="tool-coming-soon-badge" aria-label="Coming soon">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Coming Soon
-        </span>
+        <p class="tool-card-desc">Real PageSpeed data + Groq AI recommendations. Performance, SEO, Core Web Vitals — free in 30 seconds.</p>
+        <a href="tools/website-health-checker.html" class="tool-launch-btn" aria-label="Launch Website Health Checker">
+          Launch Tool
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </article>
 
-      <!-- Card 6 — COMING SOON: Competitor Ad Spy -->
-      <article class="tool-card-hub is-coming-soon" aria-label="Competitor Ad Spy — coming soon">
+      <!-- Card 6 — Competitor Tracker -->
+      <article class="tool-card-hub" aria-label="Competitor Tracker">
         <svg class="tool-card-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="20" cy="20" r="11" stroke="currentColor" stroke-width="1.5"/>
           <path d="M28 28 L38 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <circle cx="20" cy="20" r="5" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
           <circle cx="20" cy="20" r="2" fill="currentColor" opacity="0.7"/>
         </svg>
-        <p class="tool-card-tag">Competitive Intel</p>
-        <h2 class="tool-card-title">Competitor Ad Spy</h2>
-        <p class="tool-card-desc">See what your competitors are running on Meta and Google in Bangladesh.</p>
-        <span class="tool-coming-soon-badge" aria-label="Coming soon">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Coming Soon
-        </span>
+        <p class="tool-card-tag">AI-Powered</p>
+        <h2 class="tool-card-title">Competitor Tracker</h2>
+        <p class="tool-card-desc">Add up to 5 rivals and get an AI breakdown of their strengths, weaknesses, and exactly how to beat each one in your market.</p>
+        <a href="tools/competitor-tracker.html" class="tool-launch-btn" aria-label="Launch Competitor Tracker">Launch Tool &#8594;</a>
       </article>
 
       <!-- Card 7 — COMING SOON: Content Calendar Builder -->
@@ -433,6 +433,7 @@
 <script src="js/supabase-config.js"></script>
 <script src="js/content-api.js"></script>
 <!-- Site Scripts -->
+<script src="js/theme-lang.js"></script>
 <script src="js/cursor.js"></script>
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>

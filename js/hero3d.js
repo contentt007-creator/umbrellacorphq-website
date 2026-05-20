@@ -17,6 +17,11 @@
   const IS_MOBILE  = window.innerWidth < 768;
 
   /* ─────────────────────────────────────────────
+   * THEME STATE
+   * ───────────────────────────────────────────── */
+  let heroTheme = (document.documentElement.getAttribute('data-theme') || 'dark');
+
+  /* ─────────────────────────────────────────────
    * CANVAS + RENDERER
    * ───────────────────────────────────────────── */
   const canvas = document.getElementById('hero-canvas');
@@ -193,6 +198,42 @@
   scene.add(logoMark);
 
   /* ─────────────────────────────────────────────
+   * CLOUD GEOMETRY (shown in light / day mode)
+   * ───────────────────────────────────────────── */
+  const cloudMat = new THREE.MeshLambertMaterial({
+    color:       0xffffff,
+    transparent: true,
+    opacity:     0.92,
+  });
+
+  const cloudConfigs = [
+    { pos: [-3.8, 1.4, -2.0], blobs: [[0,0,0,0.7],[0.65,0.15,0,0.5],[-0.6,0.1,0,0.45],[0.2,0.3,0,0.4]] },
+    { pos: [ 3.5, 0.6, -2.5], blobs: [[0,0,0,0.6],[0.6,0.2,0,0.45],[-0.55,0.05,0,0.4],[0.1,0.28,0,0.35]] },
+    { pos: [-2.0,-1.6, -1.8], blobs: [[0,0,0,0.5],[0.5,0.12,0,0.38],[-0.45,0.08,0,0.35]] },
+    { pos: [ 4.2, 2.0, -3.2], blobs: [[0,0,0,0.55],[0.55,0.18,0,0.4],[-0.5,0.1,0,0.38],[0.05,0.3,0,0.32]] },
+    { pos: [-4.5,-0.3, -3.0], blobs: [[0,0,0,0.65],[0.6,0.2,0,0.48],[-0.58,0.1,0,0.44]] },
+    { pos: [ 1.8, 2.5, -2.8], blobs: [[0,0,0,0.45],[0.45,0.1,0,0.35],[-0.4,0.06,0,0.3]] },
+  ];
+
+  const cloudGroups = [];
+  const cloudDrifts = [];
+
+  cloudConfigs.forEach((cfg, idx) => {
+    const g = new THREE.Group();
+    cfg.blobs.forEach(([bx, by, bz, br]) => {
+      const geo  = new THREE.SphereGeometry(br, IS_MOBILE ? 6 : 10, IS_MOBILE ? 6 : 10);
+      const mesh = new THREE.Mesh(geo, cloudMat);
+      mesh.position.set(bx, by, bz);
+      g.add(mesh);
+    });
+    g.position.set(...cfg.pos);
+    g.visible = false; // hidden until light mode
+    scene.add(g);
+    cloudGroups.push(g);
+    cloudDrifts.push(idx % 2 === 0 ? 0.0007 : -0.0005);
+  });
+
+  /* ─────────────────────────────────────────────
    * PARTICLE FIELD
    * ───────────────────────────────────────────── */
   const PARTICLE_COUNT  = IS_MOBILE ? 600 : 1500;
@@ -331,6 +372,80 @@
   }
 
   /* ─────────────────────────────────────────────
+   * THEME SWITCH — day sky ↔ night space
+   * ───────────────────────────────────────────── */
+  function applyHeroTheme(t) {
+    heroTheme = t;
+
+    if (t === 'light') {
+      /* ── DAY SKY ── */
+      renderer.setClearColor(0x87ceeb, 1);           // solid sky blue
+      scene.fog = new THREE.Fog(0xc5e8f7, 10, 28);  // soft sky depth
+      ambientLight.color.setHex(0xfff4e0);
+      ambientLight.intensity = 1.4;
+      redKeyLight.color.setHex(0xffd580);            // warm sunlight
+      redKeyLight.position.set(3, 4, 4);
+      redKeyLight.intensity = 2.0;
+      rimLight.color.setHex(0xaadcff);               // sky fill
+      rimLight.intensity = 1.0;
+
+      /* Particles → white floating sky mist */
+      const whiteC = new THREE.Color(0xffffff);
+      const creamC = new THREE.Color(0xffe8b0);
+      const posArr = particleGeo.attributes.color.array;
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const col = i < IVORY_COUNT ? whiteC : creamC;
+        posArr[i * 3]     = col.r;
+        posArr[i * 3 + 1] = col.g;
+        posArr[i * 3 + 2] = col.b;
+      }
+      particleGeo.attributes.color.needsUpdate = true;
+      particleMat.size    = IS_MOBILE ? 0.06 : 0.045;
+      particleMat.opacity = 0.55;
+
+      /* Show clouds */
+      cloudGroups.forEach(cg => { cg.visible = true; });
+
+    } else {
+      /* ── NIGHT SPACE ── */
+      renderer.setClearColor(0x000000, 0);           // transparent → CSS bg shows
+      scene.fog = null;
+      ambientLight.color.setHex(0x1a0a0a);
+      ambientLight.intensity = 0.5;
+      redKeyLight.color.setHex(CORP_RED);
+      redKeyLight.position.set(0, 0, 3);
+      redKeyLight.intensity = 1.2;
+      rimLight.color.setHex(IVORY);
+      rimLight.intensity = 0.3;
+
+      /* Particles → ivory + red stars */
+      const ivoryC = new THREE.Color(IVORY);
+      const redC   = new THREE.Color(CORP_RED);
+      const posArr = particleGeo.attributes.color.array;
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const col = i < IVORY_COUNT ? ivoryC : redC;
+        posArr[i * 3]     = col.r;
+        posArr[i * 3 + 1] = col.g;
+        posArr[i * 3 + 2] = col.b;
+      }
+      particleGeo.attributes.color.needsUpdate = true;
+      particleMat.size    = IS_MOBILE ? 0.035 : 0.025;
+      particleMat.opacity = 0.7;
+
+      /* Hide clouds */
+      cloudGroups.forEach(cg => { cg.visible = false; });
+    }
+  }
+
+  /* Apply initial theme */
+  applyHeroTheme(heroTheme);
+
+  /* Listen for toggle events */
+  window.addEventListener('uch-themechange', (e) => {
+    applyHeroTheme(e.detail.theme);
+  });
+
+  /* ─────────────────────────────────────────────
    * CLOCK
    * ───────────────────────────────────────────── */
   const clock = new THREE.Clock();
@@ -400,6 +515,15 @@
 
     // Slow particle system rotation
     particles.rotation.y += 0.0005;
+
+    // ── Cloud drift (day mode)
+    if (heroTheme === 'light') {
+      cloudGroups.forEach((cg, i) => {
+        cg.position.x += cloudDrifts[i];
+        if (cg.position.x > 6.5)  cg.position.x = -6.5;
+        if (cg.position.x < -6.5) cg.position.x =  6.5;
+      });
+    }
 
     // ── Easter egg pulse
     applyPulse(now);

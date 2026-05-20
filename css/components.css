@@ -1255,10 +1255,8 @@ a.nav-dropdown-item:hover {
   letter-spacing: 0.2em;
   display:        block;
   margin-bottom:  16px;
-  position:       absolute;
-  top:            0;
-  left:           50%;
-  transform:      translateX(-50%);
+  position:       static;
+  transform:      none;
 }
 
 .process-step__title {
