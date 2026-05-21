@@ -137,17 +137,18 @@
 
 /* ─── Loading ───────────────────────────────────────────── */
 .wh-loading {
-  display:     none;
-  padding:     80px 0;
-  text-align:  center;
+  display:    none;
+  padding:    60px 0 80px;
+  text-align: center;
 }
 
 .wh-loading.is-active { display: block; }
 
+/* Radar */
 .wh-radar {
-  width:    80px;
-  height:   80px;
-  margin:   0 auto 32px;
+  width:    72px;
+  height:   72px;
+  margin:   0 auto 28px;
   position: relative;
 }
 
@@ -157,40 +158,152 @@
   animation: wh-spin 2s linear infinite;
 }
 
-@keyframes wh-spin {
-  to { transform: rotate(360deg); }
+@keyframes wh-spin { to { transform: rotate(360deg); } }
+
+/* Pulse ring around radar */
+.wh-radar::after {
+  content:       '';
+  position:      absolute;
+  inset:         -10px;
+  border-radius: 50%;
+  border:        1.5px solid rgba(193,18,31,0.25);
+  animation:     wh-pulse 2s ease-out infinite;
+}
+
+@keyframes wh-pulse {
+  0%   { transform: scale(0.85); opacity: 0.8; }
+  70%  { transform: scale(1.2);  opacity: 0; }
+  100% { transform: scale(1.2);  opacity: 0; }
 }
 
 .wh-loading-title {
-  font-size:   22px;
-  font-weight: 600;
-  color:       var(--ivory);
-  margin-bottom: 12px;
+  font-size:     22px;
+  font-weight:   600;
+  color:         var(--ivory);
+  margin-bottom: 6px;
 }
 
+.wh-loading-url {
+  font-size:     13px;
+  color:         var(--corp-red);
+  margin-bottom: 32px;
+  word-break:    break-all;
+}
+
+/* ── Step list ── */
+.wh-steps {
+  list-style:    none;
+  max-width:     340px;
+  margin:        0 auto 32px;
+  display:       flex;
+  flex-direction: column;
+  gap:           10px;
+  text-align:    left;
+}
+
+.wh-step {
+  display:       flex;
+  align-items:   center;
+  gap:           12px;
+  padding:       10px 14px;
+  border-radius: 10px;
+  font-size:     14px;
+  color:         var(--steel);
+  background:    rgba(255,255,255,0.02);
+  border:        1px solid rgba(255,255,255,0.04);
+  transition:    all 0.3s ease;
+}
+
+.wh-step.is-active {
+  color:        var(--ivory);
+  background:   rgba(193,18,31,0.06);
+  border-color: rgba(193,18,31,0.2);
+}
+
+.wh-step.is-done {
+  color:        #30d158;
+  background:   rgba(48,209,88,0.05);
+  border-color: rgba(48,209,88,0.15);
+}
+
+.wh-step-icon {
+  width:         20px;
+  height:        20px;
+  flex-shrink:   0;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+}
+
+/* Spinner for active step */
+.wh-step-spinner {
+  width:         16px;
+  height:        16px;
+  border:        2px solid rgba(193,18,31,0.2);
+  border-top-color: var(--corp-red);
+  border-radius: 50%;
+  animation:     wh-spin 0.7s linear infinite;
+}
+
+/* Checkmark for done step */
+.wh-step-check {
+  width:  16px;
+  height: 16px;
+  color:  #30d158;
+}
+
+/* Dot for pending step */
+.wh-step-dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background:    rgba(255,255,255,0.12);
+  margin:        auto;
+}
+
+/* ── Status message ── */
 .wh-loading-status {
-  font-size:   15px;
+  font-size:   13px;
   color:       var(--steel);
-  min-height:  24px;
-  transition:  opacity 0.3s ease;
+  min-height:  20px;
+  margin-bottom: 20px;
+  font-style:  italic;
+  transition:  opacity 0.4s ease;
 }
 
+/* ── Progress bar ── */
 .wh-loading-bar-wrap {
-  max-width:     320px;
-  margin:        24px auto 0;
+  max-width:     340px;
+  margin:        0 auto;
   background:    rgba(255,255,255,0.05);
   border-radius: 4px;
-  height:        4px;
+  height:        3px;
   overflow:      hidden;
 }
 
 .wh-loading-bar {
-  height:     100%;
-  background: var(--corp-red);
-  width:      0%;
+  height:        100%;
+  background:    linear-gradient(90deg, var(--corp-red), #ff6b6b);
+  width:         0%;
   border-radius: 4px;
-  transition: width 0.5s ease;
+  transition:    width 0.8s cubic-bezier(0.4,0,0.2,1);
 }
+
+/* Shimmer effect on bar */
+.wh-loading-bar::after {
+  content:    '';
+  position:   absolute;
+  top:        0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation:  wh-shimmer 1.5s infinite;
+}
+
+@keyframes wh-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.wh-loading-bar-wrap { position: relative; }
 
 /* ─── Error ─────────────────────────────────────────────── */
 .wh-error {
