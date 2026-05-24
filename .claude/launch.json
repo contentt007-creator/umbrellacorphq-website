@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "umbrella-site",
+      "name": "umbrellacorphq",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", ".", "-p", "4567"],
-      "port": 4567
+      "runtimeArgs": ["serve", ".", "--listen", "5500", "--no-clipboard"],
+      "port": 5500
     }
   ]
 }
