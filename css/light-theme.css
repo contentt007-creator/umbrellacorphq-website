@@ -1051,13 +1051,6 @@
 /* ═══════════════════════════════════════════════════════════
    TOGGLE WIDGET  (shared light + dark)
 ═══════════════════════════════════════════════════════════ */
-.uch-toggles {
-  display:      flex;
-  align-items:  center;
-  gap:          10px;
-  margin-right: 8px;
-}
-
 /* ── Theme button ── */
 .uch-theme-btn {
   display:         flex;
@@ -1110,41 +1103,6 @@
 .uch-ico-sun  { opacity: 0; transform: rotate(90deg) scale(0.6); }
 .uch-ico-moon { opacity: 1; transform: rotate(0deg) scale(1); }
 
-/* ── Language pill ── */
-.uch-lang-pill {
-  display:       flex;
-  align-items:   center;
-  border:        1px solid rgba(240, 237, 232, 0.2);
-  border-radius: 980px;
-  overflow:      hidden;
-  background:    rgba(240, 237, 232, 0.05);
-  height:        30px;
-}
-
-.uch-lang-opt {
-  padding:        0 10px;
-  height:         100%;
-  font-size:      11px;
-  font-weight:    500;
-  letter-spacing: 0.04em;
-  color:          rgba(240, 237, 232, 0.45);
-  background:     transparent;
-  border:         none;
-  cursor:         pointer;
-  transition:     all 0.2s ease;
-  font-family:    inherit;
-  line-height:    1;
-}
-
-.uch-lang-opt.is-active {
-  background: #c1121f;
-  color:      #fff;
-}
-
-.uch-lang-opt:hover:not(.is-active) {
-  color: rgba(240, 237, 232, 0.9);
-}
-
 /* Light mode toggle adjustments */
 [data-theme="light"] .uch-theme-btn {
   border-color: rgba(26, 26, 26, 0.2);
@@ -1158,36 +1116,12 @@
   color:        #c1121f;
 }
 
-[data-theme="light"] .uch-lang-pill {
-  border-color: rgba(26, 26, 26, 0.18);
-  background:   rgba(26, 26, 26, 0.04);
-}
-
-[data-theme="light"] .uch-lang-opt {
-  color: rgba(26, 26, 26, 0.5);
-}
-
-[data-theme="light"] .uch-lang-opt:hover:not(.is-active) {
-  color: rgba(26, 26, 26, 0.85);
-}
-
-/* ── Toggles sitting inside a dark inner-hero nav ── */
+/* ── Toggle sitting inside a dark inner-hero nav ── */
 [data-theme="light"] .inner-hero .uch-theme-btn,
 [data-theme="light"] .page-hero  .uch-theme-btn {
   border-color: rgba(240, 237, 232, 0.25);
   background:   rgba(240, 237, 232, 0.06);
   color:        rgba(240, 237, 232, 0.75);
-}
-
-[data-theme="light"] .inner-hero .uch-lang-pill,
-[data-theme="light"] .page-hero  .uch-lang-pill {
-  border-color: rgba(240, 237, 232, 0.2);
-  background:   rgba(240, 237, 232, 0.05);
-}
-
-[data-theme="light"] .inner-hero .uch-lang-opt,
-[data-theme="light"] .page-hero  .uch-lang-opt {
-  color: rgba(240, 237, 232, 0.45);
 }
 
 /* ═══════════════════════════════════════════════════════════
