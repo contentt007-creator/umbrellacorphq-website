@@ -12,9 +12,8 @@
   var LANG_KEY  = 'uch-lang';
 
   /* ─── State ─────────────────────────────────────────────── */
-  /* Toggles disabled — force dark mode, English */
-  var theme = 'dark';
-  var lang  = 'en';
+  var theme = localStorage.getItem(THEME_KEY) || 'dark';
+  var lang  = localStorage.getItem(LANG_KEY)  || 'en';
 
   /* ─── Apply theme immediately — no flash ────────────────── */
   document.documentElement.setAttribute('data-theme', theme);
@@ -22,9 +21,9 @@
 
   /* ─── DOMContentLoaded ───────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
-    /* injectToggles(); — disabled */
+    injectToggles();
     applyLang(lang, false);
-    /* updateUI(); — disabled (no UI injected) */
+    updateUI();
   });
 
   /* ════════════════════════════════════════════════════════
