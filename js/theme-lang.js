@@ -9,10 +9,24 @@
   var THEME_KEY = 'uch-theme';
 
   /* ─── State ─────────────────────────────────────────────── */
-  var theme = localStorage.getItem(THEME_KEY) || 'dark';
+  /* Priority: 1) user's saved choice  2) OS preference  3) dark fallback */
+  var _sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme = localStorage.getItem(THEME_KEY) || (_sysDark ? 'dark' : 'light');
 
   /* ─── Apply theme immediately — no flash ────────────────── */
   document.documentElement.setAttribute('data-theme', theme);
+
+  /* ─── Follow OS theme changes (only if user hasn't overridden) ── */
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      if (!localStorage.getItem(THEME_KEY)) {
+        theme = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        updateUI();
+        window.dispatchEvent(new CustomEvent('uch-themechange', { detail: { theme: theme } }));
+      }
+    });
+  }
 
   /* ─── DOMContentLoaded ───────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
