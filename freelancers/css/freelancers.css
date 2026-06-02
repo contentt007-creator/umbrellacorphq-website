@@ -4,6 +4,588 @@
    portfolio modal, lightbox, CTA section.
 ═══════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════
+   LOGIN PAGE  (freelancers/login.html)
+═══════════════════════════════════════════════════════════ */
+
+.fl-login-screen {
+  min-height:      100vh;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      var(--void);
+  padding:         40px 24px;
+  position:        relative;
+  overflow:        hidden;
+}
+
+/* Subtle radial glow behind the card */
+.fl-login-screen::before {
+  content:    '';
+  position:   absolute;
+  top:        30%;
+  left:       50%;
+  transform:  translate(-50%, -50%);
+  width:      600px;
+  height:     600px;
+  background: radial-gradient(circle, rgba(193,18,31,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.fl-login-card {
+  position:      relative;
+  width:         100%;
+  max-width:     420px;
+  background:    var(--carbon);
+  border:        1px solid rgba(255,255,255,0.06);
+  padding:       48px 44px 44px;
+  z-index:       1;
+}
+
+/* Logo */
+.fl-login-logo {
+  display:         flex;
+  align-items:     center;
+  gap:             12px;
+  text-decoration: none;
+  margin-bottom:   40px;
+}
+
+.fl-login-logo span {
+  font-family:    var(--font-display);
+  font-size:      18px;
+  letter-spacing: 0.05em;
+  color:          var(--ivory);
+}
+
+/* Heading */
+.fl-login-heading {
+  font-family:    var(--font-display);
+  font-size:      clamp(36px, 6vw, 52px);
+  line-height:    1;
+  color:          var(--ivory);
+  letter-spacing: -0.01em;
+  margin-bottom:  10px;
+}
+
+.fl-login-sub {
+  font-size:    15px;
+  color:        var(--steel);
+  line-height:  1.6;
+  margin-bottom: 36px;
+}
+
+/* Divider */
+.fl-login-divider {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  margin:      24px 0;
+}
+
+.fl-login-divider span {
+  font-size:      11px;
+  color:          var(--steel);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink:    0;
+}
+
+/* Form fields */
+.fl-field {
+  margin-bottom: 20px;
+}
+
+.fl-field label {
+  display:        block;
+  font-size:      11px;
+  font-weight:    500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--steel);
+  margin-bottom:  8px;
+  font-family:    var(--font-body);
+}
+
+.fl-input {
+  width:        100%;
+  background:   rgba(255,255,255,0.04);
+  border:       1px solid rgba(255,255,255,0.1);
+  color:        var(--ivory);
+  font-family:  var(--font-body);
+  font-size:    15px;
+  font-weight:  300;
+  padding:      13px 16px;
+  outline:      none;
+  transition:   border-color 0.2s ease, background 0.2s ease;
+  box-sizing:   border-box;
+  -webkit-appearance: none;
+  appearance:   none;
+  border-radius: 0;
+}
+
+.fl-input:focus {
+  border-color: var(--corp-red);
+  background:   rgba(255,255,255,0.06);
+}
+
+.fl-input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+/* Error */
+.fl-error-msg {
+  font-size:    13px;
+  color:        #e74c3c;
+  margin-bottom: 16px;
+  padding:      10px 14px;
+  background:   rgba(231,76,60,0.08);
+  border-left:  2px solid #e74c3c;
+  line-height:  1.5;
+}
+
+/* Submit button */
+.fl-login-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           100%;
+  padding:         14px 24px;
+  background:      var(--corp-red);
+  color:           #ffffff;
+  font-family:     var(--font-body);
+  font-size:       13px;
+  font-weight:     500;
+  letter-spacing:  0.1em;
+  text-transform:  uppercase;
+  border:          none;
+  cursor:          pointer;
+  transition:      background 0.2s ease;
+  margin-top:      8px;
+}
+
+.fl-login-btn:hover {
+  background: #a10e18;
+}
+
+.fl-login-btn:disabled {
+  opacity: 0.6;
+  cursor:  not-allowed;
+}
+
+/* Footer links */
+.fl-login-links {
+  margin-top:  28px;
+  padding-top: 24px;
+  border-top:  1px solid rgba(255,255,255,0.06);
+}
+
+.fl-login-links p {
+  font-size:   13px;
+  color:       var(--steel);
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+
+.fl-login-links p:last-child {
+  margin-bottom: 0;
+}
+
+.fl-login-links a {
+  color:           var(--corp-red);
+  text-decoration: none;
+  transition:      opacity 0.2s ease;
+}
+
+.fl-login-links a:hover {
+  opacity: 0.75;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .fl-login-card {
+    padding: 36px 28px 32px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REGISTER PAGE  (freelancers/register.html)
+═══════════════════════════════════════════════════════════ */
+
+.fl-register-main {
+  min-height:  100vh;
+  background:  var(--void);
+  padding:     120px 24px 80px;
+}
+
+.fl-register-wrap {
+  max-width:  760px;
+  margin:     0 auto;
+}
+
+.fl-register-header {
+  margin-bottom: 48px;
+}
+
+.fl-register-header h1 {
+  font-family:   var(--font-display);
+  font-size:     clamp(36px, 6vw, 56px);
+  color:         var(--ivory);
+  line-height:   1;
+  margin-bottom: 12px;
+}
+
+.fl-register-header p {
+  font-size:  16px;
+  color:      var(--steel);
+  line-height: 1.6;
+}
+
+/* Steps progress bar */
+.fl-steps-bar {
+  display:       flex;
+  align-items:   center;
+  margin-bottom: 48px;
+  gap:           0;
+}
+
+.fl-step {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  flex-shrink: 0;
+}
+
+.fl-step-dot {
+  width:           32px;
+  height:          32px;
+  border-radius:   50%;
+  border:          1px solid rgba(255,255,255,0.15);
+  color:           var(--steel);
+  font-size:       13px;
+  font-weight:     500;
+  font-family:     var(--font-body);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  transition:      all 0.3s ease;
+  flex-shrink:     0;
+}
+
+.fl-step.active .fl-step-dot,
+.fl-step.done .fl-step-dot {
+  background:   var(--corp-red);
+  border-color: var(--corp-red);
+  color:        #fff;
+}
+
+.fl-step-label {
+  font-size:      12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--steel);
+  white-space:    nowrap;
+}
+
+.fl-step.active .fl-step-label {
+  color: var(--ivory);
+}
+
+.fl-step-line {
+  flex:       1;
+  height:     1px;
+  background: rgba(255,255,255,0.08);
+  margin:     0 12px;
+}
+
+/* Form steps */
+.fl-form-step {
+  display: none;
+}
+
+.fl-form-step.active {
+  display: block;
+}
+
+/* Form grid */
+.fl-form-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   20px 24px;
+}
+
+.fl-form-grid .fl-field:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* Chip grid for skills */
+.fl-chip-grid {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       8px;
+  margin-top: 8px;
+}
+
+.fl-chip-grid label {
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+  padding:        6px 14px;
+  border:         1px solid rgba(255,255,255,0.1);
+  font-size:      13px;
+  color:          var(--steel);
+  cursor:         pointer;
+  transition:     all 0.2s ease;
+  user-select:    none;
+  font-family:    var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.fl-chip-grid input[type="checkbox"] {
+  display: none;
+}
+
+.fl-chip-grid input:checked + span,
+.fl-chip-grid label:has(input:checked) {
+  background:   rgba(193,18,31,0.12);
+  border-color: var(--corp-red);
+  color:        var(--ivory);
+}
+
+/* Photo upload */
+.fl-photo-upload {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             12px;
+  border:          1px dashed rgba(255,255,255,0.15);
+  padding:         40px 24px;
+  cursor:          pointer;
+  transition:      border-color 0.2s ease;
+  text-align:      center;
+}
+
+.fl-photo-upload:hover {
+  border-color: rgba(193,18,31,0.5);
+}
+
+.fl-photo-upload p {
+  font-size:  13px;
+  color:      var(--steel);
+  line-height: 1.5;
+}
+
+.fl-photo-preview {
+  width:         80px;
+  height:        80px;
+  border-radius: 50%;
+  overflow:      hidden;
+  border:        2px solid rgba(255,255,255,0.1);
+  display:       none;
+  margin:        0 auto 12px;
+}
+
+.fl-photo-preview img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+/* Slider */
+.fl-slider {
+  width:      100%;
+  appearance: none;
+  height:     2px;
+  background: rgba(255,255,255,0.1);
+  outline:    none;
+  margin:     12px 0 4px;
+}
+
+.fl-slider::-webkit-slider-thumb {
+  appearance:    none;
+  width:         18px;
+  height:        18px;
+  border-radius: 50%;
+  background:    var(--corp-red);
+  cursor:        pointer;
+}
+
+.fl-slider-marks {
+  display:         flex;
+  justify-content: space-between;
+  font-size:       11px;
+  color:           var(--steel);
+  margin-top:      4px;
+}
+
+/* Portfolio add button */
+.fl-add-portfolio-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             8px;
+  width:           100%;
+  padding:         14px;
+  border:          1px dashed rgba(255,255,255,0.12);
+  background:      transparent;
+  color:           var(--steel);
+  font-family:     var(--font-body);
+  font-size:       13px;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  margin-top:      16px;
+}
+
+.fl-add-portfolio-btn:hover {
+  border-color: rgba(193,18,31,0.4);
+  color:        var(--corp-red);
+}
+
+/* Char counter */
+.fl-char-counter {
+  font-size:  11px;
+  color:      var(--steel);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* NDA box */
+.fl-nda-box {
+  background:   rgba(255,255,255,0.03);
+  border:       1px solid rgba(255,255,255,0.07);
+  padding:      20px 24px;
+  font-size:    13px;
+  color:        var(--steel);
+  line-height:  1.75;
+  margin-bottom: 20px;
+  max-height:   160px;
+  overflow-y:   auto;
+}
+
+/* Agreements checkboxes */
+.fl-agreements {
+  display:        flex;
+  flex-direction: column;
+  gap:            14px;
+  margin-bottom:  24px;
+}
+
+.fl-check-label {
+  display:     flex;
+  align-items: flex-start;
+  gap:         12px;
+  font-size:   14px;
+  color:       var(--steel);
+  line-height: 1.5;
+  cursor:      pointer;
+}
+
+.fl-check-label input[type="checkbox"] {
+  margin-top:  3px;
+  flex-shrink: 0;
+  accent-color: var(--corp-red);
+  width:       16px;
+  height:      16px;
+}
+
+.fl-checkmark {
+  flex-shrink: 0;
+}
+
+/* Links grid */
+.fl-links-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   16px;
+}
+
+/* Portfolio note */
+.fl-portfolio-note {
+  font-size:   13px;
+  color:       var(--steel);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Form nav (Back / Next / Submit) */
+.fl-form-nav {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-top:      40px;
+  padding-top:     28px;
+  border-top:      1px solid rgba(255,255,255,0.06);
+}
+
+.fl-btn-back {
+  background:      transparent;
+  border:          1px solid rgba(255,255,255,0.12);
+  color:           var(--steel);
+  font-family:     var(--font-body);
+  font-size:       13px;
+  font-weight:     500;
+  letter-spacing:  0.08em;
+  text-transform:  uppercase;
+  padding:         12px 28px;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+}
+
+.fl-btn-back:hover {
+  border-color: rgba(255,255,255,0.25);
+  color:        var(--ivory);
+}
+
+.fl-btn-next,
+.fl-btn-submit {
+  background:      var(--corp-red);
+  border:          none;
+  color:           #ffffff;
+  font-family:     var(--font-body);
+  font-size:       13px;
+  font-weight:     500;
+  letter-spacing:  0.1em;
+  text-transform:  uppercase;
+  padding:         12px 32px;
+  cursor:          pointer;
+  transition:      background 0.2s ease;
+}
+
+.fl-btn-next:hover,
+.fl-btn-submit:hover {
+  background: #a10e18;
+}
+
+/* Select */
+.fl-select {
+  background-image:    url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23888888' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat:   no-repeat;
+  background-position: right 14px center;
+  padding-right:       40px;
+  cursor:              pointer;
+}
+
+.fl-select option {
+  background: #1e1e1e;
+  color:      var(--ivory);
+}
+
+.fl-textarea {
+  resize:      vertical;
+  min-height:  100px;
+  line-height: 1.6;
+}
+
+/* Register mobile */
+@media (max-width: 640px) {
+  .fl-register-main { padding: 100px 20px 60px; }
+  .fl-form-grid     { grid-template-columns: 1fr; }
+  .fl-links-grid    { grid-template-columns: 1fr; }
+  .fl-steps-bar     { gap: 0; }
+  .fl-step-label    { display: none; }
+}
+
 /* ─── Hero ────────────────────────────────────────────────── */
 
 .fl-hero {
