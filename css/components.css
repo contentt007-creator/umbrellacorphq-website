@@ -567,7 +567,8 @@ a.nav-dropdown-item:hover {
 .services-grid {
   display:               grid;
   grid-template-columns: repeat(3, 1fr);
-  border:                1px solid rgba(255, 255, 255, 0.06);
+  gap:                   24px;
+  border:                none;
 }
 
 .service-card {
