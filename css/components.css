@@ -1415,9 +1415,9 @@ a.nav-dropdown-item:hover {
 
 .cta-heading {
   font-family:   var(--font-display);
-  font-size:     clamp(60px, 9vw, 130px);
+  font-size:     clamp(44px, 7vw, 110px);
   color:         var(--ivory);
-  line-height:   0.9;
+  line-height:   1;
   margin-bottom: 28px;
 }
 
