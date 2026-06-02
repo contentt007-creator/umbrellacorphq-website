@@ -76,26 +76,26 @@
 }
 
 [data-theme="light"] .nav-logo-text {
-  color: #1d1d1f;
+  color: #ffffff;
 }
 
 [data-theme="light"] .nav-link {
-  color: #424245;  /* Apple's nav link color — readable on white */
+  color: rgba(255, 255, 255, 0.82);
 }
 
 [data-theme="light"] .nav-link:hover,
 [data-theme="light"] .nav-link.active {
-  color: #1d1d1f;
+  color: #ffffff;
 }
 
 /* Dropdown trigger */
 [data-theme="light"] .nav-dropdown-trigger {
-  color: #424245;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 [data-theme="light"] .nav-dropdown-wrap:hover .nav-dropdown-trigger,
 [data-theme="light"] .nav-dropdown-wrap.is-open  .nav-dropdown-trigger {
-  color: #1d1d1f;
+  color: #ffffff;
 }
 
 [data-theme="light"] .nav-dropdown {
@@ -127,7 +127,7 @@
 
 /* Hamburger lines */
 [data-theme="light"] .hamburger span {
-  background: #1d1d1f;
+  background: #ffffff;
 }
 
 /* Mobile full-screen overlay */
