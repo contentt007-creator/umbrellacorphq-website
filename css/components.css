@@ -2842,3 +2842,147 @@ a.nav-dropdown-item:hover {
     aspect-ratio: 16 / 9;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — GLOBAL SECTION PADDING + COMPONENT FIXES
+   Fills gaps not covered by individual component breakpoints
+═══════════════════════════════════════════════════════════ */
+
+/* ── Section padding reduction on tablet ─────────────────── */
+@media (max-width: 768px) {
+  .services-section         { padding: 80px 0; }
+  .services-section .section-header { margin-bottom: 48px; }
+  .work-section             { padding: 80px 0; }
+  .work-section .section-header     { margin-bottom: 48px; }
+  .process-section          { padding: 80px 0; }
+  .process-section .section-header  { margin-bottom: 60px; }
+  .testimonials-section     { padding: 80px 0; }
+  .testimonials-section .section-header { margin-bottom: 48px; }
+  .cta-section              { padding: 80px 0; }
+  .stats-bar                { padding: 60px 0; }
+  .gallery-section          { padding: 60px 0; }
+  .gallery-section .section-header  { margin-bottom: 40px; }
+  .faq-section              { padding: 80px 0; }
+  .about-story              { padding: 80px 0; }
+  .mission-vision           { padding: 80px 0; }
+  .team-section             { padding: 80px 0; }
+  .values-section           { padding: 80px 0; }
+  .comparison-section       { padding: 80px 0; }
+  .contact-section          { padding: 80px 0; }
+  .service-detail           { padding: 72px 0; }
+  .awards-section           { padding: 60px 0; }
+  .section-pad              { padding: 80px 0; }
+  .section-pad-sm           { padding: 56px 0; }
+
+  /* Inner hero size */
+  .inner-hero               { padding: 120px 0 64px; }
+  .page-hero                { min-height: 40vh; padding-bottom: 56px; }
+  .page-hero__heading       { font-size: clamp(48px, 11vw, 90px); }
+
+  /* Card content */
+  .mv-card                  { padding: 40px 28px; }
+  .cs-metric__number        { font-size: 42px; }
+  .cs-testimonial           { padding: 28px 24px; }
+
+  /* Comparison table — horizontal scroll */
+  .comparison-section .container {
+    overflow-x:    auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .comparison-table         { min-width: 560px; }
+
+  /* Section header spacing */
+  .section-heading          { margin-bottom: 16px; }
+  .section-subtext          { font-size: 17px; margin-top: 16px; }
+
+  /* CTA */
+  .cta-heading              { font-size: clamp(48px, 12vw, 80px); }
+  .cta-subtext              { font-size: 16px; }
+  .cta-btn-wrap             { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  /* Work page full card */
+  .cs-full-card__body       { padding: 28px 20px; }
+
+  /* Contact */
+  .contact-info-heading     { font-size: 28px; margin-bottom: 32px; }
+
+  /* Services page detail */
+  .service-detail__pricing  { padding: 20px 24px; }
+  .service-pricing-value    { font-size: 22px; }
+
+  /* Footer */
+  .footer-main              { padding-bottom: 48px; }
+}
+
+/* ── Section padding reduction on mobile ─────────────────── */
+@media (max-width: 480px) {
+  .services-section         { padding: 60px 0; }
+  .work-section             { padding: 60px 0; }
+  .process-section          { padding: 60px 0; }
+  .testimonials-section     { padding: 60px 0; }
+  .cta-section              { padding: 64px 0; }
+  .stats-bar                { padding: 48px 0; }
+  .faq-section              { padding: 60px 0; }
+  .about-story              { padding: 60px 0; }
+  .mission-vision           { padding: 60px 0; }
+  .team-section             { padding: 60px 0; }
+  .values-section           { padding: 60px 0; }
+  .contact-section          { padding: 60px 0; }
+  .service-detail           { padding: 56px 0; }
+  .section-pad              { padding: 60px 0; }
+  .section-pad-sm           { padding: 40px 0; }
+
+  /* Hero CTA buttons — full width on tiny screens */
+  .hero-ctas                { flex-direction: column; gap: 12px; margin-top: 28px; }
+  .hero-ctas .btn           { width: 100%; text-align: center; }
+
+  /* Stats */
+  .stats-grid               { gap: 40px 20px; }
+  .stats-number             { font-size: clamp(44px, 12vw, 64px); }
+
+  /* Case study metrics */
+  .cs-metrics               { grid-template-columns: 1fr; }
+  .cs-metric__number        { font-size: 36px; }
+  .cs-metric                { padding: 24px 20px; }
+
+  /* Full card body */
+  .cs-full-card__body       { padding: 24px 16px; }
+  .case-study-card__content { padding: 28px 20px; }
+
+  /* Team */
+  .team-grid                { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  /* Awards */
+  .awards-grid              { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  /* MV cards */
+  .mv-card                  { padding: 32px 20px; }
+
+  /* Testimonial cards */
+  .testimonial-card         { padding: 28px 20px; }
+
+  /* Section headings */
+  .cta-heading              { font-size: clamp(44px, 14vw, 72px); }
+  .inner-hero-heading       { font-size: clamp(44px, 12vw, 72px); }
+  .inner-hero               { padding: 100px 0 56px; }
+
+  /* Filter tabs wrap nicely */
+  .filter-bar               { gap: 6px; }
+  .filter-tab               { font-size: 11px; padding: 7px 12px; }
+
+  /* Blog filter */
+  .blog-filter-btn          { font-size: 11px; padding: 7px 12px; }
+
+  /* Case study expanded */
+  .case-study-expanded h3   { font-size: 18px; }
+
+  /* Form row single column already handled, but ensure gap */
+  .form-row                 { gap: 16px; }
+}
+
+/* ── Very small screens (320px) ──────────────────────────── */
+@media (max-width: 360px) {
+  .nav-logo-text            { font-size: 16px; }
+  .hero-heading             { font-size: clamp(52px, 16vw, 80px); }
+  .team-grid                { grid-template-columns: 1fr; }
+}
