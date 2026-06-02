@@ -215,6 +215,14 @@
   background: #f5f5f7;
 }
 
+/* Grid — add gap so rounded cards breathe */
+[data-theme="light"] .services-grid {
+  gap:        24px;
+  border:     none;
+  background: transparent;
+  padding:    8px 0 16px;
+}
+
 /* Service cards — white bg, Apple-radius, soft shadow, no hard border */
 [data-theme="light"] .service-card,
 [data-theme="light"] .services-section .card {
