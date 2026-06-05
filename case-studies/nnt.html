@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NNT Bag Manufacturing — Case Study | Umbrella Corp HQ</title>
+  <meta name="description" content="How Umbrella Corp HQ drove 110% revenue growth and 300+ monthly B2B leads for NNT Bag Manufacturing, Dhaka." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --red: #C0392B;
+      --dark: #1A1A1A;
+      --darker: #111111;
+      --darkest: #0d0d0d;
+      --mid: #222222;
+      --white: #FFFFFF;
+      --gray: #6C6C6C;
+      --light-gray: #999999;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 56px;
+      background: var(--dark);
+      border-bottom: 1px solid var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-back {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .nav-back:hover {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 32px;
+      opacity: 0;
+    }
+
+    .hero-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(72px, 10vw, 120px);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--white);
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-heading-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(80px);
+    }
+
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--gray);
+      margin-top: 40px;
+      max-width: 560px;
+      opacity: 0;
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 24px;
+      margin-top: 64px;
+      flex-wrap: wrap;
+    }
+
+    .metric-card {
+      background: var(--darker);
+      border-left: 3px solid var(--red);
+      padding: 28px 32px;
+      min-width: 160px;
+      opacity: 0;
+    }
+
+    .metric-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+      display: block;
+    }
+
+    .metric-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray);
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+      display: block;
+    }
+
+    .hero-red-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: scrollFade 2s ease 2s forwards;
+    }
+
+    .scroll-indicator span {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: var(--gray);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-arrow::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--red);
+      animation: scrollLine 1.5s ease-in-out infinite 2s;
+    }
+
+    @keyframes scrollLine {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    @keyframes scrollFade {
+      to { opacity: 1; }
+    }
+
+    /* ─── OVERVIEW STRIP ─── */
+    #overview {
+      background: var(--mid);
+      padding: 60px 40px;
+    }
+
+    .overview-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .overview-col {
+      padding: 0 40px;
+      border-right: 1px solid #333;
+    }
+
+    .overview-col:first-child {
+      padding-left: 0;
+    }
+
+    .overview-col:last-child {
+      border-right: none;
+    }
+
+    .overview-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .overview-stat {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--light-gray);
+      letter-spacing: 0.03em;
+      line-height: 1.5;
+    }
+
+    .overview-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ─── CHALLENGE SECTION ─── */
+    #challenge {
+      background: var(--dark);
+      padding: 120px 40px;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 48px);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 72px;
+      line-height: 1.1;
+    }
+
+    .challenge-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .challenge-item {
+      position: relative;
+      padding: 48px 0 48px 80px;
+      border-bottom: 1px solid #2a2a2a;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .challenge-item:first-child {
+      border-top: 1px solid #2a2a2a;
+    }
+
+    .challenge-bg-num {
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      font-weight: 900;
+      color: var(--red);
+      opacity: 0.10;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .challenge-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .challenge-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .challenge-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      color: var(--gray);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    /* ─── BEFORE / AFTER ─── */
+    #before-after {
+      background: var(--mid);
+      padding: 120px 40px;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 64px auto 0;
+      height: 480px;
+      overflow: hidden;
+      cursor: ew-resize;
+      user-select: none;
+    }
+
+    .slider-panel {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slider-before {
+      left: 0;
+      width: 100%;
+      background: #b0b0b0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-after {
+      right: 0;
+      width: 50%;
+      background: var(--darker);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-before-content {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .before-wordmark {
+      font-family: 'Georgia', serif;
+      font-size: 52px;
+      font-weight: 400;
+      color: #888;
+      letter-spacing: -0.02em;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .before-tagline {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #aaa;
+      letter-spacing: 0.05em;
+    }
+
+    .before-badge {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 8px 20px;
+      border: 1px solid #aaa;
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: #aaa;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .slider-after-content {
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .after-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .after-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .after-rule {
+      width: 40px;
+      height: 3px;
+      background: var(--red);
+      margin: 0 auto 24px;
+    }
+
+    .after-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray);
+      letter-spacing: 0.05em;
+    }
+
+    .slider-label {
+      position: absolute;
+      top: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      z-index: 5;
+    }
+
+    .label-before {
+      left: 20px;
+      background: rgba(0,0,0,0.5);
+      color: #ccc;
+    }
+
+    .label-after {
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      color: var(--white);
+    }
+
+    .slider-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--white);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      cursor: ew-resize;
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      background: var(--white);
+      border: 2px solid var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 11;
+    }
+
+    .slider-handle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ─── STRATEGY ─── */
+    #strategy {
+      background: var(--dark);
+      padding: 120px 40px;
+    }
+
+    .section-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: var(--gray);
+      margin-top: 16px;
+      margin-bottom: 72px;
+    }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .phase-card {
+      background: var(--darker);
+      border-top: 4px solid var(--red);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .phase-bg-num {
+      position: absolute;
+      top: -20px;
+      right: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      font-weight: 900;
+      color: var(--red);
+      opacity: 0.10;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .phase-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .phase-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .phase-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    /* ─── THREE.JS SECTION ─── */
+    #delivered {
+      background: var(--dark);
+      padding: 120px 0 80px;
+    }
+
+    .delivered-header {
+      padding: 0 40px;
+      max-width: 1200px;
+      margin: 0 auto 64px;
+    }
+
+    #three-canvas-wrap {
+      width: 100%;
+      height: 600px;
+      position: relative;
+      background: var(--darker);
+      overflow: hidden;
+    }
+
+    #three-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .three-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      perspective: 800px;
+    }
+
+    .fallback-device {
+      transform-style: preserve-3d;
+      animation: deviceFloat 3s ease-in-out infinite;
+    }
+
+    .fallback-device.phone {
+      animation-delay: -1.5s;
+    }
+
+    .fallback-macbook {
+      width: 280px;
+    }
+
+    .fallback-screen {
+      width: 280px;
+      height: 176px;
+      background: #1e1e1e;
+      border: 2px solid var(--red);
+      position: relative;
+    }
+
+    .fallback-screen::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      background: #0d0d0d;
+    }
+
+    .fallback-keyboard {
+      width: 300px;
+      height: 20px;
+      background: #2a2a2a;
+      margin-top: 4px;
+      margin-left: -10px;
+    }
+
+    .fallback-phone-box {
+      width: 100px;
+      height: 200px;
+      background: #1e1e1e;
+      border: 2px solid var(--red);
+      position: relative;
+    }
+
+    @keyframes deviceFloat {
+      0%, 100% { transform: translateY(0px) rotateY(-8deg); }
+      50% { transform: translateY(-20px) rotateY(8deg); }
+    }
+
+    .deliverable-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      padding: 48px 40px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .d-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      border: 1px solid #333;
+      padding: 12px 24px;
+      text-transform: uppercase;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .d-tag:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* ─── RESULTS ─── */
+    #results {
+      background: var(--darker);
+      padding: 120px 40px;
+    }
+
+    .chart-wrap {
+      max-width: 900px;
+      margin: 64px auto 80px;
+      height: 400px;
+      position: relative;
+    }
+
+    .results-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .result-stat {
+      background: var(--dark);
+      padding: 48px 40px;
+      border-left: 3px solid var(--red);
+      text-align: left;
+    }
+
+    .result-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+      display: block;
+    }
+
+    .result-stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--light-gray);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* ─── BAGORA ─── */
+    #bagora {
+      background: var(--dark);
+      padding: 120px 40px;
+    }
+
+    .bagora-card {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--darker);
+      border-left: 2px solid var(--red);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .bagora-left {
+      padding: 72px 64px;
+    }
+
+    .bagora-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .bagora-text:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .bagora-right {
+      padding: 72px 64px;
+      border-left: 1px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .bagora-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .bagora-rule {
+      width: 48px;
+      height: 3px;
+      background: var(--red);
+      margin-bottom: 32px;
+    }
+
+    .bagora-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .bagora-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      padding-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .bagora-link:hover {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    #testimonial {
+      background: var(--darker);
+      padding: 120px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #testimonial::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 200px;
+      color: var(--red);
+      opacity: 0.25;
+      line-height: 0.8;
+      display: block;
+      margin-bottom: -40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      max-width: 860px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+    }
+
+    .quote-attr {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+    }
+
+    .quote-attr strong {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    /* ─── CTA ─── */
+    #cta {
+      background: var(--dark);
+      padding: 160px 40px;
+      text-align: center;
+    }
+
+    .cta-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 7vw, 72px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .cta-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: var(--gray);
+      max-width: 560px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 18px 40px;
+      display: inline-block;
+      border: 2px solid var(--red);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--red);
+    }
+
+    .btn-secondary {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid #444;
+      padding-bottom: 2px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    /* ─── FOOTER ─── */
+    #footer {
+      background: var(--darkest);
+      border-top: 1px solid var(--red);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      #nav {
+        padding: 0 20px;
+      }
+
+      #hero {
+        padding: 100px 20px 60px;
+      }
+
+      .hero-metrics {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .metric-card {
+        min-width: unset;
+        padding: 20px 24px;
+      }
+
+      .metric-number {
+        font-size: 36px;
+      }
+
+      #overview {
+        padding: 48px 20px;
+      }
+
+      .overview-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .overview-col {
+        border-right: none;
+        border-bottom: 1px solid #333;
+        padding: 0 0 32px 0;
+      }
+
+      .overview-col:last-child {
+        border-bottom: none;
+      }
+
+      #challenge {
+        padding: 80px 20px;
+      }
+
+      .challenge-item {
+        padding: 40px 0 40px 60px;
+      }
+
+      .challenge-bg-num {
+        font-size: 80px;
+        left: -10px;
+      }
+
+      .challenge-name {
+        font-size: 24px;
+      }
+
+      #before-after {
+        padding: 80px 20px;
+      }
+
+      .slider-wrapper {
+        height: 340px;
+      }
+
+      .before-wordmark,
+      .after-wordmark {
+        font-size: 36px;
+      }
+
+      #strategy {
+        padding: 80px 20px;
+      }
+
+      .phase-grid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      #delivered {
+        padding: 80px 0 60px;
+      }
+
+      .delivered-header {
+        padding: 0 20px;
+      }
+
+      #three-canvas-wrap {
+        height: 400px;
+      }
+
+      .deliverable-tags {
+        padding: 32px 20px 0;
+      }
+
+      #results {
+        padding: 80px 20px;
+      }
+
+      .results-stats {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      #bagora {
+        padding: 80px 20px;
+      }
+
+      .bagora-card {
+        grid-template-columns: 1fr;
+      }
+
+      .bagora-left {
+        padding: 48px 32px;
+      }
+
+      .bagora-right {
+        padding: 48px 32px;
+        border-left: none;
+        border-top: 1px solid #2a2a2a;
+      }
+
+      .bagora-brand-name {
+        font-size: 52px;
+      }
+
+      #testimonial {
+        padding: 80px 20px;
+      }
+
+      .quote-mark {
+        font-size: 120px;
+      }
+
+      #cta {
+        padding: 100px 20px;
+      }
+
+      .cta-actions {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      #footer {
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="/">Umbrella Corp HQ</a>
+    <a class="nav-back" href="../work.html">← Back to Work</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Case Study — B2B Manufacturing</span>
+      <h1 class="hero-heading">
+        <span class="hero-heading-line">NNT Bag</span>
+        <span class="hero-heading-line">Manufacturing</span>
+      </h1>
+      <p class="hero-subtitle">From factory floor to international export — a B2B growth story.</p>
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <span class="metric-number">110%</span>
+          <span class="metric-label">Revenue Growth</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-number">300+</span>
+          <span class="metric-label">Monthly B2B Leads</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-number">2–5</span>
+          <span class="metric-label">Export Deals Closed</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+    <div class="hero-red-line"></div>
+  </section>
+
+  <!-- OVERVIEW STRIP -->
+  <section id="overview">
+    <div class="overview-grid">
+      <div class="overview-col">
+        <span class="overview-num">01</span>
+        <span class="overview-value">NNT Bag Manufacturing</span>
+        <span class="overview-stat">Client — 100+ staff, Dhaka, Bangladesh</span>
+      </div>
+      <div class="overview-col">
+        <span class="overview-num">02</span>
+        <span class="overview-value">Feb 2026</span>
+        <span class="overview-stat">Engagement start — ongoing growth partnership</span>
+      </div>
+      <div class="overview-col">
+        <span class="overview-num">03</span>
+        <span class="overview-value">Full-Stack Growth</span>
+        <span class="overview-stat">Branding · Ads · Catalogue · Pitch Deck · Sub-brand</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHALLENGE -->
+  <section id="challenge">
+    <div class="section-inner">
+      <span class="section-tag">What We Faced</span>
+      <h2 class="section-title">The Challenge</h2>
+      <div class="challenge-list">
+        <div class="challenge-item">
+          <span class="challenge-bg-num">01</span>
+          <span class="challenge-num">01</span>
+          <h3 class="challenge-name">No Brand Identity</h3>
+          <p class="challenge-desc">NNT had no cohesive visual identity, no brand guidelines, and no professional materials to present to buyers. Every sales interaction started from zero credibility.</p>
+        </div>
+        <div class="challenge-item">
+          <span class="challenge-bg-num">02</span>
+          <span class="challenge-num">02</span>
+          <h3 class="challenge-name">Zero Digital Presence</h3>
+          <p class="challenge-desc">No website, no active social media, no search visibility. Potential buyers searching for Dhaka bag manufacturers could not find NNT, resulting in missed pipeline at every stage.</p>
+        </div>
+        <div class="challenge-item">
+          <span class="challenge-bg-num">03</span>
+          <span class="challenge-num">03</span>
+          <h3 class="challenge-name">No Lead Generation System</h3>
+          <p class="challenge-desc">Lead acquisition was entirely word-of-mouth and referral. There was no repeatable, scalable mechanism to bring in new B2B prospects month after month.</p>
+        </div>
+        <div class="challenge-item">
+          <span class="challenge-bg-num">04</span>
+          <span class="challenge-num">04</span>
+          <h3 class="challenge-name">No International Reach</h3>
+          <p class="challenge-desc">Despite holding strong manufacturing capability, NNT had no strategy, materials, or positioning to approach export markets or international wholesale buyers.</p>
+        </div>
+        <div class="challenge-item">
+          <span class="challenge-bg-num">05</span>
+          <span class="challenge-num">05</span>
+          <h3 class="challenge-name">Untapped Audience Segments</h3>
+          <p class="challenge-desc">The direct-to-consumer opportunity sat completely dormant. NNT's own manufacturing infrastructure could support a consumer brand — but that vision had never been activated.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section id="before-after">
+    <div class="section-inner">
+      <span class="section-tag">Visual Transformation</span>
+      <h2 class="section-title">Before &amp; After</h2>
+    </div>
+    <div class="slider-wrapper" id="slider">
+      <!-- BEFORE panel -->
+      <div class="slider-panel slider-before" id="panel-before">
+        <div class="slider-before-content">
+          <span class="before-wordmark">NNT bags</span>
+          <span class="before-tagline">bag manufacturer · dhaka</span>
+          <span class="before-badge">Est. — Dhaka</span>
+        </div>
+      </div>
+      <!-- AFTER panel (clipped) -->
+      <div class="slider-panel slider-after" id="panel-after">
+        <div class="slider-after-content">
+          <span class="after-wordmark">NNT</span>
+          <span class="after-sub">Bag Manufacturing</span>
+          <div class="after-rule"></div>
+          <span class="after-tagline">PREMIUM · EXPORT-READY · DHAKA</span>
+        </div>
+      </div>
+      <!-- Labels -->
+      <span class="slider-label label-before">Before</span>
+      <span class="slider-label label-after">After</span>
+      <!-- Divider -->
+      <div class="slider-divider" id="slider-divider">
+        <div class="slider-handle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+            <polyline points="9 18 3 12 9 6"></polyline>
+            <polyline points="15 18 21 12 15 6" transform="translate(0,0)"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRATEGY -->
+  <section id="strategy">
+    <div class="section-inner">
+      <span class="section-tag">How We Did It</span>
+      <h2 class="section-title">Our Strategy</h2>
+      <p class="section-subtitle">Three phases, compounding results.</p>
+      <div class="phase-grid">
+        <div class="phase-card">
+          <span class="phase-bg-num">01</span>
+          <span class="phase-label">Phase 01</span>
+          <h3 class="phase-name">Brand Foundation</h3>
+          <p class="phase-desc">Complete identity build from scratch — logo system, brand guidelines, full visual kit. Professional B2B product catalogue designed for wholesale buyers. Investor-grade pitch deck engineered for export conversations.</p>
+        </div>
+        <div class="phase-card">
+          <span class="phase-bg-num">02</span>
+          <span class="phase-label">Phase 02</span>
+          <h3 class="phase-name">Digital Marketing Launch</h3>
+          <p class="phase-desc">Meta, Google, and LinkedIn ad campaigns built and launched simultaneously. Audience-segmented landing pages for B2B buyers vs. export leads. Monthly content cadence established across all platforms.</p>
+        </div>
+        <div class="phase-card">
+          <span class="phase-bg-num">03</span>
+          <span class="phase-label">Phase 03</span>
+          <h3 class="phase-name">Growth &amp; Scale</h3>
+          <p class="phase-desc">Rolling 90-day growth roadmaps. Active lead nurturing sequences for warm pipeline. Export market targeting across South and Southeast Asia. Weekly performance reporting with real-time spend optimization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE.JS DEVICES -->
+  <section id="delivered">
+    <div class="delivered-header">
+      <span class="section-tag">Deliverables</span>
+      <h2 class="section-title">What We Delivered</h2>
+    </div>
+    <div id="three-canvas-wrap">
+      <canvas id="three-canvas"></canvas>
+      <div class="three-fallback" id="three-fallback">
+        <div class="fallback-device fallback-macbook">
+          <div class="fallback-screen"></div>
+          <div class="fallback-keyboard"></div>
+        </div>
+        <div class="fallback-device phone">
+          <div class="fallback-phone-box"></div>
+        </div>
+      </div>
+    </div>
+    <div class="deliverable-tags">
+      <span class="d-tag">Brand Identity</span>
+      <span class="d-tag">Brand Guidelines</span>
+      <span class="d-tag">Product Catalogue</span>
+      <span class="d-tag">Pitch Deck</span>
+      <span class="d-tag">Meta Ads</span>
+      <span class="d-tag">LinkedIn Strategy</span>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results">
+    <div class="section-inner">
+      <span class="section-tag">What Changed</span>
+      <h2 class="section-title">The Results</h2>
+      <div class="chart-wrap">
+        <canvas id="results-chart"></canvas>
+      </div>
+      <div class="results-stats">
+        <div class="result-stat">
+          <span class="result-stat-num">110%</span>
+          <span class="result-stat-label">Revenue Growth</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-stat-num">300+</span>
+          <span class="result-stat-label">B2B Leads Per Month</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-stat-num">2–5</span>
+          <span class="result-stat-label">International Export Deals</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAGORA -->
+  <section id="bagora">
+    <div class="section-inner" style="max-width:1200px;margin:0 auto;">
+      <span class="section-tag">Sub-Brand Launch</span>
+      <h2 class="section-title">The B2B-to-B2C Evolution</h2>
+    </div>
+    <div class="bagora-card">
+      <div class="bagora-left">
+        <p class="bagora-text">The B2B success laid the groundwork for something bigger. With a proven digital infrastructure and a growing market presence, NNT took the next step: launching Bagora — their own consumer-facing lifestyle bag brand.</p>
+        <p class="bagora-text">Same-day delivery in Dhaka. Products built on NNT's own manufacturing capability, sold direct to consumers. Bagora represents the natural evolution from factory to brand — and Umbrella Corp HQ built every piece of it.</p>
+      </div>
+      <div class="bagora-right">
+        <span class="bagora-brand-name">BAGORA</span>
+        <div class="bagora-rule"></div>
+        <div class="bagora-links">
+          <a class="bagora-link" href="https://getbagora.com" target="_blank" rel="noopener">
+            Visit getbagora.com
+            <span>→</span>
+          </a>
+          <a class="bagora-link" href="https://facebook.com/getbagora" target="_blank" rel="noopener">
+            Follow on Facebook
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section id="testimonial">
+    <span class="quote-mark">"</span>
+    <p class="quote-text" id="quote-text">"Working with Umbrella Corp HQ was a turning point for NNT. Our business has more than doubled in revenue, and we now have a consistent pipeline of leads every single month."</p>
+    <p class="quote-attr" id="quote-attr">— <strong>Management</strong>, NNT Bag Manufacturing, Dhaka</p>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <h2 class="cta-heading" id="cta-heading">Ready to Scale<br>Your Business?</h2>
+    <p class="cta-sub" id="cta-sub">Umbrella Corp HQ builds brands, generates leads, and unlocks new markets for ambitious Dhaka businesses.</p>
+    <div class="cta-actions" id="cta-actions">
+      <a class="btn-primary" href="../contact.html">Get a Free Quote →</a>
+      <a class="btn-secondary" href="../work.html">View All Case Studies →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <span class="footer-logo">Umbrella Corp HQ</span>
+    <span class="footer-copy">© 2026 Umbrella Corp HQ. All rights reserved.</span>
+  </footer>
+
+  <!-- CDN SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+  <script>
+    // ─── GSAP SETUP ───────────────────────────────────────────────
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero entrance
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.to('.hero-tag', { opacity: 1, duration: 0.6, delay: 0.3 })
+      .to('.hero-heading-line', {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.15
+      }, '-=0.2')
+      .to('.hero-subtitle', { opacity: 1, duration: 0.7 }, '-=0.4')
+      .to('.metric-card', {
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.12
+      }, '-=0.3');
+
+    // Challenge items
+    gsap.utils.toArray('.challenge-item').forEach((item) => {
+      gsap.to(item, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 80%',
+          once: true
+        }
+      });
+    });
+
+    // Phase cards stagger
+    gsap.to('.phase-card', {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.15,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.phase-grid',
+        start: 'top 75%',
+        once: true
+      }
+    });
+
+    // Testimonial
+    gsap.to('#quote-text', {
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#testimonial',
+        start: 'top 70%',
+        once: true
+      }
+    });
+    gsap.to('#quote-attr', {
+      opacity: 1,
+      duration: 0.8,
+      delay: 0.3,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#testimonial',
+        start: 'top 70%',
+        once: true
+      }
+    });
+
+    // CTA section
+    const ctaTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#cta',
+        start: 'top 70%',
+        once: true
+      }
+    });
+    ctaTl.to('#cta-heading', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+         .to('#cta-sub', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.5')
+         .to('#cta-actions', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+
+    // ─── BEFORE / AFTER SLIDER ─────────────────────────────────────
+    (function () {
+      const wrapper = document.getElementById('slider');
+      const divider = document.getElementById('slider-divider');
+      const panelAfter = document.getElementById('panel-after');
+      let isDragging = false;
+
+      function getPercent(clientX) {
+        const rect = wrapper.getBoundingClientRect();
+        let pct = (clientX - rect.left) / rect.width;
+        pct = Math.min(Math.max(pct, 0.05), 0.95);
+        return pct;
+      }
+
+      function applyPosition(pct) {
+        const pctStr = (pct * 100).toFixed(2) + '%';
+        divider.style.left = pctStr;
+        panelAfter.style.width = (100 - pct * 100).toFixed(2) + '%';
+        panelAfter.style.right = '0';
+        panelAfter.style.left = 'auto';
+      }
+
+      applyPosition(0.5);
+
+      function onStart(e) {
+        isDragging = true;
+        e.preventDefault();
+      }
+
+      function onMove(e) {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        applyPosition(getPercent(clientX));
+      }
+
+      function onEnd() {
+        isDragging = false;
+      }
+
+      divider.addEventListener('mousedown', onStart);
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+
+      divider.addEventListener('touchstart', onStart, { passive: false });
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onEnd);
+
+      wrapper.addEventListener('mousedown', onStart);
+    })();
+
+    // ─── THREE.JS DEVICES ──────────────────────────────────────────
+    (function () {
+      const wrap = document.getElementById('three-canvas-wrap');
+      const canvas = document.getElementById('three-canvas');
+      const fallback = document.getElementById('three-fallback');
+
+      if (typeof THREE === 'undefined') {
+        canvas.style.display = 'none';
+        fallback.style.display = 'flex';
+        return;
+      }
+
+      try {
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x111111, 1);
+
+        const scene = new THREE.Scene();
+
+        const w = wrap.clientWidth;
+        const h = wrap.clientHeight;
+        renderer.setSize(w, h);
+
+        const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
+        camera.position.set(0, 0, 8);
+
+        // Lighting
+        const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambient);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(5, 10, 7);
+        scene.add(dirLight);
+
+        const redLight = new THREE.PointLight(0xC0392B, 1.5, 20);
+        redLight.position.set(-4, 2, 4);
+        scene.add(redLight);
+
+        // ── MacBook group ──────────────────────────────────────────
+        const macGroup = new THREE.Group();
+
+        const screenGeo = new THREE.BoxGeometry(3.2, 2, 0.08);
+        const screenMat = new THREE.MeshStandardMaterial({ color: 0x1e1e1e, roughness: 0.5, metalness: 0.3 });
+        const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+        screenMesh.position.set(0, 1.1, 0);
+        macGroup.add(screenMesh);
+
+        // Red accent line on screen top edge
+        const accentGeo = new THREE.BoxGeometry(3.2, 0.06, 0.1);
+        const accentMat = new THREE.MeshStandardMaterial({ color: 0xC0392B, roughness: 0.3 });
+        const accentMesh = new THREE.Mesh(accentGeo, accentMat);
+        accentMesh.position.set(0, 2.08, 0);
+        macGroup.add(accentMesh);
+
+        // Screen face (slightly recessed)
+        const faceMat = new THREE.MeshStandardMaterial({ color: 0x0d0d0d, roughness: 0.8 });
+        const faceGeo = new THREE.BoxGeometry(2.9, 1.7, 0.02);
+        const faceMesh = new THREE.Mesh(faceGeo, faceMat);
+        faceMesh.position.set(0, 1.1, 0.05);
+        macGroup.add(faceMesh);
+
+        // Keyboard base
+        const baseGeo = new THREE.BoxGeometry(3.4, 0.14, 2.2);
+        const baseMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.6, metalness: 0.4 });
+        const baseMesh = new THREE.Mesh(baseGeo, baseMat);
+        baseMesh.position.set(0, 0.07, 0.5);
+        macGroup.add(baseMesh);
+
+        macGroup.position.set(-2.2, 0, 0);
+        macGroup.rotation.y = 0.3;
+        scene.add(macGroup);
+
+        // ── Phone group ─────────────────────────────────────────────
+        const phoneGroup = new THREE.Group();
+
+        const phoneBodyGeo = new THREE.BoxGeometry(1.0, 2.0, 0.1);
+        const phoneBodyMat = new THREE.MeshStandardMaterial({ color: 0x1e1e1e, roughness: 0.4, metalness: 0.5 });
+        const phoneBody = new THREE.Mesh(phoneBodyGeo, phoneBodyMat);
+        phoneGroup.add(phoneBody);
+
+        // Red accent border
+        const phoneBorderGeo = new THREE.BoxGeometry(1.05, 2.05, 0.08);
+        const phoneBorderMat = new THREE.MeshStandardMaterial({ color: 0xC0392B, roughness: 0.3 });
+        const phoneBorder = new THREE.Mesh(phoneBorderGeo, phoneBorderMat);
+        phoneBorder.position.z = -0.015;
+        phoneGroup.add(phoneBorder);
+
+        // Phone screen
+        const pFaceMat = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, roughness: 0.9 });
+        const pFaceGeo = new THREE.BoxGeometry(0.85, 1.75, 0.02);
+        const pFaceMesh = new THREE.Mesh(pFaceGeo, pFaceMat);
+        pFaceMesh.position.z = 0.06;
+        phoneGroup.add(pFaceMesh);
+
+        phoneGroup.position.set(2.4, 0, 0);
+        phoneGroup.rotation.y = -0.3;
+        scene.add(phoneGroup);
+
+        // ── Mouse parallax ──────────────────────────────────────────
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        // ── Resize ──────────────────────────────────────────────────
+        function onResize() {
+          const nw = wrap.clientWidth;
+          const nh = wrap.clientHeight;
+          renderer.setSize(nw, nh);
+          camera.aspect = nw / nh;
+          camera.updateProjectionMatrix();
+        }
+        window.addEventListener('resize', onResize);
+
+        // ── Animate ─────────────────────────────────────────────────
+        let time = 0;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          time += 0.016;
+
+          // Smooth parallax
+          targetX += (mouseX - targetX) * 0.05;
+          targetY += (mouseY - targetY) * 0.05;
+
+          // MacBook float
+          macGroup.position.y = Math.sin(time * 0.8) * 0.25;
+          macGroup.rotation.y = 0.3 + targetX * 0.2;
+          macGroup.rotation.x = -targetY * 0.1;
+
+          // Phone float (offset phase)
+          phoneGroup.position.y = Math.sin(time * 0.8 + 1.5) * 0.3;
+          phoneGroup.rotation.y = -0.3 + targetX * 0.2;
+          phoneGroup.rotation.x = -targetY * 0.1;
+
+          // Slow Y rotation
+          macGroup.rotation.y += 0.002;
+          phoneGroup.rotation.y -= 0.002;
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+
+      } catch (err) {
+        canvas.style.display = 'none';
+        fallback.style.display = 'flex';
+      }
+    })();
+
+    // ─── CHART.JS RESULTS ─────────────────────────────────────────
+    (function () {
+      const chartCanvas = document.getElementById('results-chart');
+      if (!chartCanvas) return;
+
+      let chartRendered = false;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !chartRendered) {
+            chartRendered = true;
+            renderChart();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(chartCanvas);
+
+      function renderChart() {
+        const ctx = chartCanvas.getContext('2d');
+
+        Chart.defaults.color = '#6C6C6C';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Monthly Leads', 'Revenue Index', 'Export Deals'],
+            datasets: [
+              {
+                label: 'Before UCH',
+                data: [0, 100, 0],
+                backgroundColor: 'rgba(60, 60, 60, 0.85)',
+                borderColor: '#444',
+                borderWidth: 1
+              },
+              {
+                label: 'After UCH',
+                data: [300, 210, 3],
+                backgroundColor: 'rgba(192, 57, 43, 0.90)',
+                borderColor: '#C0392B',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+              duration: 1200,
+              easing: 'easeOutQuart'
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#999',
+                  font: { size: 13, weight: '500' },
+                  padding: 24,
+                  usePointStyle: true
+                }
+              },
+              tooltip: {
+                backgroundColor: '#111',
+                borderColor: '#C0392B',
+                borderWidth: 1,
+                titleColor: '#fff',
+                bodyColor: '#999',
+                padding: 12
+              }
+            },
+            scales: {
+              x: {
+                grid: {
+                  color: 'rgba(255,255,255,0.05)'
+                },
+                ticks: {
+                  color: '#6C6C6C',
+                  font: { size: 13 }
+                }
+              },
+              y: {
+                grid: {
+                  color: 'rgba(255,255,255,0.05)'
+                },
+                ticks: {
+                  color: '#6C6C6C',
+                  font: { size: 13 }
+                },
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+    })();
+
+    // ─── FIX SLIDER DIVIDER SVG ───────────────────────────────────
+    // Rebuild handle SVG to show arrows pointing left/right
+    (function () {
+      const handle = document.querySelector('.slider-handle');
+      if (handle) {
+        handle.innerHTML = `
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 3 12 9 6"></polyline>
+            <polyline points="15 6 21 12 15 18"></polyline>
+          </svg>`;
+      }
+    })();
+  </script>
+</body>
+</html>
